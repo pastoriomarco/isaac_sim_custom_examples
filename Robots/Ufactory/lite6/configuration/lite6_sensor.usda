@@ -6,4 +6,73 @@
 
 over "UF_ROBOT"
 {
+    over "link6"
+    {
+        def Xform "sensors"
+        {
+            def Xform "camera_link"
+            {
+                quatd xformOp:orient = (0, 0.7071067811865476, 0, 0.7071067811865475)
+                double3 xformOp:translate = (0.06746, 0.0, 0.0237)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
+
+                def Xform "rsd455" (
+                    prepend references = @../../../../Sensors/RealSense/rsd455.usda@</Root/RSD455>
+                    delete apiSchemas = ["PhysicsRigidBodyAPI", "PhysxRigidBodyAPI", "PhysicsMassAPI"]
+                )
+                {
+                    quatd xformOp:orient = (0, 0, 0, 1)
+                    double3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                    over "Imu_Sensor" (
+                        active = false
+                    )
+                    {
+                    }
+
+                    over "Camera_OmniVision_OV9782_Color"
+                    {
+                        def Xform "camera_color_optical_frame"
+                        {
+                            quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
+                            double3 xformOp:translate = (0, 0, 0)
+                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
+                        }
+                    }
+
+                    over "Camera_OmniVision_OV9782_Left"
+                    {
+                        def Xform "camera_left_ir_optical_frame"
+                        {
+                            quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
+                            double3 xformOp:translate = (0, 0, 0)
+                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
+                        }
+                    }
+
+                    over "Camera_OmniVision_OV9782_Right"
+                    {
+                        def Xform "camera_right_ir_optical_frame"
+                        {
+                            quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
+                            double3 xformOp:translate = (0, 0, 0)
+                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
+                        }
+                    }
+
+                    over "Camera_Pseudo_Depth"
+                    {
+                        def Xform "camera_depth_optical_frame"
+                        {
+                            quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
+                            double3 xformOp:translate = (0, 0, 0)
+                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

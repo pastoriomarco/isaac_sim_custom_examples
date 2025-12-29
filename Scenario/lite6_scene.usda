@@ -4,6 +4,7 @@
     upAxis = "Z"
     subLayers = [
         @../Robots/Ufactory/lite6/lite6.usda@,
+        @../Robots/Ufactory/lite6/graphs/ros_joint_states.usda@,
         @./physics_scene.usda@
     ]
 )
@@ -16,19 +17,61 @@ over "UF_ROBOT" (
 {
 }
 
-def "Graph" (
+over "Graph" (
     variants = {
-        string ROS = "None"
+        string Gripper = "lite_gripper"
+        string ROS = "JointStates"
     }
-    prepend variantSets = ["ROS"]
+    prepend variantSets = ["ROS", "Gripper"]
 )
 {
     variantSet "ROS" = {
         "None" {
+            over "ROS_JointStates" (
+                active = false
+            )
+            {
+            }
         }
-        "JointStates" (
-            prepend payload = @../Robots/Ufactory/lite6/graphs/ros_joint_states.usda@</Graph>
-        ) {
+        "JointStates" {
+            over "ROS_JointStates" (
+                active = true
+            )
+            {
+            }
+        }
+    }
+
+    variantSet "Gripper" = {
+        "None" {
+            over "ROS_JointStates"
+            {
+                over "SubscriberJointStateGripper" (
+                    active = false
+                )
+                {
+                }
+                over "ArticulationControllerGripper" (
+                    active = false
+                )
+                {
+                }
+            }
+        }
+        "lite_gripper" {
+            over "ROS_JointStates"
+            {
+                over "SubscriberJointStateGripper" (
+                    active = true
+                )
+                {
+                }
+                over "ArticulationControllerGripper" (
+                    active = true
+                )
+                {
+                }
+            }
         }
     }
 }

@@ -191,7 +191,7 @@ def "Graph"
             custom double[] inputs:positionCommand
             prepend double[] inputs:positionCommand.connect = </Graph/ROS_JointStates/SubscriberJointStateGripper.outputs:positionCommand>
             custom string inputs:robotPath
-            custom rel inputs:targetPrim = </UF_ROBOT/lite_gripper_base_link/right_finger_joint> (
+            custom rel inputs:targetPrim = </UF_ROBOT/root_joint> (
                 customData = {
                     dictionary omni = {
                         dictionary graph = {
