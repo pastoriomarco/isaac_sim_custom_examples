@@ -12,9 +12,8 @@ def Xform "UF_ROBOT" (
     kind = "assembly"
     variants = {
         string Physics = "PhysX"
-        string Sensor = "None"
     }
-    prepend variantSets = ["Physics", "Sensor"]
+    prepend variantSets = ["Physics"]
     prepend references = @./configuration/uf_lite_gripper_base.usda@</UF_ROBOT>
 )
 {
@@ -23,15 +22,6 @@ def Xform "UF_ROBOT" (
         }
         "PhysX" (
             prepend payload = @./configuration/uf_lite_gripper_physics.usda@</UF_ROBOT>
-        ) {
-        }
-    }
-
-    variantSet "Sensor" = {
-        "None" {
-        }
-        "Sensors" (
-            prepend payload = @./configuration/uf_lite_gripper_sensor.usda@</UF_ROBOT>
         ) {
         }
     }

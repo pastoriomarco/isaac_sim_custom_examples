@@ -31,8 +31,12 @@ def Xform "UF_ROBOT" (
     variantSet "Sensor" = {
         "None" {
         }
-        "Sensors" (
+        "MountedCamera" (
             prepend payload = @./configuration/lite6_sensor.usda@</UF_ROBOT>
+        ) {
+        }
+        "ExternalCamera" (
+            prepend payload = @./configuration/lite6_external_camera.usda@</UF_ROBOT>
         ) {
         }
     }

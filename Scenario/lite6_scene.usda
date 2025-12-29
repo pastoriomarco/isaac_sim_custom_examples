@@ -5,36 +5,66 @@
     subLayers = [
         @../Robots/Ufactory/lite6/lite6.usda@,
         @../Robots/Ufactory/lite6/graphs/ros_joint_states.usda@,
+        @../Robots/Ufactory/lite6/graphs/ros_camera.usda@,
+        @../Robots/Ufactory/lite6/graphs/ros_tf.usda@,
         @./physics_scene.usda@
     ]
 )
 
-over "UF_ROBOT" (
-    variants = {
-        string Gripper = "lite_gripper"
-    }
-)
-{
-}
-
 over "Graph" (
     variants = {
-        string Gripper = "lite_gripper"
-        string ROS = "JointStates"
+        string Gripper = "None"
+        string JointStates = "On"
+        string Camera = "Off"
+        string TF = "Off"
     }
-    prepend variantSets = ["ROS", "Gripper"]
+    prepend variantSets = ["JointStates", "Camera", "TF", "Gripper"]
 )
 {
-    variantSet "ROS" = {
-        "None" {
+    variantSet "JointStates" = {
+        "Off" {
             over "ROS_JointStates" (
                 active = false
             )
             {
             }
         }
-        "JointStates" {
+        "On" {
             over "ROS_JointStates" (
+                active = true
+            )
+            {
+            }
+        }
+    }
+
+    variantSet "Camera" = {
+        "Off" {
+            over "ROS_Camera" (
+                active = false
+            )
+            {
+            }
+        }
+        "On" {
+            over "ROS_Camera" (
+                active = true
+            )
+            {
+            }
+        }
+    }
+
+    variantSet "TF" = {
+        "Off" {
+            over "ROS_TF" (
+                active = false
+            )
+            {
+            }
+        }
+        "On" {
+            over "ROS_TF" (
                 active = true
             )
             {
