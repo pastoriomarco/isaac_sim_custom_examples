@@ -1,0 +1,316 @@
+#usda 1.0
+(
+    defaultPrim = "UF_ROBOT"
+    metersPerUnit = 1
+    upAxis = "Z"
+)
+
+over Xform "UF_ROBOT"
+{
+    over Xform "world" (
+        apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        float3 physics:diagonalInertia = (0.00001, 0.00001, 0.00001)
+        float physics:mass = 0
+        rel physics:simulationOwner
+        def PhysicsFixedJoint "world_joint"
+        {
+            rel physics:body0 = </UF_ROBOT/world>
+            rel physics:body1 = </UF_ROBOT/link_base>
+            float physics:breakForce = 3.4028235e38
+            float physics:breakTorque = 3.4028235e38
+            point3f physics:localPos0 = (0, 0, 0)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (1, 0, 0, 0)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+        }
+    }
+    def PhysicsFixedJoint "root_joint" (
+        apiSchemas = ["PhysicsArticulationRootAPI", "PhysxArticulationAPI"]
+    )
+    {
+        rel physics:body1 = </UF_ROBOT/world>
+        bool physxArticulation:enabledSelfCollisions = 0
+        int physxArticulation:solverPositionIterationCount = 32
+        int physxArticulation:solverVelocityIterationCount = 1
+        quatd xformOp:orient = (1, 0, 0, 0)
+        double3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (0, 0, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
+    over Xform "link_base" (
+        apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        point3f physics:centerOfMass = (-0.008295446, 0.000032635744, 0.063119456)
+        float physics:mass = 1.6539351
+        rel physics:simulationOwner
+        over Mesh "collisions" (
+            apiSchemas = ["PhysicsCollisionAPI", "PhysicsMeshCollisionAPI"]
+        )
+        {
+            uniform token physics:approximation = "convexHull"
+            rel physics:simulationOwner
+        }
+        def PhysicsRevoluteJoint "joint1" (
+            apiSchemas = ["PhysxJointAPI", "PhysicsJointStateAPI:angular", "PhysicsDriveAPI:angular"]
+        )
+        {
+            float drive:angular:physics:damping = 52.7081
+            float drive:angular:physics:maxForce = 50
+            float drive:angular:physics:stiffness = 1051.6648
+            float drive:angular:physics:targetPosition = 0
+            uniform token drive:angular:physics:type = "force"
+            uniform token physics:axis = "Z"
+            rel physics:body0 = </UF_ROBOT/link_base>
+            rel physics:body1 = </UF_ROBOT/link1>
+            float physics:breakForce = 3.4028235e38
+            float physics:breakTorque = 3.4028235e38
+            point3f physics:localPos0 = (0, 0, 0.2435)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (1, 0, 0, 0)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+            float physics:lowerLimit = -360
+            float physics:upperLimit = 360
+            float physxJoint:jointFriction = 1
+            float physxJoint:maxJointVelocity = 179.90875
+            float state:angular:physics:position = 0
+            float state:angular:physics:velocity = 0
+        }
+    }
+    over Xform "link1" (
+        apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        point3f physics:centerOfMass = (-0.00036, 0.04195, -0.0025)
+        float physics:mass = 1.411
+        rel physics:simulationOwner
+        over Mesh "collisions" (
+            apiSchemas = ["PhysicsCollisionAPI", "PhysicsMeshCollisionAPI"]
+        )
+        {
+            uniform token physics:approximation = "convexHull"
+            rel physics:simulationOwner
+        }
+        def PhysicsRevoluteJoint "joint2" (
+            apiSchemas = ["PhysxJointAPI", "PhysicsJointStateAPI:angular", "PhysicsDriveAPI:angular"]
+        )
+        {
+            float drive:angular:physics:damping = 52.7081
+            float drive:angular:physics:maxForce = 50
+            float drive:angular:physics:stiffness = 1051.6648
+            float drive:angular:physics:targetPosition = 0
+            uniform token drive:angular:physics:type = "force"
+            uniform token physics:axis = "Z"
+            rel physics:body0 = </UF_ROBOT/link1>
+            rel physics:body1 = </UF_ROBOT/link2>
+            float physics:breakForce = 3.4028235e38
+            float physics:breakTorque = 3.4028235e38
+            point3f physics:localPos0 = (0, 0, 0)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (-0.50000364, 0.49999818, 0.5000018, 0.4999964)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+            float physics:lowerLimit = -149.99977
+            float physics:upperLimit = 149.99977
+            float physxJoint:jointFriction = 1
+            float physxJoint:maxJointVelocity = 179.90875
+            float state:angular:physics:position = 0
+            float state:angular:physics:velocity = 0
+        }
+    }
+    over Xform "link2" (
+        apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        point3f physics:centerOfMass = (0.179, 0, 0.0584)
+        float physics:mass = 1.34
+        rel physics:simulationOwner
+        over Mesh "collisions" (
+            apiSchemas = ["PhysicsCollisionAPI", "PhysicsMeshCollisionAPI"]
+        )
+        {
+            uniform token physics:approximation = "convexHull"
+            rel physics:simulationOwner
+        }
+        def PhysicsRevoluteJoint "joint3" (
+            apiSchemas = ["PhysxJointAPI", "PhysicsJointStateAPI:angular", "PhysicsDriveAPI:angular"]
+        )
+        {
+            float drive:angular:physics:damping = 52.7081
+            float drive:angular:physics:maxForce = 32
+            float drive:angular:physics:stiffness = 1051.6648
+            float drive:angular:physics:targetPosition = 0
+            uniform token drive:angular:physics:type = "force"
+            uniform token physics:axis = "Z"
+            rel physics:body0 = </UF_ROBOT/link2>
+            rel physics:body1 = </UF_ROBOT/link3>
+            float physics:breakForce = 3.4028235e38
+            float physics:breakTorque = 3.4028235e38
+            point3f physics:localPos0 = (0.2002, 0, 0)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (-0.000002559715, -0.7071055, -0.7071081, -0.0000025597242)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+            float physics:lowerLimit = -3.5000272
+            float physics:upperLimit = 300
+            float physxJoint:jointFriction = 1
+            float physxJoint:maxJointVelocity = 179.90875
+            float state:angular:physics:position = 0
+            float state:angular:physics:velocity = 0
+        }
+    }
+    over Xform "link3" (
+        apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        point3f physics:centerOfMass = (0.072, -0.0357, -0.001)
+        float physics:mass = 0.953
+        rel physics:simulationOwner
+        over Mesh "collisions" (
+            apiSchemas = ["PhysicsCollisionAPI", "PhysicsMeshCollisionAPI"]
+        )
+        {
+            uniform token physics:approximation = "convexHull"
+            rel physics:simulationOwner
+        }
+        def PhysicsRevoluteJoint "joint4" (
+            apiSchemas = ["PhysxJointAPI", "PhysicsJointStateAPI:angular", "PhysicsDriveAPI:angular"]
+        )
+        {
+            float drive:angular:physics:damping = 52.7081
+            float drive:angular:physics:maxForce = 32
+            float drive:angular:physics:stiffness = 1051.6648
+            float drive:angular:physics:targetPosition = 0
+            uniform token drive:angular:physics:type = "force"
+            uniform token physics:axis = "Z"
+            rel physics:body0 = </UF_ROBOT/link3>
+            rel physics:body1 = </UF_ROBOT/link4>
+            float physics:breakForce = 3.4028235e38
+            float physics:breakTorque = 3.4028235e38
+            point3f physics:localPos0 = (0.087, -0.22761, 0)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (0.7071055, 0.7071081, 0, 0)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+            float physics:lowerLimit = -360
+            float physics:upperLimit = 360
+            float physxJoint:jointFriction = 1
+            float physxJoint:maxJointVelocity = 179.90875
+            float state:angular:physics:position = 0
+            float state:angular:physics:velocity = 0
+        }
+    }
+    over Xform "link4" (
+        apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        point3f physics:centerOfMass = (-0.002, -0.0285, -0.0813)
+        float physics:mass = 1.284
+        rel physics:simulationOwner
+        over Mesh "collisions" (
+            apiSchemas = ["PhysicsCollisionAPI", "PhysicsMeshCollisionAPI"]
+        )
+        {
+            uniform token physics:approximation = "convexHull"
+            rel physics:simulationOwner
+        }
+        def PhysicsRevoluteJoint "joint5" (
+            apiSchemas = ["PhysxJointAPI", "PhysicsJointStateAPI:angular", "PhysicsDriveAPI:angular"]
+        )
+        {
+            float drive:angular:physics:damping = 52.7081
+            float drive:angular:physics:maxForce = 32
+            float drive:angular:physics:stiffness = 1051.6648
+            float drive:angular:physics:targetPosition = 0
+            uniform token drive:angular:physics:type = "force"
+            uniform token physics:axis = "Z"
+            rel physics:body0 = </UF_ROBOT/link4>
+            rel physics:body1 = </UF_ROBOT/link5>
+            float physics:breakForce = 3.4028235e38
+            float physics:breakTorque = 3.4028235e38
+            point3f physics:localPos0 = (0, 0, 0)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (0.7071055, 0.7071081, 0, 0)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+            float physics:lowerLimit = -123.99952
+            float physics:upperLimit = 123.99952
+            float physxJoint:jointFriction = 1
+            float physxJoint:maxJointVelocity = 179.90875
+            float state:angular:physics:position = 0
+            float state:angular:physics:velocity = 0
+        }
+    }
+    over Xform "link5" (
+        apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        point3f physics:centerOfMass = (0, 0.01, 0.0019)
+        float physics:mass = 0.804
+        rel physics:simulationOwner
+        over Mesh "collisions" (
+            apiSchemas = ["PhysicsCollisionAPI", "PhysicsMeshCollisionAPI"]
+        )
+        {
+            uniform token physics:approximation = "convexHull"
+            rel physics:simulationOwner
+        }
+        def PhysicsRevoluteJoint "joint6" (
+            apiSchemas = ["PhysxJointAPI", "PhysicsJointStateAPI:angular", "PhysicsDriveAPI:angular"]
+        )
+        {
+            float drive:angular:physics:damping = 52.7081
+            float drive:angular:physics:maxForce = 20
+            float drive:angular:physics:stiffness = 1051.6648
+            float drive:angular:physics:targetPosition = 0
+            uniform token drive:angular:physics:type = "force"
+            uniform token physics:axis = "Z"
+            rel physics:body0 = </UF_ROBOT/link5>
+            rel physics:body1 = </UF_ROBOT/link6>
+            float physics:breakForce = 3.4028235e38
+            float physics:breakTorque = 3.4028235e38
+            point3f physics:localPos0 = (0, 0.0625, 0)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (0.7071055, -0.7071081, 0, 0)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+            float physics:lowerLimit = -360
+            float physics:upperLimit = 360
+            float physxJoint:jointFriction = 1
+            float physxJoint:maxJointVelocity = 179.90875
+            float state:angular:physics:position = 0
+            float state:angular:physics:velocity = 0
+        }
+    }
+    over Xform "link6" (
+        apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        point3f physics:centerOfMass = (0, -0.00194, -0.0102)
+        float physics:mass = 0.13
+        rel physics:simulationOwner
+        over Mesh "collisions" (
+            apiSchemas = ["PhysicsCollisionAPI", "PhysicsMeshCollisionAPI"]
+        )
+        {
+            uniform token physics:approximation = "convexHull"
+            rel physics:simulationOwner
+        }
+        def PhysicsFixedJoint "joint_eef"
+        {
+            rel physics:body0 = </UF_ROBOT/link6>
+            rel physics:body1 = </UF_ROBOT/link_eef>
+            float physics:breakForce = 3.4028235e38
+            float physics:breakTorque = 3.4028235e38
+            point3f physics:localPos0 = (0, 0, 0)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (1, 0, 0, 0)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+        }
+    }
+    over Xform "link_eef" (
+        apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        float3 physics:diagonalInertia = (0.00001, 0.00001, 0.00001)
+        float physics:mass = 0.000001
+        rel physics:simulationOwner
+    }
+}

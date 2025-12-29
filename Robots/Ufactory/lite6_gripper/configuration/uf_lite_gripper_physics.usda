@@ -1,0 +1,135 @@
+#usda 1.0
+(
+    metersPerUnit = 1
+    upAxis = "Z"
+)
+
+over "UF_ROBOT"
+{
+    over "link_eef"
+    {
+        def PhysicsFixedJoint "gripper_fix"
+        {
+            rel physics:body0 = </UF_ROBOT/link_eef>
+            rel physics:body1 = </UF_ROBOT/lite_gripper_base_link>
+            float physics:breakForce = 3.4028235e38
+            float physics:breakTorque = 3.4028235e38
+            point3f physics:localPos0 = (0, 0, 0)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (1, 0, 0, 0)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+        }
+    }
+    over Xform "lite_gripper_base_link" (
+        apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        point3f physics:centerOfMass = (0, 0, 0.03)
+        float physics:mass = 0.28
+        rel physics:simulationOwner
+        over Mesh "collisions" (
+            apiSchemas = ["PhysicsCollisionAPI", "PhysicsMeshCollisionAPI"]
+        )
+        {
+            uniform token physics:approximation = "convexHull"
+            rel physics:simulationOwner
+        }
+        def PhysicsFixedJoint "joint_tcp"
+        {
+            rel physics:body0 = </UF_ROBOT/lite_gripper_base_link>
+            rel physics:body1 = </UF_ROBOT/link_tcp>
+            float physics:breakForce = 3.4028235e38
+            float physics:breakTorque = 3.4028235e38
+            point3f physics:localPos0 = (0, 0, 0.0836)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (1, 0, 0, 0)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+        }
+        def PhysicsPrismaticJoint "left_finger_joint" (
+            apiSchemas = ["PhysxJointAPI", "PhysicsJointStateAPI:linear", "PhysxMimicJointAPI:rotY", "PhysicsDriveAPI:linear"]
+        )
+        {
+            float drive:linear:physics:damping = 0
+            float drive:linear:physics:stiffness = 0
+            uniform token physics:axis = "Y"
+            rel physics:body0 = </UF_ROBOT/lite_gripper_base_link>
+            rel physics:body1 = </UF_ROBOT/lite_gripper_left_finger>
+            float physics:breakForce = 3.4028235e38
+            float physics:breakTorque = 3.4028235e38
+            point3f physics:localPos0 = (0, 0, 0)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (1, 0, 0, 0)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 0.0081
+            float physxJoint:maxJointVelocity = 0.1
+            float physxMimicJoint:rotY:gearing = -1
+            float physxMimicJoint:rotY:offset = 0
+            rel physxMimicJoint:rotY:referenceJoint = </UF_ROBOT/lite_gripper_base_link/right_finger_joint>
+            float state:linear:physics:position = 0.000002342251
+            float state:linear:physics:velocity = -0.000028587616
+        }
+        def PhysicsPrismaticJoint "right_finger_joint" (
+            apiSchemas = ["PhysxJointAPI", "PhysicsJointStateAPI:linear", "PhysicsDriveAPI:linear"]
+        )
+        {
+            float drive:linear:physics:damping = 0
+            float drive:linear:physics:maxForce = 2
+            float drive:linear:physics:stiffness = 10000000
+            float drive:linear:physics:targetPosition = 0
+            uniform token drive:linear:physics:type = "force"
+            uniform token physics:axis = "Y"
+            rel physics:body0 = </UF_ROBOT/lite_gripper_base_link>
+            rel physics:body1 = </UF_ROBOT/lite_gripper_right_finger>
+            float physics:breakForce = 3.4028235e38
+            float physics:breakTorque = 3.4028235e38
+            point3f physics:localPos0 = (0, 0, 0)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (0, 1, 0, 0)
+            quatf physics:localRot1 = (0, 1, 0, 0)
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 0.0081
+            float physxJoint:maxJointVelocity = 0.1
+            float state:linear:physics:position = 0
+            float state:linear:physics:velocity = 0
+        }
+    }
+    over Xform "lite_gripper_left_finger" (
+        apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        point3f physics:centerOfMass = (0, 0.0078, 0.0543)
+        float physics:mass = 0.012105
+        rel physics:simulationOwner
+        over Mesh "collisions" (
+            apiSchemas = ["PhysicsCollisionAPI", "PhysicsMeshCollisionAPI", "PhysxConvexDecompositionCollisionAPI"]
+        )
+        {
+            uniform token physics:approximation = "convexDecomposition"
+            rel physics:simulationOwner
+        }
+    }
+    over Xform "lite_gripper_right_finger" (
+        apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        point3f physics:centerOfMass = (0, -0.0078, 0.0543)
+        float physics:mass = 0.012068
+        rel physics:simulationOwner
+        over Mesh "collisions" (
+            apiSchemas = ["PhysicsCollisionAPI", "PhysicsMeshCollisionAPI", "PhysxConvexDecompositionCollisionAPI"]
+        )
+        {
+            uniform token physics:approximation = "convexDecomposition"
+            rel physics:simulationOwner
+        }
+    }
+    over Xform "link_tcp" (
+        apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        float3 physics:diagonalInertia = (0.00001, 0.00001, 0.00001)
+        float physics:mass = 0.000001
+        rel physics:simulationOwner
+    }
+}

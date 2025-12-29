@@ -1,0 +1,141 @@
+#usda 1.0
+
+over "UF_ROBOT" (
+    prepend apiSchemas = ["IsaacRobotAPI"]
+)
+{
+    string isaac:description
+    string isaac:namespace
+    prepend rel isaac:physics:robotJoints = [
+        </UF_ROBOT/link_base/joint1>,
+        </UF_ROBOT/link1/joint2>,
+        </UF_ROBOT/link2/joint3>,
+        </UF_ROBOT/link3/joint4>,
+        </UF_ROBOT/link4/joint5>,
+        </UF_ROBOT/link5/joint6>,
+        </UF_ROBOT/link6/joint_eef>
+    ]
+    prepend rel isaac:physics:robotLinks = [
+        </UF_ROBOT/world>,
+        </UF_ROBOT/link_base>,
+        </UF_ROBOT/link1>,
+        </UF_ROBOT/link2>,
+        </UF_ROBOT/link3>,
+        </UF_ROBOT/link4>,
+        </UF_ROBOT/link5>,
+        </UF_ROBOT/link6>,
+        </UF_ROBOT/link_eef>
+    ]
+
+    over "world" (
+        prepend apiSchemas = ["IsaacLinkAPI"]
+    )
+    {
+        string isaac:nameOverride
+    }
+
+    over "link_base" (
+        prepend apiSchemas = ["IsaacLinkAPI"]
+    )
+    {
+        string isaac:nameOverride
+
+        over "joint1" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+            custom string isaac:nameOverride
+        }
+    }
+
+    over "link1" (
+        prepend apiSchemas = ["IsaacLinkAPI"]
+    )
+    {
+        string isaac:nameOverride
+
+        over "joint2" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+            custom string isaac:nameOverride
+        }
+    }
+
+    over "link2" (
+        prepend apiSchemas = ["IsaacLinkAPI"]
+    )
+    {
+        string isaac:nameOverride
+
+        over "joint3" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+            custom string isaac:nameOverride
+        }
+    }
+
+    over "link3" (
+        prepend apiSchemas = ["IsaacLinkAPI"]
+    )
+    {
+        string isaac:nameOverride
+
+        over "joint4" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+            custom string isaac:nameOverride
+        }
+    }
+
+    over "link4" (
+        prepend apiSchemas = ["IsaacLinkAPI"]
+    )
+    {
+        string isaac:nameOverride
+
+        over "joint5" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+            custom string isaac:nameOverride
+        }
+    }
+
+    over "link5" (
+        prepend apiSchemas = ["IsaacLinkAPI"]
+    )
+    {
+        string isaac:nameOverride
+
+        over "joint6" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+            custom string isaac:nameOverride
+        }
+    }
+
+    over "link6" (
+        prepend apiSchemas = ["IsaacLinkAPI"]
+    )
+    {
+        string isaac:nameOverride
+
+        over "joint_eef" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+            custom string isaac:nameOverride
+        }
+    }
+
+    over "link_eef" (
+        prepend apiSchemas = ["IsaacLinkAPI"]
+    )
+    {
+        string isaac:nameOverride
+    }
+}

@@ -1,0 +1,80 @@
+#usda 1.0
+
+over "UF_ROBOT" (
+    prepend apiSchemas = ["IsaacRobotAPI"]
+)
+{
+    string isaac:description
+    string isaac:namespace
+    prepend rel isaac:physics:robotJoints = [
+        </UF_ROBOT/link_eef/gripper_fix>,
+        </UF_ROBOT/lite_gripper_base_link/joint_tcp>,
+        </UF_ROBOT/lite_gripper_base_link/left_finger_joint>,
+        </UF_ROBOT/lite_gripper_base_link/right_finger_joint>
+    ]
+    prepend rel isaac:physics:robotLinks = [
+        </UF_ROBOT/lite_gripper_base_link>,
+        </UF_ROBOT/lite_gripper_left_finger>,
+        </UF_ROBOT/lite_gripper_right_finger>,
+        </UF_ROBOT/link_tcp>
+    ]
+
+    over "link_eef"
+    {
+        over "gripper_fix" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+            custom string isaac:nameOverride
+        }
+    }
+
+    over "lite_gripper_base_link" (
+        prepend apiSchemas = ["IsaacLinkAPI"]
+    )
+    {
+        string isaac:nameOverride
+
+        over "joint_tcp" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+            custom string isaac:nameOverride
+        }
+
+        over "left_finger_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+            custom string isaac:nameOverride
+        }
+
+        over "right_finger_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+            custom string isaac:nameOverride
+        }
+    }
+
+    over "lite_gripper_left_finger" (
+        prepend apiSchemas = ["IsaacLinkAPI"]
+    )
+    {
+        string isaac:nameOverride
+    }
+
+    over "lite_gripper_right_finger" (
+        prepend apiSchemas = ["IsaacLinkAPI"]
+    )
+    {
+        string isaac:nameOverride
+    }
+
+    over "link_tcp" (
+        prepend apiSchemas = ["IsaacLinkAPI"]
+    )
+    {
+        string isaac:nameOverride
+    }
+}

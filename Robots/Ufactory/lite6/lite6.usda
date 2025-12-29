@@ -1,0 +1,60 @@
+#usda 1.0
+(
+    defaultPrim = "UF_ROBOT"
+    metersPerUnit = 1
+    upAxis = "Z"
+    subLayers = [
+        @./configuration/lite6_robot_schema.usda@
+    ]
+)
+
+def Xform "UF_ROBOT" (
+    kind = "assembly"
+    variants = {
+        string Physics = "PhysX"
+        string Sensor = "None"
+        string Gripper = "None"
+    }
+    prepend variantSets = ["Physics", "Sensor", "Gripper"]
+    prepend references = @./configuration/lite6_base.usda@</UF_ROBOT>
+)
+{
+    variantSet "Physics" = {
+        "None" {
+        }
+        "PhysX" (
+            prepend payload = @./configuration/lite6_physics.usda@</UF_ROBOT>
+        ) {
+        }
+    }
+
+    variantSet "Sensor" = {
+        "None" {
+        }
+        "Sensors" (
+            prepend payload = @./configuration/lite6_sensor.usda@</UF_ROBOT>
+        ) {
+        }
+    }
+
+    variantSet "Gripper" = {
+        "None" {
+        }
+        "lite_gripper" (
+            customData = {
+                string[] variantPrimPaths = [
+                    "lite_gripper_base_link",
+                    "lite_gripper_left_finger",
+                    "lite_gripper_right_finger",
+                    "link_tcp",
+                    "gripper_fix",
+                    "left_finger_joint",
+                    "right_finger_joint",
+                    "joint_tcp"
+                ]
+            }
+            prepend payload = @../lite6_gripper/uf_lite_gripper.usda@</UF_ROBOT>
+        ) {
+        }
+    }
+}

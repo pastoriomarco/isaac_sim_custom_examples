@@ -1,0 +1,34 @@
+#usda 1.0
+(
+    metersPerUnit = 1
+    upAxis = "Z"
+    subLayers = [
+        @../Robots/Ufactory/lite6/lite6.usda@,
+        @./physics_scene.usda@
+    ]
+)
+
+over "UF_ROBOT" (
+    variants = {
+        string Gripper = "lite_gripper"
+    }
+)
+{
+}
+
+def "Graph" (
+    variants = {
+        string ROS = "None"
+    }
+    prepend variantSets = ["ROS"]
+)
+{
+    variantSet "ROS" = {
+        "None" {
+        }
+        "JointStates" (
+            prepend payload = @../Robots/Ufactory/lite6/graphs/ros_joint_states.usda@</Graph>
+        ) {
+        }
+    }
+}
