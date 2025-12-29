@@ -35,10 +35,6 @@ def Xform "UF_ROBOT" (
             prepend payload = @./configuration/lite6_sensor.usda@</UF_ROBOT>
         ) {
         }
-        "ExternalCamera" (
-            prepend payload = @./configuration/lite6_external_camera.usda@</UF_ROBOT>
-        ) {
-        }
     }
 
     variantSet "Gripper" = {

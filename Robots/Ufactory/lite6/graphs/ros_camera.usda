@@ -58,7 +58,7 @@ def "Graph"
 
         def OmniGraphNode "RenderProduct"
         {
-            custom rel inputs:cameraPrim = </UF_ROBOT/link6/sensors/camera_link/rsd455/Camera_OmniVision_OV9782_Color> (
+            custom rel inputs:cameraPrim (
                 customData = {
                     dictionary omni = {
                         dictionary graph = {

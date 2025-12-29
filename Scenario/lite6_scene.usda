@@ -1,9 +1,9 @@
 #usda 1.0
 (
+    defaultPrim = "World"
     metersPerUnit = 1
     upAxis = "Z"
     subLayers = [
-        @../Robots/Ufactory/lite6/lite6.usda@,
         @../Robots/Ufactory/lite6/graphs/ros_joint_states.usda@,
         @../Robots/Ufactory/lite6/graphs/ros_camera.usda@,
         @../Robots/Ufactory/lite6/graphs/ros_tf.usda@,
@@ -11,14 +11,102 @@
     ]
 )
 
+def Xform "World" (
+    kind = "assembly"
+    variants = {
+        string Camera = "None"
+    }
+    prepend variantSets = ["Camera"]
+)
+{
+    def Xform "lite6" (
+        kind = "assembly"
+        variants = {
+            string Physics = "PhysX"
+            string Gripper = "None"
+        }
+        prepend payload = @../Robots/Ufactory/lite6/lite6.usda@
+    )
+    {
+    }
+
+    variantSet "Camera" = {
+        "None" {
+        }
+        "ExternalCamera" {
+            def Xform "rsd455" (
+                prepend payload = @../Sensors/RealSense/rsd455.usda@
+            )
+            {
+                quatf xformOp:orient = (0.5609855, -0.43045935, -0.43045935, -0.5609855)
+                float3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (1.9984014443252818e-15, -0.42, 0.32)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                over "RSD455" (
+                    delete apiSchemas = ["PhysicsRigidBodyAPI", "PhysxRigidBodyAPI", "PhysicsMassAPI"]
+                )
+                {
+                    over "Imu_Sensor" (
+                        active = false
+                    )
+                    {
+                    }
+
+                    over "Camera_OmniVision_OV9782_Color"
+                    {
+                        def Xform "camera_color_optical_frame"
+                        {
+                            quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
+                            double3 xformOp:translate = (0, 0, 0)
+                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
+                        }
+                    }
+
+                    over "Camera_OmniVision_OV9782_Left"
+                    {
+                        def Xform "camera_left_ir_optical_frame"
+                        {
+                            quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
+                            double3 xformOp:translate = (0, 0, 0)
+                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
+                        }
+                    }
+
+                    over "Camera_OmniVision_OV9782_Right"
+                    {
+                        def Xform "camera_right_ir_optical_frame"
+                        {
+                            quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
+                            double3 xformOp:translate = (0, 0, 0)
+                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
+                        }
+                    }
+
+                    over "Camera_Pseudo_Depth"
+                    {
+                        def Xform "camera_depth_optical_frame"
+                        {
+                            quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
+                            double3 xformOp:translate = (0, 0, 0)
+                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 over "Graph" (
     variants = {
         string Gripper = "None"
         string JointStates = "On"
         string Camera = "Off"
         string TF = "Off"
+        string CameraSource = "MountedCamera"
     }
-    prepend variantSets = ["JointStates", "Camera", "TF", "Gripper"]
+    prepend variantSets = ["JointStates", "Camera", "TF", "Gripper", "CameraSource"]
 )
 {
     variantSet "JointStates" = {
@@ -68,6 +156,43 @@ over "Graph" (
                 active = true
             )
             {
+            }
+        }
+    }
+
+    variantSet "CameraSource" = {
+        "MountedCamera" {
+            over "ROS_Camera"
+            {
+                over "RenderProduct"
+                {
+                    custom rel inputs:cameraPrim = </World/lite6/link6/sensors/camera_link/rsd455/Camera_OmniVision_OV9782_Color>
+                }
+            }
+
+            over "ROS_TF"
+            {
+                over "PublisherTF"
+                {
+                    custom rel inputs:targetPrims = </World/lite6/link6/sensors/camera_link/rsd455/Camera_OmniVision_OV9782_Color/camera_color_optical_frame>
+                }
+            }
+        }
+        "ExternalCamera" {
+            over "ROS_Camera"
+            {
+                over "RenderProduct"
+                {
+                    custom rel inputs:cameraPrim = </World/rsd455/RSD455/Camera_OmniVision_OV9782_Color>
+                }
+            }
+
+            over "ROS_TF"
+            {
+                over "PublisherTF"
+                {
+                    custom rel inputs:targetPrims = </World/rsd455/RSD455/Camera_OmniVision_OV9782_Color/camera_color_optical_frame>
+                }
             }
         }
     }

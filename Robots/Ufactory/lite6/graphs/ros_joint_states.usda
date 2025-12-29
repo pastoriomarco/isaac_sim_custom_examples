@@ -60,7 +60,7 @@ def "Graph"
             custom string inputs:nodeNamespace = ""
             custom string inputs:qosProfile
             custom uint64 inputs:queueSize
-            custom rel inputs:targetPrim = </UF_ROBOT/root_joint> (
+            custom rel inputs:targetPrim = </World/lite6/root_joint> (
                 customData = {
                     dictionary omni = {
                         dictionary graph = {
@@ -125,7 +125,7 @@ def "Graph"
             custom double[] inputs:positionCommand
             prepend double[] inputs:positionCommand.connect = </Graph/ROS_JointStates/SubscriberJointState.outputs:positionCommand>
             custom string inputs:robotPath
-            custom rel inputs:targetPrim = </UF_ROBOT/root_joint> (
+            custom rel inputs:targetPrim = </World/lite6/root_joint> (
                 customData = {
                     dictionary omni = {
                         dictionary graph = {
@@ -191,7 +191,7 @@ def "Graph"
             custom double[] inputs:positionCommand
             prepend double[] inputs:positionCommand.connect = </Graph/ROS_JointStates/SubscriberJointStateGripper.outputs:positionCommand>
             custom string inputs:robotPath
-            custom rel inputs:targetPrim = </UF_ROBOT/root_joint> (
+            custom rel inputs:targetPrim = </World/lite6/lite_gripper_base_link/right_finger_joint> (
                 customData = {
                     dictionary omni = {
                         dictionary graph = {

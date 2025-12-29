@@ -70,7 +70,7 @@ def "Graph"
             custom string inputs:qosProfile
             custom uint64 inputs:queueSize
             custom bool inputs:staticPublisher
-            custom rel inputs:targetPrims = </UF_ROBOT/link6/sensors/camera_link/rsd455/Camera_OmniVision_OV9782_Color/camera_color_optical_frame> (
+            custom rel inputs:targetPrims (
                 customData = {
                     dictionary omni = {
                         dictionary graph = {
