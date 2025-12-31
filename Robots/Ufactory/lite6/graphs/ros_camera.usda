@@ -33,7 +33,7 @@ def "Graph"
             custom uint64 inputs:context
             prepend uint64 inputs:context.connect = </Graph/ROS_Camera/Context.outputs:context>
             custom bool inputs:enabled
-            custom uint inputs:execIn (
+            custom uint inputs:execIn ( 
                 customData = {
                     bool isExecution = 1
                 }

@@ -4,8 +4,6 @@
     metersPerUnit = 1
     upAxis = "Z"
     subLayers = [
-        @../Robots/Ufactory/lite6/graphs/ros_joint_states.usda@,
-        @../Robots/Ufactory/lite6/graphs/ros_tf.usda@,
         @./physics_scene.usda@
     ]
 )
@@ -29,9 +27,7 @@ def Xform "World" (
     {
     }
 
-    def Xform "rsd455" (
-        prepend payload = @../Sensors/RealSense/rsd455.usda@
-    )
+    def Xform "rsd455"
     {
         token ui:displayName = "realsense_camera_1"
         quatf xformOp:orient = (0.5609855, -0.43045935, -0.43045935, -0.5609855)
@@ -39,103 +35,71 @@ def Xform "World" (
         double3 xformOp:translate = (1.9984014443252818e-15, -0.42, 0.32)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
-	        over "RSD455" (
-	            delete apiSchemas = ["PhysicsRigidBodyAPI", "PhysxRigidBodyAPI", "PhysicsMassAPI"]
-	        )
-	        {
-	            quatd xformOp:orient = (1, 0, 0, 0)
-	            token ui:displayName = "realsense_camera_1"
-
-            over "Imu_Sensor" (
-                active = false
+        def Xform "realsense_camera_1"
+        {
+            def Scope "Looks" (
+                prepend references = @../Sensors/RealSense/rsd455.usda@</Root/RSD455/Looks>
             )
             {
             }
 
-	            over "Camera_OmniVision_OV9782_Color" (
-	                active = false
-	            )
-	            {
-	            }
+            def Xform "Visual" (
+                prepend references = @../Sensors/RealSense/rsd455.usda@</Root/RSD455/Visual>
+            )
+            {
+            }
 
-	            over "Camera_OmniVision_OV9782_Left" (
-	                active = false
-	            )
-	            {
-	            }
+            def Camera "realsense_camera_1_color" (
+                prepend references = @../Sensors/RealSense/rsd455.usda@</Root/RSD455/Camera_OmniVision_OV9782_Color>
+            )
+            {
+                def Xform "camera_1_color_optical_frame"
+                {
+                    quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
+                    double3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
+                }
+            }
 
-	            over "Camera_OmniVision_OV9782_Right" (
-	                active = false
-	            )
-	            {
-	            }
+            def Camera "realsense_camera_1_left_ir" (
+                prepend references = @../Sensors/RealSense/rsd455.usda@</Root/RSD455/Camera_OmniVision_OV9782_Left>
+            )
+            {
+                def Xform "camera_left_ir_optical_frame"
+                {
+                    quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
+                    double3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
+                }
+            }
 
-	            over "Camera_Pseudo_Depth" (
-	                active = false
-	            )
-	            {
-	            }
-	        }
+            def Camera "realsense_camera_1_right_ir" (
+                prepend references = @../Sensors/RealSense/rsd455.usda@</Root/RSD455/Camera_OmniVision_OV9782_Right>
+            )
+            {
+                def Xform "camera_right_ir_optical_frame"
+                {
+                    quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
+                    double3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
+                }
+            }
 
-	        def Camera "realsense_camera_1_color" (
-	            prepend references = @../Sensors/RealSense/rsd455.usda@</Root/RSD455/Camera_OmniVision_OV9782_Color>
-	        )
-	        {
-	            def Xform "camera_color_optical_frame"
-	            {
-	                quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
-	                double3 xformOp:translate = (0, 0, 0)
-	                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
-	            }
+            def Camera "realsense_camera_1_pseudo_depth" (
+                prepend references = @../Sensors/RealSense/rsd455.usda@</Root/RSD455/Camera_Pseudo_Depth>
+            )
+            {
+                def Xform "camera_depth_optical_frame"
+                {
+                    quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
+                    double3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
+                }
+            }
+        }
+    }
 
-	            def Xform "camera_1_color_optical_frame"
-	            {
-	                quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
-	                double3 xformOp:translate = (0, 0, 0)
-	                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
-	            }
-	        }
-
-	        def Camera "realsense_camera_1_left_ir" (
-	            prepend references = @../Sensors/RealSense/rsd455.usda@</Root/RSD455/Camera_OmniVision_OV9782_Left>
-	        )
-	        {
-	            def Xform "camera_left_ir_optical_frame"
-	            {
-	                quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
-	                double3 xformOp:translate = (0, 0, 0)
-	                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
-	            }
-	        }
-
-	        def Camera "realsense_camera_1_right_ir" (
-	            prepend references = @../Sensors/RealSense/rsd455.usda@</Root/RSD455/Camera_OmniVision_OV9782_Right>
-	        )
-	        {
-	            def Xform "camera_right_ir_optical_frame"
-	            {
-	                quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
-	                double3 xformOp:translate = (0, 0, 0)
-	                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
-	            }
-	        }
-
-	        def Camera "realsense_camera_1_pseudo_depth" (
-	            prepend references = @../Sensors/RealSense/rsd455.usda@</Root/RSD455/Camera_Pseudo_Depth>
-	        )
-	        {
-	            def Xform "camera_depth_optical_frame"
-	            {
-	                quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
-	                double3 xformOp:translate = (0, 0, 0)
-	                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
-	            }
-	        }
-	    }
-
-    def Xform "rsd455_2" (
-        prepend payload = @../Sensors/RealSense/rsd455.usda@
-    )
+    def Xform "rsd455_2"
     {
         token ui:displayName = "realsense_camera_2"
         quatf xformOp:orient = (0.5609855, -0.43045935, -0.43045935, -0.5609855)
@@ -143,99 +107,69 @@ def Xform "World" (
         double3 xformOp:translate = (0, -0.60, 0.32)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
-	        over "RSD455" (
-	            delete apiSchemas = ["PhysicsRigidBodyAPI", "PhysxRigidBodyAPI", "PhysicsMassAPI"]
-	        )
-	        {
-	            quatd xformOp:orient = (1, 0, 0, 0)
-	            token ui:displayName = "realsense_camera_2"
-
-            over "Imu_Sensor" (
-                active = false
+        def Xform "realsense_camera_2"
+        {
+            def Scope "Looks" (
+                prepend references = @../Sensors/RealSense/rsd455.usda@</Root/RSD455/Looks>
             )
             {
             }
 
-	            over "Camera_OmniVision_OV9782_Color" (
-	                active = false
-	            )
-	            {
-	            }
+            def Xform "Visual" (
+                prepend references = @../Sensors/RealSense/rsd455.usda@</Root/RSD455/Visual>
+            )
+            {
+            }
 
-	            over "Camera_OmniVision_OV9782_Left" (
-	                active = false
-	            )
-	            {
-	            }
+            def Camera "realsense_camera_2_color" (
+                prepend references = @../Sensors/RealSense/rsd455.usda@</Root/RSD455/Camera_OmniVision_OV9782_Color>
+            )
+            {
+                def Xform "camera_2_color_optical_frame"
+                {
+                    quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
+                    double3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
+                }
+            }
 
-	            over "Camera_OmniVision_OV9782_Right" (
-	                active = false
-	            )
-	            {
-	            }
+            def Camera "realsense_camera_2_left_ir" (
+                prepend references = @../Sensors/RealSense/rsd455.usda@</Root/RSD455/Camera_OmniVision_OV9782_Left>
+            )
+            {
+                def Xform "camera_left_ir_optical_frame"
+                {
+                    quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
+                    double3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
+                }
+            }
 
-	            over "Camera_Pseudo_Depth" (
-	                active = false
-	            )
-	            {
-	            }
-	        }
+            def Camera "realsense_camera_2_right_ir" (
+                prepend references = @../Sensors/RealSense/rsd455.usda@</Root/RSD455/Camera_OmniVision_OV9782_Right>
+            )
+            {
+                def Xform "camera_right_ir_optical_frame"
+                {
+                    quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
+                    double3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
+                }
+            }
 
-	        def Camera "realsense_camera_2_color" (
-	            prepend references = @../Sensors/RealSense/rsd455.usda@</Root/RSD455/Camera_OmniVision_OV9782_Color>
-	        )
-	        {
-	            def Xform "camera_color_optical_frame"
-	            {
-	                quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
-	                double3 xformOp:translate = (0, 0, 0)
-	                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
-	            }
-
-	            def Xform "camera_2_color_optical_frame"
-	            {
-	                quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
-	                double3 xformOp:translate = (0, 0, 0)
-	                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
-	            }
-	        }
-
-	        def Camera "realsense_camera_2_left_ir" (
-	            prepend references = @../Sensors/RealSense/rsd455.usda@</Root/RSD455/Camera_OmniVision_OV9782_Left>
-	        )
-	        {
-	            def Xform "camera_left_ir_optical_frame"
-	            {
-	                quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
-	                double3 xformOp:translate = (0, 0, 0)
-	                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
-	            }
-	        }
-
-	        def Camera "realsense_camera_2_right_ir" (
-	            prepend references = @../Sensors/RealSense/rsd455.usda@</Root/RSD455/Camera_OmniVision_OV9782_Right>
-	        )
-	        {
-	            def Xform "camera_right_ir_optical_frame"
-	            {
-	                quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
-	                double3 xformOp:translate = (0, 0, 0)
-	                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
-	            }
-	        }
-
-	        def Camera "realsense_camera_2_pseudo_depth" (
-	            prepend references = @../Sensors/RealSense/rsd455.usda@</Root/RSD455/Camera_Pseudo_Depth>
-	        )
-	        {
-	            def Xform "camera_depth_optical_frame"
-	            {
-	                quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
-	                double3 xformOp:translate = (0, 0, 0)
-	                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
-	            }
-	        }
-	    }
+            def Camera "realsense_camera_2_pseudo_depth" (
+                prepend references = @../Sensors/RealSense/rsd455.usda@</Root/RSD455/Camera_Pseudo_Depth>
+            )
+            {
+                def Xform "camera_depth_optical_frame"
+                {
+                    quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
+                    double3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
+                }
+            }
+        }
+    }
 
     variantSet "ExternalCameraAssets" = {
         "0" {
@@ -272,344 +206,6 @@ def Xform "World" (
                 active = true
             )
             {
-            }
-        }
-    }
-}
-
-over "Graph" (
-    variants = {
-        string Gripper = "None"
-        string JointStates = "On"
-        string TF = "Off"
-        string MountedCameras = "0"
-        string ExternalCameras = "0"
-        string CameraTopicConvention = "IsaacForManipulation"
-    }
-    prepend variantSets = ["JointStates", "TF", "Gripper", "MountedCameras", "ExternalCameras", "CameraTopicConvention"]
-)
-{
-    def OmniGraph "ROS_Camera_Mounted_1" (
-        prepend references = @../Robots/Ufactory/lite6/graphs/ros_camera.usda@</Graph/ROS_Camera>
-    )
-    {
-        over "RenderProduct"
-        {
-            custom rel inputs:cameraPrim = </World/lite6/link6/sensors/camera_link/rsd455/Camera_OmniVision_OV9782_Color>
-        }
-    }
-
-    def OmniGraph "ROS_Camera_External_1" (
-        prepend references = @../Robots/Ufactory/lite6/graphs/ros_camera.usda@</Graph/ROS_Camera>
-    )
-    {
-        over "RenderProduct"
-        {
-            custom rel inputs:cameraPrim = </World/rsd455/realsense_camera_1_color>
-        }
-    }
-
-    def OmniGraph "ROS_Camera_External_2" (
-        prepend references = @../Robots/Ufactory/lite6/graphs/ros_camera.usda@</Graph/ROS_Camera>
-    )
-    {
-        over "RenderProduct"
-        {
-            custom rel inputs:cameraPrim = </World/rsd455_2/realsense_camera_2_color>
-        }
-    }
-
-    over "ROS_TF"
-    {
-        over "PublisherTF"
-        {
-            prepend rel inputs:targetPrims = </World/lite6>
-        }
-    }
-
-    variantSet "JointStates" = {
-        "Off" {
-            over "ROS_JointStates" (
-                active = false
-            )
-            {
-            }
-        }
-        "On" {
-            over "ROS_JointStates" (
-                active = true
-            )
-            {
-            }
-        }
-    }
-
-    variantSet "TF" = {
-        "Off" {
-            over "ROS_TF" (
-                active = false
-            )
-            {
-            }
-        }
-        "On" {
-            over "ROS_TF" (
-                active = true
-            )
-            {
-            }
-        }
-    }
-
-    variantSet "MountedCameras" = {
-        "0" {
-            over "ROS_Camera_Mounted_1" (
-                active = false
-            )
-            {
-            }
-        }
-        "1" {
-            over "ROS_Camera_Mounted_1" (
-                active = true
-            )
-            {
-            }
-
-            over "ROS_TF"
-            {
-                over "PublisherTF"
-                {
-                    prepend rel inputs:targetPrims = </World/lite6/link6/sensors/camera_link/rsd455/Camera_OmniVision_OV9782_Color/camera_color_optical_frame>
-                }
-            }
-        }
-    }
-
-    variantSet "ExternalCameras" = {
-        "0" {
-            over "ROS_Camera_External_1" (
-                active = false
-            )
-            {
-            }
-            over "ROS_Camera_External_2" (
-                active = false
-            )
-            {
-            }
-        }
-        "1" {
-            over "ROS_Camera_External_1" (
-                active = true
-            )
-            {
-            }
-            over "ROS_Camera_External_2" (
-                active = false
-            )
-            {
-            }
-
-	            over "ROS_TF"
-	            {
-	                over "PublisherTF"
-	                {
-	                    prepend rel inputs:targetPrims = </World/rsd455/realsense_camera_1_color/camera_1_color_optical_frame>
-	                }
-	            }
-	        }
-	        "2" {
-            over "ROS_Camera_External_1" (
-                active = true
-            )
-            {
-            }
-            over "ROS_Camera_External_2" (
-                active = true
-            )
-            {
-            }
-
-	            over "ROS_TF"
-	            {
-	                over "PublisherTF"
-	                {
-	                    prepend rel inputs:targetPrims = [
-	                        </World/rsd455/realsense_camera_1_color/camera_1_color_optical_frame>,
-	                        </World/rsd455_2/realsense_camera_2_color/camera_2_color_optical_frame>
-	                    ]
-	                }
-	            }
-	        }
-	    }
-
-    variantSet "CameraTopicConvention" = {
-        "IsaacForManipulation" {
-            over "ROS_Camera_Mounted_1"
-            {
-                over "CameraInfoPublish"
-                {
-                    custom string inputs:frameId = "camera_color_optical_frame"
-                    custom string inputs:nodeNamespace = "realsense_camera"
-                    custom string inputs:topicName = "rgb/camera_info"
-                }
-                over "RGBPublish"
-                {
-                    custom string inputs:frameId = "camera_color_optical_frame"
-                    custom string inputs:nodeNamespace = "realsense_camera"
-                    custom string inputs:topicName = "rgb/image_rect_color"
-                }
-                over "DepthPublish"
-                {
-                    custom string inputs:frameId = "camera_color_optical_frame"
-                    custom string inputs:nodeNamespace = "realsense_camera"
-                    custom string inputs:topicName = "depth/image_rect_raw"
-                }
-            }
-
-            over "ROS_Camera_External_1"
-            {
-                over "CameraInfoPublish"
-                {
-                    custom string inputs:frameId = "camera_1_color_optical_frame"
-                    custom string inputs:nodeNamespace = "realsense_camera_1"
-                    custom string inputs:topicName = "rgb/camera_info"
-                }
-                over "RGBPublish"
-                {
-                    custom string inputs:frameId = "camera_1_color_optical_frame"
-                    custom string inputs:nodeNamespace = "realsense_camera_1"
-                    custom string inputs:topicName = "rgb/image_rect_color"
-                }
-                over "DepthPublish"
-                {
-                    custom string inputs:frameId = "camera_1_color_optical_frame"
-                    custom string inputs:nodeNamespace = "realsense_camera_1"
-                    custom string inputs:topicName = "depth/image_rect_raw"
-                }
-            }
-
-            over "ROS_Camera_External_2"
-            {
-                over "CameraInfoPublish"
-                {
-                    custom string inputs:frameId = "camera_2_color_optical_frame"
-                    custom string inputs:nodeNamespace = "realsense_camera_2"
-                    custom string inputs:topicName = "rgb/camera_info"
-                }
-                over "RGBPublish"
-                {
-                    custom string inputs:frameId = "camera_2_color_optical_frame"
-                    custom string inputs:nodeNamespace = "realsense_camera_2"
-                    custom string inputs:topicName = "rgb/image_rect_color"
-                }
-                over "DepthPublish"
-                {
-                    custom string inputs:frameId = "camera_2_color_optical_frame"
-                    custom string inputs:nodeNamespace = "realsense_camera_2"
-                    custom string inputs:topicName = "depth/image_rect_raw"
-                }
-            }
-        }
-        "NvbloxIndexed" {
-            over "ROS_Camera_Mounted_1"
-            {
-                over "CameraInfoPublish"
-                {
-                    custom string inputs:frameId = "camera_color_optical_frame"
-                    custom string inputs:nodeNamespace = "camera"
-                    custom string inputs:topicName = "color/camera_info"
-                }
-                over "RGBPublish"
-                {
-                    custom string inputs:frameId = "camera_color_optical_frame"
-                    custom string inputs:nodeNamespace = "camera"
-                    custom string inputs:topicName = "color/image_raw"
-                }
-                over "DepthPublish"
-                {
-                    custom string inputs:frameId = "camera_color_optical_frame"
-                    custom string inputs:nodeNamespace = "camera"
-                    custom string inputs:topicName = "depth/image_rect_raw"
-                }
-            }
-
-            over "ROS_Camera_External_1"
-            {
-                over "CameraInfoPublish"
-                {
-                    custom string inputs:frameId = "camera_1_color_optical_frame"
-                    custom string inputs:nodeNamespace = "camera1"
-                    custom string inputs:topicName = "color/camera_info"
-                }
-                over "RGBPublish"
-                {
-                    custom string inputs:frameId = "camera_1_color_optical_frame"
-                    custom string inputs:nodeNamespace = "camera1"
-                    custom string inputs:topicName = "color/image_raw"
-                }
-                over "DepthPublish"
-                {
-                    custom string inputs:frameId = "camera_1_color_optical_frame"
-                    custom string inputs:nodeNamespace = "camera1"
-                    custom string inputs:topicName = "depth/image_rect_raw"
-                }
-            }
-
-            over "ROS_Camera_External_2"
-            {
-                over "CameraInfoPublish"
-                {
-                    custom string inputs:frameId = "camera_2_color_optical_frame"
-                    custom string inputs:nodeNamespace = "camera2"
-                    custom string inputs:topicName = "color/camera_info"
-                }
-                over "RGBPublish"
-                {
-                    custom string inputs:frameId = "camera_2_color_optical_frame"
-                    custom string inputs:nodeNamespace = "camera2"
-                    custom string inputs:topicName = "color/image_raw"
-                }
-                over "DepthPublish"
-                {
-                    custom string inputs:frameId = "camera_2_color_optical_frame"
-                    custom string inputs:nodeNamespace = "camera2"
-                    custom string inputs:topicName = "depth/image_rect_raw"
-                }
-            }
-        }
-    }
-
-    variantSet "Gripper" = {
-        "None" {
-            over "ROS_JointStates"
-            {
-                over "SubscriberJointStateGripper" (
-                    active = false
-                )
-                {
-                }
-                over "ArticulationControllerGripper" (
-                    active = false
-                )
-                {
-                }
-            }
-        }
-        "lite_gripper" {
-            over "ROS_JointStates"
-            {
-                over "SubscriberJointStateGripper" (
-                    active = true
-                )
-                {
-                }
-                over "ArticulationControllerGripper" (
-                    active = true
-                )
-                {
-                }
             }
         }
     }

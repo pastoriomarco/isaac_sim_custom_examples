@@ -1,0 +1,351 @@
+#usda 1.0
+(
+    metersPerUnit = 1
+    upAxis = "Z"
+)
+
+def "Graph" (
+    variants = {
+        string Gripper = "None"
+        string JointStates = "On"
+        string TF = "Off"
+        string MountedCameras = "0"
+        string ExternalCameras = "0"
+        string CameraTopicConvention = "IsaacForManipulation"
+    }
+    prepend variantSets = ["JointStates", "TF", "Gripper", "MountedCameras", "ExternalCameras", "CameraTopicConvention"]
+)
+{
+    def OmniGraph "ROS_JointStates" (
+        prepend references = @../Robots/Ufactory/lite6/graphs/ros_joint_states.usda@</Graph/ROS_JointStates>
+    )
+    {
+    }
+
+    def OmniGraph "ROS_TF" (
+        prepend references = @../Robots/Ufactory/lite6/graphs/ros_tf.usda@</Graph/ROS_TF>
+    )
+    {
+        over "PublisherTF"
+        {
+            prepend rel inputs:targetPrims = </World/lite6>
+        }
+    }
+
+    def OmniGraph "ROS_Camera_Mounted_1" (
+        prepend references = @../Robots/Ufactory/lite6/graphs/ros_camera.usda@</Graph/ROS_Camera>
+    )
+    {
+        over "RenderProduct"
+        {
+            custom rel inputs:cameraPrim = </World/lite6/link6/sensors/camera_link/rsd455/Camera_OmniVision_OV9782_Color>
+        }
+    }
+
+    def OmniGraph "ROS_Camera_External_1" (
+        prepend references = @../Robots/Ufactory/lite6/graphs/ros_camera.usda@</Graph/ROS_Camera>
+    )
+    {
+        over "RenderProduct"
+        {
+            custom rel inputs:cameraPrim = </World/rsd455/realsense_camera_1/realsense_camera_1_color>
+        }
+    }
+
+    def OmniGraph "ROS_Camera_External_2" (
+        prepend references = @../Robots/Ufactory/lite6/graphs/ros_camera.usda@</Graph/ROS_Camera>
+    )
+    {
+        over "RenderProduct"
+        {
+            custom rel inputs:cameraPrim = </World/rsd455_2/realsense_camera_2/realsense_camera_2_color>
+        }
+    }
+
+    variantSet "JointStates" = {
+        "Off" {
+            over "ROS_JointStates" (
+                active = false
+            )
+            {
+            }
+        }
+        "On" {
+            over "ROS_JointStates" (
+                active = true
+            )
+            {
+            }
+        }
+    }
+
+    variantSet "TF" = {
+        "Off" {
+            over "ROS_TF" (
+                active = false
+            )
+            {
+            }
+        }
+        "On" {
+            over "ROS_TF" (
+                active = true
+            )
+            {
+            }
+        }
+    }
+
+    variantSet "MountedCameras" = {
+        "0" {
+            over "ROS_Camera_Mounted_1" (
+                active = false
+            )
+            {
+            }
+        }
+        "1" {
+            over "ROS_Camera_Mounted_1" (
+                active = true
+            )
+            {
+            }
+
+            over "ROS_TF"
+            {
+                over "PublisherTF"
+                {
+                    prepend rel inputs:targetPrims = </World/lite6/link6/sensors/camera_link/rsd455/Camera_OmniVision_OV9782_Color/camera_color_optical_frame>
+                }
+            }
+        }
+    }
+
+    variantSet "ExternalCameras" = {
+        "0" {
+            over "ROS_Camera_External_1" (
+                active = false
+            )
+            {
+            }
+            over "ROS_Camera_External_2" (
+                active = false
+            )
+            {
+            }
+        }
+        "1" {
+            over "ROS_Camera_External_1" (
+                active = true
+            )
+            {
+            }
+            over "ROS_Camera_External_2" (
+                active = false
+            )
+            {
+            }
+
+            over "ROS_TF"
+            {
+                over "PublisherTF"
+                {
+                    prepend rel inputs:targetPrims = </World/rsd455/realsense_camera_1/realsense_camera_1_color/camera_1_color_optical_frame>
+                }
+            }
+        }
+        "2" {
+            over "ROS_Camera_External_1" (
+                active = true
+            )
+            {
+            }
+            over "ROS_Camera_External_2" (
+                active = true
+            )
+            {
+            }
+
+            over "ROS_TF"
+            {
+                over "PublisherTF"
+                {
+                    prepend rel inputs:targetPrims = [
+                        </World/rsd455/realsense_camera_1/realsense_camera_1_color/camera_1_color_optical_frame>,
+                        </World/rsd455_2/realsense_camera_2/realsense_camera_2_color/camera_2_color_optical_frame>
+                    ]
+                }
+            }
+        }
+    }
+
+    variantSet "CameraTopicConvention" = {
+        "IsaacForManipulation" {
+            over "ROS_Camera_Mounted_1"
+            {
+                over "CameraInfoPublish"
+                {
+                    custom string inputs:frameId = "camera_color_optical_frame"
+                    custom string inputs:nodeNamespace = "realsense_camera"
+                    custom string inputs:topicName = "rgb/camera_info"
+                }
+                over "RGBPublish"
+                {
+                    custom string inputs:frameId = "camera_color_optical_frame"
+                    custom string inputs:nodeNamespace = "realsense_camera"
+                    custom string inputs:topicName = "rgb/image_rect_color"
+                }
+                over "DepthPublish"
+                {
+                    custom string inputs:frameId = "camera_color_optical_frame"
+                    custom string inputs:nodeNamespace = "realsense_camera"
+                    custom string inputs:topicName = "depth/image_rect_raw"
+                }
+            }
+
+            over "ROS_Camera_External_1"
+            {
+                over "CameraInfoPublish"
+                {
+                    custom string inputs:frameId = "camera_1_color_optical_frame"
+                    custom string inputs:nodeNamespace = "realsense_camera_1"
+                    custom string inputs:topicName = "rgb/camera_info"
+                }
+                over "RGBPublish"
+                {
+                    custom string inputs:frameId = "camera_1_color_optical_frame"
+                    custom string inputs:nodeNamespace = "realsense_camera_1"
+                    custom string inputs:topicName = "rgb/image_rect_color"
+                }
+                over "DepthPublish"
+                {
+                    custom string inputs:frameId = "camera_1_color_optical_frame"
+                    custom string inputs:nodeNamespace = "realsense_camera_1"
+                    custom string inputs:topicName = "depth/image_rect_raw"
+                }
+            }
+
+            over "ROS_Camera_External_2"
+            {
+                over "CameraInfoPublish"
+                {
+                    custom string inputs:frameId = "camera_2_color_optical_frame"
+                    custom string inputs:nodeNamespace = "realsense_camera_2"
+                    custom string inputs:topicName = "rgb/camera_info"
+                }
+                over "RGBPublish"
+                {
+                    custom string inputs:frameId = "camera_2_color_optical_frame"
+                    custom string inputs:nodeNamespace = "realsense_camera_2"
+                    custom string inputs:topicName = "rgb/image_rect_color"
+                }
+                over "DepthPublish"
+                {
+                    custom string inputs:frameId = "camera_2_color_optical_frame"
+                    custom string inputs:nodeNamespace = "realsense_camera_2"
+                    custom string inputs:topicName = "depth/image_rect_raw"
+                }
+            }
+        }
+        "NvbloxIndexed" {
+            over "ROS_Camera_Mounted_1"
+            {
+                over "CameraInfoPublish"
+                {
+                    custom string inputs:frameId = "camera_color_optical_frame"
+                    custom string inputs:nodeNamespace = "camera"
+                    custom string inputs:topicName = "color/camera_info"
+                }
+                over "RGBPublish"
+                {
+                    custom string inputs:frameId = "camera_color_optical_frame"
+                    custom string inputs:nodeNamespace = "camera"
+                    custom string inputs:topicName = "color/image_raw"
+                }
+                over "DepthPublish"
+                {
+                    custom string inputs:frameId = "camera_color_optical_frame"
+                    custom string inputs:nodeNamespace = "camera"
+                    custom string inputs:topicName = "depth/image_rect_raw"
+                }
+            }
+
+            over "ROS_Camera_External_1"
+            {
+                over "CameraInfoPublish"
+                {
+                    custom string inputs:frameId = "camera_1_color_optical_frame"
+                    custom string inputs:nodeNamespace = "camera1"
+                    custom string inputs:topicName = "color/camera_info"
+                }
+                over "RGBPublish"
+                {
+                    custom string inputs:frameId = "camera_1_color_optical_frame"
+                    custom string inputs:nodeNamespace = "camera1"
+                    custom string inputs:topicName = "color/image_raw"
+                }
+                over "DepthPublish"
+                {
+                    custom string inputs:frameId = "camera_1_color_optical_frame"
+                    custom string inputs:nodeNamespace = "camera1"
+                    custom string inputs:topicName = "depth/image_rect_raw"
+                }
+            }
+
+            over "ROS_Camera_External_2"
+            {
+                over "CameraInfoPublish"
+                {
+                    custom string inputs:frameId = "camera_2_color_optical_frame"
+                    custom string inputs:nodeNamespace = "camera2"
+                    custom string inputs:topicName = "color/camera_info"
+                }
+                over "RGBPublish"
+                {
+                    custom string inputs:frameId = "camera_2_color_optical_frame"
+                    custom string inputs:nodeNamespace = "camera2"
+                    custom string inputs:topicName = "color/image_raw"
+                }
+                over "DepthPublish"
+                {
+                    custom string inputs:frameId = "camera_2_color_optical_frame"
+                    custom string inputs:nodeNamespace = "camera2"
+                    custom string inputs:topicName = "depth/image_rect_raw"
+                }
+            }
+        }
+    }
+
+    variantSet "Gripper" = {
+        "None" {
+            over "ROS_JointStates"
+            {
+                over "SubscriberJointStateGripper" (
+                    active = false
+                )
+                {
+                }
+                over "ArticulationControllerGripper" (
+                    active = false
+                )
+                {
+                }
+            }
+        }
+        "lite_gripper" {
+            over "ROS_JointStates"
+            {
+                over "SubscriberJointStateGripper" (
+                    active = true
+                )
+                {
+                }
+                over "ArticulationControllerGripper" (
+                    active = true
+                )
+                {
+                }
+            }
+        }
+    }
+}

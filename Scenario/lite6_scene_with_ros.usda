@@ -1,0 +1,11 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    metersPerUnit = 1
+    upAxis = "Z"
+    subLayers = [
+        @./lite6_scene.usda@,
+        @./lite6_ros.usda@
+    ]
+)
+
