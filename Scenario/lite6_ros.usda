@@ -20,6 +20,20 @@ def "Graph" (
         prepend references = @../Robots/Ufactory/lite6/graphs/ros_joint_states.usda@</Graph/ROS_JointStates>
     )
     {
+        over "PublisherJointState"
+        {
+            custom rel inputs:targetPrim = </World/lite6/root_joint>
+        }
+
+        over "ArticulationController"
+        {
+            custom rel inputs:targetPrim = </World/lite6/root_joint>
+        }
+
+        over "ArticulationControllerGripper"
+        {
+            custom rel inputs:targetPrim = </World/lite6/root_joint>
+        }
     }
 
     def OmniGraph "ROS_TF" (
@@ -183,21 +197,22 @@ def "Graph" (
         "IsaacForManipulation" {
             over "ROS_Camera_Mounted_1"
             {
+                over "FrameId"
+                {
+                    custom string inputs:value = "camera_color_optical_frame"
+                }
                 over "CameraInfoPublish"
                 {
-                    custom string inputs:frameId = "camera_color_optical_frame"
                     custom string inputs:nodeNamespace = "realsense_camera"
                     custom string inputs:topicName = "rgb/camera_info"
                 }
                 over "RGBPublish"
                 {
-                    custom string inputs:frameId = "camera_color_optical_frame"
                     custom string inputs:nodeNamespace = "realsense_camera"
                     custom string inputs:topicName = "rgb/image_rect_color"
                 }
                 over "DepthPublish"
                 {
-                    custom string inputs:frameId = "camera_color_optical_frame"
                     custom string inputs:nodeNamespace = "realsense_camera"
                     custom string inputs:topicName = "depth/image_rect_raw"
                 }
@@ -205,21 +220,22 @@ def "Graph" (
 
             over "ROS_Camera_External_1"
             {
+                over "FrameId"
+                {
+                    custom string inputs:value = "camera_1_color_optical_frame"
+                }
                 over "CameraInfoPublish"
                 {
-                    custom string inputs:frameId = "camera_1_color_optical_frame"
                     custom string inputs:nodeNamespace = "realsense_camera_1"
                     custom string inputs:topicName = "rgb/camera_info"
                 }
                 over "RGBPublish"
                 {
-                    custom string inputs:frameId = "camera_1_color_optical_frame"
                     custom string inputs:nodeNamespace = "realsense_camera_1"
                     custom string inputs:topicName = "rgb/image_rect_color"
                 }
                 over "DepthPublish"
                 {
-                    custom string inputs:frameId = "camera_1_color_optical_frame"
                     custom string inputs:nodeNamespace = "realsense_camera_1"
                     custom string inputs:topicName = "depth/image_rect_raw"
                 }
@@ -227,21 +243,22 @@ def "Graph" (
 
             over "ROS_Camera_External_2"
             {
+                over "FrameId"
+                {
+                    custom string inputs:value = "camera_2_color_optical_frame"
+                }
                 over "CameraInfoPublish"
                 {
-                    custom string inputs:frameId = "camera_2_color_optical_frame"
                     custom string inputs:nodeNamespace = "realsense_camera_2"
                     custom string inputs:topicName = "rgb/camera_info"
                 }
                 over "RGBPublish"
                 {
-                    custom string inputs:frameId = "camera_2_color_optical_frame"
                     custom string inputs:nodeNamespace = "realsense_camera_2"
                     custom string inputs:topicName = "rgb/image_rect_color"
                 }
                 over "DepthPublish"
                 {
-                    custom string inputs:frameId = "camera_2_color_optical_frame"
                     custom string inputs:nodeNamespace = "realsense_camera_2"
                     custom string inputs:topicName = "depth/image_rect_raw"
                 }
@@ -250,21 +267,22 @@ def "Graph" (
         "NvbloxIndexed" {
             over "ROS_Camera_Mounted_1"
             {
+                over "FrameId"
+                {
+                    custom string inputs:value = "camera_color_optical_frame"
+                }
                 over "CameraInfoPublish"
                 {
-                    custom string inputs:frameId = "camera_color_optical_frame"
                     custom string inputs:nodeNamespace = "camera"
                     custom string inputs:topicName = "color/camera_info"
                 }
                 over "RGBPublish"
                 {
-                    custom string inputs:frameId = "camera_color_optical_frame"
                     custom string inputs:nodeNamespace = "camera"
                     custom string inputs:topicName = "color/image_raw"
                 }
                 over "DepthPublish"
                 {
-                    custom string inputs:frameId = "camera_color_optical_frame"
                     custom string inputs:nodeNamespace = "camera"
                     custom string inputs:topicName = "depth/image_rect_raw"
                 }
@@ -272,21 +290,22 @@ def "Graph" (
 
             over "ROS_Camera_External_1"
             {
+                over "FrameId"
+                {
+                    custom string inputs:value = "camera_1_color_optical_frame"
+                }
                 over "CameraInfoPublish"
                 {
-                    custom string inputs:frameId = "camera_1_color_optical_frame"
                     custom string inputs:nodeNamespace = "camera1"
                     custom string inputs:topicName = "color/camera_info"
                 }
                 over "RGBPublish"
                 {
-                    custom string inputs:frameId = "camera_1_color_optical_frame"
                     custom string inputs:nodeNamespace = "camera1"
                     custom string inputs:topicName = "color/image_raw"
                 }
                 over "DepthPublish"
                 {
-                    custom string inputs:frameId = "camera_1_color_optical_frame"
                     custom string inputs:nodeNamespace = "camera1"
                     custom string inputs:topicName = "depth/image_rect_raw"
                 }
@@ -294,21 +313,22 @@ def "Graph" (
 
             over "ROS_Camera_External_2"
             {
+                over "FrameId"
+                {
+                    custom string inputs:value = "camera_2_color_optical_frame"
+                }
                 over "CameraInfoPublish"
                 {
-                    custom string inputs:frameId = "camera_2_color_optical_frame"
                     custom string inputs:nodeNamespace = "camera2"
                     custom string inputs:topicName = "color/camera_info"
                 }
                 over "RGBPublish"
                 {
-                    custom string inputs:frameId = "camera_2_color_optical_frame"
                     custom string inputs:nodeNamespace = "camera2"
                     custom string inputs:topicName = "color/image_raw"
                 }
                 over "DepthPublish"
                 {
-                    custom string inputs:frameId = "camera_2_color_optical_frame"
                     custom string inputs:nodeNamespace = "camera2"
                     custom string inputs:topicName = "depth/image_rect_raw"
                 }

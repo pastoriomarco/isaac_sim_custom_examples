@@ -36,6 +36,7 @@ over "UF_ROBOT"
                     over "Camera_OmniVision_OV9782_Color"
                     {
                         token ui:displayName = "realsense_camera Color"
+                        custom string isaac:nameOverride = "camera_color_optical_frame"
                         def Xform "camera_color_optical_frame"
                         {
                             quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
@@ -47,6 +48,7 @@ over "UF_ROBOT"
                     over "Camera_OmniVision_OV9782_Left"
                     {
                         token ui:displayName = "realsense_camera Left IR"
+                        custom string isaac:nameOverride = "camera_left_ir_optical_frame"
                         def Xform "camera_left_ir_optical_frame"
                         {
                             quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
@@ -58,6 +60,7 @@ over "UF_ROBOT"
                     over "Camera_OmniVision_OV9782_Right"
                     {
                         token ui:displayName = "realsense_camera Right IR"
+                        custom string isaac:nameOverride = "camera_right_ir_optical_frame"
                         def Xform "camera_right_ir_optical_frame"
                         {
                             quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
@@ -69,6 +72,7 @@ over "UF_ROBOT"
                     over "Camera_Pseudo_Depth"
                     {
                         token ui:displayName = "realsense_camera Depth"
+                        custom string isaac:nameOverride = "camera_depth_optical_frame"
                         def Xform "camera_depth_optical_frame"
                         {
                             quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)

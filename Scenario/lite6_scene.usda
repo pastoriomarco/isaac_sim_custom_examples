@@ -35,16 +35,46 @@ def Xform "World" (
         double3 xformOp:translate = (1.9984014443252818e-15, -0.42, 0.32)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
-        def Xform "realsense_camera_1"
+        def Xform "realsense_camera_1" (
+            prepend references = @../Sensors/RealSense/rsd455.usda@</Root/RSD455>
+            delete apiSchemas = ["PhysicsRigidBodyAPI", "PhysxRigidBodyAPI", "PhysicsMassAPI"]
+        )
         {
-            def Scope "Looks" (
-                prepend references = @../Sensors/RealSense/rsd455.usda@</Root/RSD455/Looks>
+            quatd xformOp:orient = (1, 0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "Imu_Sensor" (
+                active = false
             )
             {
             }
 
-            def Xform "Visual" (
-                prepend references = @../Sensors/RealSense/rsd455.usda@</Root/RSD455/Visual>
+            over "Camera_Pseudo_Depth" (
+                active = false
+            )
+            {
+            }
+
+            over "Camera_OmniVision_OV9782_Color" (
+                active = false
+            )
+            {
+            }
+
+            over "Camera_OmniVision_OV9782_Left" (
+                active = false
+            )
+            {
+            }
+
+            over "Camera_OmniVision_OV9782_Right" (
+                active = false
+            )
+            {
+            }
+
+            over "TemplateRenderProducts" (
+                active = false
             )
             {
             }
@@ -53,6 +83,7 @@ def Xform "World" (
                 prepend references = @../Sensors/RealSense/rsd455.usda@</Root/RSD455/Camera_OmniVision_OV9782_Color>
             )
             {
+                custom string isaac:nameOverride = "camera_1_color_optical_frame"
                 def Xform "camera_1_color_optical_frame"
                 {
                     quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
@@ -65,6 +96,7 @@ def Xform "World" (
                 prepend references = @../Sensors/RealSense/rsd455.usda@</Root/RSD455/Camera_OmniVision_OV9782_Left>
             )
             {
+                custom string isaac:nameOverride = "camera_1_left_ir_optical_frame"
                 def Xform "camera_left_ir_optical_frame"
                 {
                     quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
@@ -77,6 +109,7 @@ def Xform "World" (
                 prepend references = @../Sensors/RealSense/rsd455.usda@</Root/RSD455/Camera_OmniVision_OV9782_Right>
             )
             {
+                custom string isaac:nameOverride = "camera_1_right_ir_optical_frame"
                 def Xform "camera_right_ir_optical_frame"
                 {
                     quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
@@ -89,6 +122,7 @@ def Xform "World" (
                 prepend references = @../Sensors/RealSense/rsd455.usda@</Root/RSD455/Camera_Pseudo_Depth>
             )
             {
+                custom string isaac:nameOverride = "camera_1_depth_optical_frame"
                 def Xform "camera_depth_optical_frame"
                 {
                     quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
@@ -107,16 +141,46 @@ def Xform "World" (
         double3 xformOp:translate = (0, -0.60, 0.32)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
-        def Xform "realsense_camera_2"
+        def Xform "realsense_camera_2" (
+            prepend references = @../Sensors/RealSense/rsd455.usda@</Root/RSD455>
+            delete apiSchemas = ["PhysicsRigidBodyAPI", "PhysxRigidBodyAPI", "PhysicsMassAPI"]
+        )
         {
-            def Scope "Looks" (
-                prepend references = @../Sensors/RealSense/rsd455.usda@</Root/RSD455/Looks>
+            quatd xformOp:orient = (1, 0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "Imu_Sensor" (
+                active = false
             )
             {
             }
 
-            def Xform "Visual" (
-                prepend references = @../Sensors/RealSense/rsd455.usda@</Root/RSD455/Visual>
+            over "Camera_Pseudo_Depth" (
+                active = false
+            )
+            {
+            }
+
+            over "Camera_OmniVision_OV9782_Color" (
+                active = false
+            )
+            {
+            }
+
+            over "Camera_OmniVision_OV9782_Left" (
+                active = false
+            )
+            {
+            }
+
+            over "Camera_OmniVision_OV9782_Right" (
+                active = false
+            )
+            {
+            }
+
+            over "TemplateRenderProducts" (
+                active = false
             )
             {
             }
@@ -125,6 +189,7 @@ def Xform "World" (
                 prepend references = @../Sensors/RealSense/rsd455.usda@</Root/RSD455/Camera_OmniVision_OV9782_Color>
             )
             {
+                custom string isaac:nameOverride = "camera_2_color_optical_frame"
                 def Xform "camera_2_color_optical_frame"
                 {
                     quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
@@ -137,6 +202,7 @@ def Xform "World" (
                 prepend references = @../Sensors/RealSense/rsd455.usda@</Root/RSD455/Camera_OmniVision_OV9782_Left>
             )
             {
+                custom string isaac:nameOverride = "camera_2_left_ir_optical_frame"
                 def Xform "camera_left_ir_optical_frame"
                 {
                     quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
@@ -149,6 +215,7 @@ def Xform "World" (
                 prepend references = @../Sensors/RealSense/rsd455.usda@</Root/RSD455/Camera_OmniVision_OV9782_Right>
             )
             {
+                custom string isaac:nameOverride = "camera_2_right_ir_optical_frame"
                 def Xform "camera_right_ir_optical_frame"
                 {
                     quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
@@ -161,6 +228,7 @@ def Xform "World" (
                 prepend references = @../Sensors/RealSense/rsd455.usda@</Root/RSD455/Camera_Pseudo_Depth>
             )
             {
+                custom string isaac:nameOverride = "camera_2_depth_optical_frame"
                 def Xform "camera_depth_optical_frame"
                 {
                     quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
