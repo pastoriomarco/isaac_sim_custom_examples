@@ -49,7 +49,7 @@ def "Graph"
             prepend token inputs:renderProductPath.connect = </Graph/ROS_Camera/RenderProduct.outputs:renderProductPath>
             custom token inputs:renderProductPathRight
             custom bool inputs:resetSimulationTimeOnStop = 1
-            custom string inputs:topicName = "camera_info"
+            custom string inputs:topicName = "rgb/camera_info"
             custom string inputs:topicNameRight
             custom bool inputs:useSystemTime
             token node:type = "isaacsim.ros2.bridge.ROS2CameraInfoHelper"
@@ -134,7 +134,7 @@ def "Graph"
             custom bool inputs:resetSimulationTimeOnStop = 1
             custom string inputs:semanticLabelsTopicName
             custom float2 inputs:stereoOffset
-            custom string inputs:topicName = "/image_rect"
+            custom string inputs:topicName = "rgb/image_rect_color"
             custom token inputs:type = "rgb" (
                 allowedTokens = ["rgb", "depth", "depth_pcl", "instance_segmentation", "semantic_segmentation", "bbox_2d_tight", "bbox_2d_loose", "bbox_3d"]
             )
@@ -166,7 +166,7 @@ def "Graph"
             custom bool inputs:resetSimulationTimeOnStop = 1
             custom string inputs:semanticLabelsTopicName
             custom float2 inputs:stereoOffset
-            custom string inputs:topicName = "/depth"
+            custom string inputs:topicName = "depth/image_rect_raw"
             custom token inputs:type = "depth" (
                 allowedTokens = ["rgb", "depth", "depth_pcl", "instance_segmentation", "semantic_segmentation", "bbox_2d_tight", "bbox_2d_loose", "bbox_3d"]
             )
