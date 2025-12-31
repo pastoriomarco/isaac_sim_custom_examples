@@ -1,0 +1,49 @@
+#usda 1.0
+(
+    defaultPrim = "RSD455"
+    metersPerUnit = 1
+    upAxis = "Z"
+)
+
+def Xform "RSD455" (
+    prepend references = @./rsd455.usda@</Root/RSD455>
+    delete apiSchemas = ["PhysicsRigidBodyAPI", "PhysxRigidBodyAPI", "PhysicsMassAPI"]
+)
+{
+    over "Imu_Sensor" (
+        active = false
+    )
+    {
+    }
+
+    over "Camera_Pseudo_Depth" (
+        active = false
+    )
+    {
+    }
+
+    over "Camera_OmniVision_OV9782_Color" (
+        active = false
+    )
+    {
+    }
+
+    over "Camera_OmniVision_OV9782_Left" (
+        active = false
+    )
+    {
+    }
+
+    over "Camera_OmniVision_OV9782_Right" (
+        active = false
+    )
+    {
+    }
+
+    over "TemplateRenderProducts" (
+        active = false
+    )
+    {
+    }
+}
+
