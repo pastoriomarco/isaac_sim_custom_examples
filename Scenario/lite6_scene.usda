@@ -36,7 +36,7 @@ def Xform "World" (
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
         def Xform "realsense_camera_1" (
-            prepend references = @../Sensors/RealSense/rsd455_instance.usda@</RSD455>
+            prepend references = @../Sensors/RealSense/rsd455_ref_overrides.usda@</RSD455>
         )
         {
             def Camera "realsense_camera_1_color" (
@@ -102,7 +102,7 @@ def Xform "World" (
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
         def Xform "realsense_camera_2" (
-            prepend references = @../Sensors/RealSense/rsd455_instance.usda@</RSD455>
+            prepend references = @../Sensors/RealSense/rsd455_ref_overrides.usda@</RSD455>
         )
         {
             def Camera "realsense_camera_2_color" (
