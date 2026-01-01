@@ -1,0 +1,1870 @@
+#usda 1.0
+(
+    customLayerData = {
+        dictionary cameraSettings = {
+            dictionary Front = {
+                double3 position = (5, 0, 0)
+                double radius = 5
+            }
+            dictionary Perspective = {
+                double3 position = (-1.1791811811425637, 3.171188649199579, 0.701045263206313)
+                double3 target = (1.2620537023478928, -1.954774313208969, -0.772286640214458)
+            }
+            dictionary Right = {
+                double3 position = (0, -5, 0)
+                double radius = 5
+            }
+            dictionary Top = {
+                double3 position = (0, 0, 5)
+                double radius = 3.7843650817871093
+            }
+            string boundCamera = "/OmniverseKit_Persp"
+        }
+        dictionary metricsAssembler = {
+            dictionary "/World/gear_base" = {
+            }
+            dictionary "/World/gear_large" = {
+            }
+            dictionary "/World/gear_medium" = {
+            }
+            dictionary "/World/gear_small" = {
+            }
+            int version = 1
+        }
+        dictionary omni_layer = {
+            string authoring_layer = "./isaac_manipulator_scene.usda"
+            dictionary locked = {
+            }
+            dictionary muteness = {
+            }
+        }
+        dictionary physicsSettings = {
+            int "/persistent/simulation/minFrameRate" = 60
+        }
+        dictionary renderSettings = {
+        }
+    }
+    defaultPrim = "World"
+    endTimeCode = 100
+    metersPerUnit = 1
+    startTimeCode = 0
+    timeCodesPerSecond = 60
+    upAxis = "Z"
+)
+
+def Xform "background" (
+    prepend references = @https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Environments/Simple_Room/simple_room.usd@
+)
+{
+    quatd xformOp:orient = (1, 0, 0, 0)
+    double3 xformOp:scale = (1, 1, 1)
+    double3 xformOp:translate = (0, 0, 0)
+    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+    over "GroundPlane"
+    {
+        token visibility = "inherited"
+    }
+
+    over "Towel_Room01_floor_bottom_218"
+    {
+        double3 xformOp:rotateZYX = (0, 0, 0)
+        double3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (-0.11680934882163717, 1.305869970811531, -0.76956998279877)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateZYX", "xformOp:scale"]
+    }
+
+    over "table_low_327"
+    {
+        double3 xformOp:rotateZYX = (0, 0, 0)
+        double3 xformOp:scale = (1, 1.5, 1.149999976158142)
+        double3 xformOp:translate = (0, 0, -0.7695999827980996)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateZYX", "xformOp:scale"]
+
+        over "table_low" (
+            prepend apiSchemas = ["PhysxConvexHullCollisionAPI", "PhysxConvexDecompositionCollisionAPI"]
+        )
+        {
+            uniform token physics:approximation = "convexDecomposition"
+            float physxConvexDecompositionCollision:errorPercentage = 1
+            bool physxConvexDecompositionCollision:shrinkWrap = 1
+        }
+    }
+
+    over "DomeLight"
+    {
+        double3 xformOp:rotateXYZ = (0, 0, 0)
+        double3 xformOp:scale = (0.009999999776482582, 0.009999999776482582, 0.009999999776482582)
+        double3 xformOp:translate = (0, 0, -0.007756443890224507)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+    }
+}
+
+def "Viewport_Measure" (
+    hide_in_stage_window = true
+)
+{
+}
+
+def "Render" (
+    hide_in_stage_window = true
+    no_delete = true
+)
+{
+    def "OmniverseKit"
+    {
+        def "HydraTextures" (
+            hide_in_stage_window = true
+            no_delete = true
+        )
+        {
+            over "Replicator"
+            {
+                over "PostRender"
+                {
+                    over "SDGPipeline"
+                    {
+                        custom uint64 graph:variable:__computeParams (
+                            customData = {
+                                token scope = "private"
+                            }
+                            displayName = "__computeParams"
+                        )
+                        custom uint64 graph:variable:__cudaInteropState (
+                            customData = {
+                                token scope = "private"
+                            }
+                            displayName = "__cudaInteropState"
+                        )
+                        custom uint64 graph:variable:__cudaStream (
+                            customData = {
+                                token scope = "private"
+                            }
+                            displayName = "__cudaStream"
+                        )
+                        custom uint64 graph:variable:__rpInteropState (
+                            customData = {
+                                token scope = "private"
+                            }
+                            displayName = "__rpInteropState"
+                        )
+                    }
+                }
+            }
+
+            def RenderProduct "omni_kit_widget_viewport_ViewportTexture_0" (
+                prepend apiSchemas = ["OmniRtxSettingsCommonAdvancedAPI_1", "OmniRtxSettingsRtAdvancedAPI_1", "OmniRtxSettingsPtAdvancedAPI_1", "OmniRtxPostColorGradingAPI_1", "OmniRtxPostChromaticAberrationAPI_1", "OmniRtxPostBloomPhysicalAPI_1", "OmniRtxPostMatteObjectAPI_1", "OmniRtxPostCompositingAPI_1", "OmniRtxPostDofAPI_1", "OmniRtxPostMotionBlurAPI_1", "OmniRtxPostTvNoiseAPI_1", "OmniRtxPostTonemapIrayReinhardAPI_1", "OmniRtxPostDebugSettingsAPI_1", "OmniRtxDebugSettingsAPI_1"]
+                hide_in_stage_window = true
+                no_delete = true
+            )
+            {
+                rel camera = </OmniverseKit_Persp>
+                token omni:rtx:background:source:texture:textureMode = "repeatMirrored"
+                token omni:rtx:background:source:type = "domeLight"
+                bool omni:rtx:dlss:frameGeneration = 0
+                bool omni:rtx:material:db:nonVisualMaterialCSV:enabled = 0
+                string omni:rtx:material:db:rtSensorNameToIdMap = "DefaultMaterial:0;AsphaltStandardMaterial:1;AsphaltWeatheredMaterial:2;VegetationGrassMaterial:3;WaterStandardMaterial:4;GlassStandardMaterial:5;FiberGlassMaterial:6;MetalAlloyMaterial:7;MetalAluminumMaterial:8;MetalAluminumOxidizedMaterial:9;PlasticStandardMaterial:10;RetroMarkingsMaterial:11;RetroSignMaterial:12;RubberStandardMaterial:13;SoilClayMaterial:14;ConcreteRoughMaterial:15;ConcreteSmoothMaterial:16;OakTreeBarkMaterial:17;FabricStandardMaterial:18;PlexiGlassStandardMaterial:19;MetalSilverMaterial:20"
+                bool omni:rtx:material:db:syncLoads = 1
+                token omni:rtx:post:dlss:execMode = "performance"
+                bool omni:rtx:post:registeredCompositing:invertColorCorrection = 1
+                bool omni:rtx:post:registeredCompositing:invertToneMap = 1
+                bool omni:rtx:pt:lightcache:cached:dontResolveConflicts = 1
+                int omni:rtx:pt:maxSamplesPerLaunch = 2073600
+                int omni:rtx:pt:mgpu:maxPixelsPerRegionExponent = 12
+                color3f omni:rtx:rt:ambientLight:color = (0.1, 0.1, 0.1)
+                bool omni:rtx:rt:demoire = 0
+                bool omni:rtx:rt:ecoMode:enabled
+                bool omni:rtx:rt:lightcache:spatialCache:dontResolveConflicts = 1
+                bool omni:rtx:scene:hydra:materialSyncLoads = 1
+                bool omni:rtx:scene:hydra:mdlMaterialWarmup = 1
+                uint omni:rtx:viewTile:limit = 4294967295
+                rel orderedVars = </Render/Vars/LdrColor>
+                custom bool overrideClipRange = 0
+                uniform int2 resolution = (1280, 720)
+            }
+
+            def RenderProduct "Replicator_01" (
+                prepend apiSchemas = ["OmniRtxSettingsCommonAdvancedAPI_1", "OmniRtxSettingsRtAdvancedAPI_1", "OmniRtxSettingsPtAdvancedAPI_1", "OmniRtxPostColorGradingAPI_1", "OmniRtxPostChromaticAberrationAPI_1", "OmniRtxPostBloomPhysicalAPI_1", "OmniRtxPostMatteObjectAPI_1", "OmniRtxPostCompositingAPI_1", "OmniRtxPostDofAPI_1", "OmniRtxPostMotionBlurAPI_1", "OmniRtxPostTvNoiseAPI_1", "OmniRtxPostTonemapIrayReinhardAPI_1", "OmniRtxPostDebugSettingsAPI_1", "OmniRtxDebugSettingsAPI_1"]
+                hide_in_stage_window = true
+                no_delete = true
+            )
+            {
+                rel camera = </World/hawk_manipulator/left/camera_left>
+                token omni:rtx:background:source:texture:textureMode = "repeatMirrored"
+                token omni:rtx:background:source:type = "domeLight"
+                bool omni:rtx:dlss:frameGeneration = 0
+                string omni:rtx:material:db:rtSensorNameToIdMap = "DefaultMaterial:0;AsphaltStandardMaterial:1;AsphaltWeatheredMaterial:2;VegetationGrassMaterial:3;WaterStandardMaterial:4;GlassStandardMaterial:5;FiberGlassMaterial:6;MetalAlloyMaterial:7;MetalAluminumMaterial:8;MetalAluminumOxidizedMaterial:9;PlasticStandardMaterial:10;RetroMarkingsMaterial:11;RetroSignMaterial:12;RubberStandardMaterial:13;SoilClayMaterial:14;ConcreteRoughMaterial:15;ConcreteSmoothMaterial:16;OakTreeBarkMaterial:17;FabricStandardMaterial:18;PlexiGlassStandardMaterial:19;MetalSilverMaterial:20"
+                bool omni:rtx:material:db:syncLoads = 1
+                bool omni:rtx:post:registeredCompositing:invertColorCorrection = 1
+                bool omni:rtx:post:registeredCompositing:invertToneMap = 1
+                bool omni:rtx:pt:lightcache:cached:dontResolveConflicts = 1
+                int omni:rtx:pt:maxSamplesPerLaunch = 2073600
+                int omni:rtx:pt:mgpu:maxPixelsPerRegionExponent = 12
+                color3f omni:rtx:rt:ambientLight:color = (0.1, 0.1, 0.1)
+                bool omni:rtx:rt:demoire = 0
+                bool omni:rtx:rt:ecoMode:enabled = 0
+                bool omni:rtx:rt:lightcache:spatialCache:dontResolveConflicts = 1
+                bool omni:rtx:scene:hydra:materialSyncLoads = 1
+                bool omni:rtx:scene:hydra:mdlMaterialWarmup = 1
+                uint omni:rtx:viewTile:limit = 4294967295
+                rel orderedVars = </Render/Vars/LdrColor>
+                custom bool overrideClipRange = 0
+                uniform int2 resolution = (1920, 1200)
+            }
+
+            def RenderProduct "Replicator_02" (
+                prepend apiSchemas = ["OmniRtxSettingsCommonAdvancedAPI_1", "OmniRtxSettingsRtAdvancedAPI_1", "OmniRtxSettingsPtAdvancedAPI_1", "OmniRtxPostColorGradingAPI_1", "OmniRtxPostChromaticAberrationAPI_1", "OmniRtxPostBloomPhysicalAPI_1", "OmniRtxPostMatteObjectAPI_1", "OmniRtxPostCompositingAPI_1", "OmniRtxPostDofAPI_1", "OmniRtxPostMotionBlurAPI_1", "OmniRtxPostTvNoiseAPI_1", "OmniRtxPostTonemapIrayReinhardAPI_1", "OmniRtxPostDebugSettingsAPI_1", "OmniRtxDebugSettingsAPI_1"]
+                hide_in_stage_window = true
+                no_delete = true
+            )
+            {
+                rel camera = </World/hawk_manipulator/left/camera_left>
+                custom string ogPostProcessPath = "/Render/OmniverseKit/HydraTextures/Replicator_02/PostRender"
+                token omni:rtx:background:source:texture:textureMode = "repeatMirrored"
+                token omni:rtx:background:source:type = "domeLight"
+                bool omni:rtx:dlss:frameGeneration = 0
+                string omni:rtx:material:db:rtSensorNameToIdMap = "DefaultMaterial:0;AsphaltStandardMaterial:1;AsphaltWeatheredMaterial:2;VegetationGrassMaterial:3;WaterStandardMaterial:4;GlassStandardMaterial:5;FiberGlassMaterial:6;MetalAlloyMaterial:7;MetalAluminumMaterial:8;MetalAluminumOxidizedMaterial:9;PlasticStandardMaterial:10;RetroMarkingsMaterial:11;RetroSignMaterial:12;RubberStandardMaterial:13;SoilClayMaterial:14;ConcreteRoughMaterial:15;ConcreteSmoothMaterial:16;OakTreeBarkMaterial:17;FabricStandardMaterial:18;PlexiGlassStandardMaterial:19;MetalSilverMaterial:20"
+                bool omni:rtx:material:db:syncLoads = 1
+                bool omni:rtx:post:registeredCompositing:invertColorCorrection = 1
+                bool omni:rtx:post:registeredCompositing:invertToneMap = 1
+                bool omni:rtx:pt:lightcache:cached:dontResolveConflicts = 1
+                int omni:rtx:pt:maxSamplesPerLaunch = 2073600
+                int omni:rtx:pt:mgpu:maxPixelsPerRegionExponent = 12
+                color3f omni:rtx:rt:ambientLight:color = (0.1, 0.1, 0.1)
+                bool omni:rtx:rt:demoire = 0
+                bool omni:rtx:rt:ecoMode:enabled = 0
+                bool omni:rtx:rt:lightcache:spatialCache:dontResolveConflicts = 1
+                bool omni:rtx:scene:hydra:materialSyncLoads = 1
+                bool omni:rtx:scene:hydra:mdlMaterialWarmup = 1
+                uint omni:rtx:viewTile:limit = 4294967295
+                rel orderedVars = [
+                    </Render/Vars/DistanceToImagePlaneSD>,
+                    </Render/Vars/LdrColorSD>,
+                    </Render/Vars/LdrColor>,
+                ]
+                custom bool overrideClipRange = 0
+                uniform int2 resolution = (1920, 1200)
+            }
+
+            def RenderProduct "Replicator_03" (
+                prepend apiSchemas = ["OmniRtxSettingsCommonAdvancedAPI_1", "OmniRtxSettingsRtAdvancedAPI_1", "OmniRtxSettingsPtAdvancedAPI_1", "OmniRtxPostColorGradingAPI_1", "OmniRtxPostChromaticAberrationAPI_1", "OmniRtxPostBloomPhysicalAPI_1", "OmniRtxPostMatteObjectAPI_1", "OmniRtxPostCompositingAPI_1", "OmniRtxPostDofAPI_1", "OmniRtxPostMotionBlurAPI_1", "OmniRtxPostTvNoiseAPI_1", "OmniRtxPostTonemapIrayReinhardAPI_1", "OmniRtxPostDebugSettingsAPI_1", "OmniRtxDebugSettingsAPI_1"]
+                hide_in_stage_window = true
+                no_delete = true
+            )
+            {
+                rel camera = </World/hawk_manipulator/left/camera_left>
+                custom string ogPostProcessPath = "/Render/OmniverseKit/HydraTextures/Replicator_03/PostRender"
+                token omni:rtx:background:source:texture:textureMode = "repeatMirrored"
+                token omni:rtx:background:source:type = "domeLight"
+                bool omni:rtx:dlss:frameGeneration = 0
+                string omni:rtx:material:db:rtSensorNameToIdMap = "DefaultMaterial:0;AsphaltStandardMaterial:1;AsphaltWeatheredMaterial:2;VegetationGrassMaterial:3;WaterStandardMaterial:4;GlassStandardMaterial:5;FiberGlassMaterial:6;MetalAlloyMaterial:7;MetalAluminumMaterial:8;MetalAluminumOxidizedMaterial:9;PlasticStandardMaterial:10;RetroMarkingsMaterial:11;RetroSignMaterial:12;RubberStandardMaterial:13;SoilClayMaterial:14;ConcreteRoughMaterial:15;ConcreteSmoothMaterial:16;OakTreeBarkMaterial:17;FabricStandardMaterial:18;PlexiGlassStandardMaterial:19;MetalSilverMaterial:20"
+                bool omni:rtx:material:db:syncLoads = 1
+                bool omni:rtx:post:registeredCompositing:invertColorCorrection = 1
+                bool omni:rtx:post:registeredCompositing:invertToneMap = 1
+                bool omni:rtx:pt:lightcache:cached:dontResolveConflicts = 1
+                int omni:rtx:pt:maxSamplesPerLaunch = 2073600
+                int omni:rtx:pt:mgpu:maxPixelsPerRegionExponent = 12
+                color3f omni:rtx:rt:ambientLight:color = (0.1, 0.1, 0.1)
+                bool omni:rtx:rt:demoire = 0
+                bool omni:rtx:rt:ecoMode:enabled = 0
+                bool omni:rtx:rt:lightcache:spatialCache:dontResolveConflicts = 1
+                bool omni:rtx:scene:hydra:materialSyncLoads = 1
+                bool omni:rtx:scene:hydra:mdlMaterialWarmup = 1
+                uint omni:rtx:viewTile:limit = 4294967295
+                rel orderedVars = [
+                    </Render/Vars/DistanceToImagePlaneSD>,
+                    </Render/Vars/LdrColorSD>,
+                    </Render/Vars/LdrColor>,
+                ]
+                custom bool overrideClipRange = 0
+                uniform int2 resolution = (1920, 1200)
+            }
+
+            def RenderProduct "Replicator_04" (
+                prepend apiSchemas = ["OmniRtxSettingsCommonAdvancedAPI_1", "OmniRtxSettingsRtAdvancedAPI_1", "OmniRtxSettingsPtAdvancedAPI_1", "OmniRtxPostColorGradingAPI_1", "OmniRtxPostChromaticAberrationAPI_1", "OmniRtxPostBloomPhysicalAPI_1", "OmniRtxPostMatteObjectAPI_1", "OmniRtxPostCompositingAPI_1", "OmniRtxPostDofAPI_1", "OmniRtxPostMotionBlurAPI_1", "OmniRtxPostTvNoiseAPI_1", "OmniRtxPostTonemapIrayReinhardAPI_1", "OmniRtxPostDebugSettingsAPI_1", "OmniRtxDebugSettingsAPI_1"]
+                hide_in_stage_window = true
+                no_delete = true
+            )
+            {
+                rel camera = </World/hawk_manipulator/left/camera_left>
+                custom string ogPostProcessPath = "/Render/OmniverseKit/HydraTextures/Replicator_04/PostRender"
+                token omni:rtx:background:source:texture:textureMode = "repeatMirrored"
+                token omni:rtx:background:source:type = "domeLight"
+                bool omni:rtx:dlss:frameGeneration = 0
+                string omni:rtx:material:db:rtSensorNameToIdMap = "DefaultMaterial:0;AsphaltStandardMaterial:1;AsphaltWeatheredMaterial:2;VegetationGrassMaterial:3;WaterStandardMaterial:4;GlassStandardMaterial:5;FiberGlassMaterial:6;MetalAlloyMaterial:7;MetalAluminumMaterial:8;MetalAluminumOxidizedMaterial:9;PlasticStandardMaterial:10;RetroMarkingsMaterial:11;RetroSignMaterial:12;RubberStandardMaterial:13;SoilClayMaterial:14;ConcreteRoughMaterial:15;ConcreteSmoothMaterial:16;OakTreeBarkMaterial:17;FabricStandardMaterial:18;PlexiGlassStandardMaterial:19;MetalSilverMaterial:20"
+                bool omni:rtx:material:db:syncLoads = 1
+                bool omni:rtx:post:registeredCompositing:invertColorCorrection = 1
+                bool omni:rtx:post:registeredCompositing:invertToneMap = 1
+                bool omni:rtx:pt:lightcache:cached:dontResolveConflicts = 1
+                int omni:rtx:pt:maxSamplesPerLaunch = 2073600
+                int omni:rtx:pt:mgpu:maxPixelsPerRegionExponent = 12
+                color3f omni:rtx:rt:ambientLight:color = (0.1, 0.1, 0.1)
+                bool omni:rtx:rt:demoire = 0
+                bool omni:rtx:rt:ecoMode:enabled = 0
+                bool omni:rtx:rt:lightcache:spatialCache:dontResolveConflicts = 1
+                bool omni:rtx:scene:hydra:materialSyncLoads = 1
+                bool omni:rtx:scene:hydra:mdlMaterialWarmup = 1
+                uint omni:rtx:viewTile:limit = 4294967295
+                rel orderedVars = [
+                    </Render/Vars/DistanceToImagePlaneSD>,
+                    </Render/Vars/LdrColorSD>,
+                    </Render/Vars/LdrColor>,
+                ]
+                custom bool overrideClipRange = 0
+                uniform int2 resolution = (1920, 1200)
+            }
+
+            def RenderProduct "Replicator_05" (
+                prepend apiSchemas = ["OmniRtxSettingsCommonAdvancedAPI_1", "OmniRtxSettingsRtAdvancedAPI_1", "OmniRtxSettingsPtAdvancedAPI_1", "OmniRtxPostColorGradingAPI_1", "OmniRtxPostChromaticAberrationAPI_1", "OmniRtxPostBloomPhysicalAPI_1", "OmniRtxPostMatteObjectAPI_1", "OmniRtxPostCompositingAPI_1", "OmniRtxPostDofAPI_1", "OmniRtxPostMotionBlurAPI_1", "OmniRtxPostTvNoiseAPI_1", "OmniRtxPostTonemapIrayReinhardAPI_1", "OmniRtxPostDebugSettingsAPI_1", "OmniRtxDebugSettingsAPI_1"]
+                hide_in_stage_window = true
+                no_delete = true
+            )
+            {
+                rel camera = </World/hawk_manipulator/left/camera_left>
+                custom string ogPostProcessPath = "/Render/OmniverseKit/HydraTextures/Replicator_05/PostRender"
+                token omni:rtx:background:source:texture:textureMode = "repeatMirrored"
+                token omni:rtx:background:source:type = "domeLight"
+                bool omni:rtx:dlss:frameGeneration = 0
+                string omni:rtx:material:db:rtSensorNameToIdMap = "DefaultMaterial:0;AsphaltStandardMaterial:1;AsphaltWeatheredMaterial:2;VegetationGrassMaterial:3;WaterStandardMaterial:4;GlassStandardMaterial:5;FiberGlassMaterial:6;MetalAlloyMaterial:7;MetalAluminumMaterial:8;MetalAluminumOxidizedMaterial:9;PlasticStandardMaterial:10;RetroMarkingsMaterial:11;RetroSignMaterial:12;RubberStandardMaterial:13;SoilClayMaterial:14;ConcreteRoughMaterial:15;ConcreteSmoothMaterial:16;OakTreeBarkMaterial:17;FabricStandardMaterial:18;PlexiGlassStandardMaterial:19;MetalSilverMaterial:20"
+                bool omni:rtx:material:db:syncLoads = 1
+                bool omni:rtx:post:registeredCompositing:invertColorCorrection = 1
+                bool omni:rtx:post:registeredCompositing:invertToneMap = 1
+                bool omni:rtx:pt:lightcache:cached:dontResolveConflicts = 1
+                int omni:rtx:pt:maxSamplesPerLaunch = 2073600
+                int omni:rtx:pt:mgpu:maxPixelsPerRegionExponent = 12
+                color3f omni:rtx:rt:ambientLight:color = (0.1, 0.1, 0.1)
+                bool omni:rtx:rt:demoire = 0
+                bool omni:rtx:rt:ecoMode:enabled = 0
+                bool omni:rtx:rt:lightcache:spatialCache:dontResolveConflicts = 1
+                bool omni:rtx:scene:hydra:materialSyncLoads = 1
+                bool omni:rtx:scene:hydra:mdlMaterialWarmup = 1
+                uint omni:rtx:viewTile:limit = 4294967295
+                rel orderedVars = [
+                    </Render/Vars/LdrColorSD>,
+                    </Render/Vars/DistanceToImagePlaneSD>,
+                    </Render/Vars/LdrColor>,
+                ]
+                custom bool overrideClipRange = 0
+                uniform int2 resolution = (1920, 1200)
+            }
+
+            def RenderProduct "Replicator_06" (
+                prepend apiSchemas = ["OmniRtxSettingsCommonAdvancedAPI_1", "OmniRtxSettingsRtAdvancedAPI_1", "OmniRtxSettingsPtAdvancedAPI_1", "OmniRtxPostColorGradingAPI_1", "OmniRtxPostChromaticAberrationAPI_1", "OmniRtxPostBloomPhysicalAPI_1", "OmniRtxPostMatteObjectAPI_1", "OmniRtxPostCompositingAPI_1", "OmniRtxPostDofAPI_1", "OmniRtxPostMotionBlurAPI_1", "OmniRtxPostTvNoiseAPI_1", "OmniRtxPostTonemapIrayReinhardAPI_1", "OmniRtxPostDebugSettingsAPI_1", "OmniRtxDebugSettingsAPI_1"]
+                hide_in_stage_window = true
+                no_delete = true
+            )
+            {
+                rel camera = </World/hawk_manipulator/left/camera_left>
+                custom string ogPostProcessPath = "/Render/OmniverseKit/HydraTextures/Replicator_06/PostRender"
+                token omni:rtx:background:source:texture:textureMode = "repeatMirrored"
+                token omni:rtx:background:source:type = "domeLight"
+                bool omni:rtx:dlss:frameGeneration = 0
+                string omni:rtx:material:db:rtSensorNameToIdMap = "DefaultMaterial:0;AsphaltStandardMaterial:1;AsphaltWeatheredMaterial:2;VegetationGrassMaterial:3;WaterStandardMaterial:4;GlassStandardMaterial:5;FiberGlassMaterial:6;MetalAlloyMaterial:7;MetalAluminumMaterial:8;MetalAluminumOxidizedMaterial:9;PlasticStandardMaterial:10;RetroMarkingsMaterial:11;RetroSignMaterial:12;RubberStandardMaterial:13;SoilClayMaterial:14;ConcreteRoughMaterial:15;ConcreteSmoothMaterial:16;OakTreeBarkMaterial:17;FabricStandardMaterial:18;PlexiGlassStandardMaterial:19;MetalSilverMaterial:20"
+                bool omni:rtx:material:db:syncLoads = 1
+                bool omni:rtx:post:registeredCompositing:invertColorCorrection = 1
+                bool omni:rtx:post:registeredCompositing:invertToneMap = 1
+                bool omni:rtx:pt:lightcache:cached:dontResolveConflicts = 1
+                int omni:rtx:pt:maxSamplesPerLaunch = 2073600
+                int omni:rtx:pt:mgpu:maxPixelsPerRegionExponent = 12
+                color3f omni:rtx:rt:ambientLight:color = (0.1, 0.1, 0.1)
+                bool omni:rtx:rt:demoire = 0
+                bool omni:rtx:rt:ecoMode:enabled = 0
+                bool omni:rtx:rt:lightcache:spatialCache:dontResolveConflicts = 1
+                bool omni:rtx:scene:hydra:materialSyncLoads = 1
+                bool omni:rtx:scene:hydra:mdlMaterialWarmup = 1
+                uint omni:rtx:viewTile:limit = 4294967295
+                rel orderedVars = [
+                    </Render/Vars/LdrColorSD>,
+                    </Render/Vars/DistanceToImagePlaneSD>,
+                    </Render/Vars/LdrColor>,
+                ]
+                custom bool overrideClipRange = 0
+                uniform int2 resolution = (1920, 1200)
+            }
+
+            def RenderProduct "Replicator_07" (
+                prepend apiSchemas = ["OmniRtxSettingsCommonAdvancedAPI_1", "OmniRtxSettingsRtAdvancedAPI_1", "OmniRtxSettingsPtAdvancedAPI_1", "OmniRtxPostColorGradingAPI_1", "OmniRtxPostChromaticAberrationAPI_1", "OmniRtxPostBloomPhysicalAPI_1", "OmniRtxPostMatteObjectAPI_1", "OmniRtxPostCompositingAPI_1", "OmniRtxPostDofAPI_1", "OmniRtxPostMotionBlurAPI_1", "OmniRtxPostTvNoiseAPI_1", "OmniRtxPostTonemapIrayReinhardAPI_1", "OmniRtxPostDebugSettingsAPI_1", "OmniRtxDebugSettingsAPI_1"]
+                hide_in_stage_window = true
+                no_delete = true
+            )
+            {
+                rel camera = </World/hawk_manipulator/left/camera_left>
+                custom string ogPostProcessPath = "/Render/OmniverseKit/HydraTextures/Replicator_07/PostRender"
+                token omni:rtx:background:source:texture:textureMode = "repeatMirrored"
+                token omni:rtx:background:source:type = "domeLight"
+                bool omni:rtx:dlss:frameGeneration = 0
+                string omni:rtx:material:db:rtSensorNameToIdMap = "DefaultMaterial:0;AsphaltStandardMaterial:1;AsphaltWeatheredMaterial:2;VegetationGrassMaterial:3;WaterStandardMaterial:4;GlassStandardMaterial:5;FiberGlassMaterial:6;MetalAlloyMaterial:7;MetalAluminumMaterial:8;MetalAluminumOxidizedMaterial:9;PlasticStandardMaterial:10;RetroMarkingsMaterial:11;RetroSignMaterial:12;RubberStandardMaterial:13;SoilClayMaterial:14;ConcreteRoughMaterial:15;ConcreteSmoothMaterial:16;OakTreeBarkMaterial:17;FabricStandardMaterial:18;PlexiGlassStandardMaterial:19;MetalSilverMaterial:20"
+                bool omni:rtx:material:db:syncLoads = 1
+                bool omni:rtx:post:registeredCompositing:invertColorCorrection = 1
+                bool omni:rtx:post:registeredCompositing:invertToneMap = 1
+                bool omni:rtx:pt:lightcache:cached:dontResolveConflicts = 1
+                int omni:rtx:pt:maxSamplesPerLaunch = 2073600
+                int omni:rtx:pt:mgpu:maxPixelsPerRegionExponent = 12
+                color3f omni:rtx:rt:ambientLight:color = (0.1, 0.1, 0.1)
+                bool omni:rtx:rt:demoire = 0
+                bool omni:rtx:rt:ecoMode:enabled = 0
+                bool omni:rtx:rt:lightcache:spatialCache:dontResolveConflicts = 1
+                bool omni:rtx:scene:hydra:materialSyncLoads = 1
+                bool omni:rtx:scene:hydra:mdlMaterialWarmup = 1
+                uint omni:rtx:viewTile:limit = 4294967295
+                rel orderedVars = [
+                    </Render/Vars/DistanceToImagePlaneSD>,
+                    </Render/Vars/LdrColorSD>,
+                    </Render/Vars/LdrColor>,
+                ]
+                custom bool overrideClipRange = 0
+                uniform int2 resolution = (1920, 1200)
+            }
+
+            def RenderProduct "Replicator_08" (
+                prepend apiSchemas = ["OmniRtxSettingsCommonAdvancedAPI_1", "OmniRtxSettingsRtAdvancedAPI_1", "OmniRtxSettingsPtAdvancedAPI_1", "OmniRtxPostColorGradingAPI_1", "OmniRtxPostChromaticAberrationAPI_1", "OmniRtxPostBloomPhysicalAPI_1", "OmniRtxPostMatteObjectAPI_1", "OmniRtxPostCompositingAPI_1", "OmniRtxPostDofAPI_1", "OmniRtxPostMotionBlurAPI_1", "OmniRtxPostTvNoiseAPI_1", "OmniRtxPostTonemapIrayReinhardAPI_1", "OmniRtxPostDebugSettingsAPI_1", "OmniRtxDebugSettingsAPI_1"]
+                hide_in_stage_window = true
+                no_delete = true
+            )
+            {
+                rel camera = </World/hawk_manipulator/left/camera_left>
+                custom string ogPostProcessPath = "/Render/OmniverseKit/HydraTextures/Replicator_08/PostRender"
+                bool omni:rtx:material:db:syncLoads = 1
+                bool omni:rtx:rt:ecoMode:enabled = 0
+                bool omni:rtx:scene:hydra:materialSyncLoads = 1
+                rel orderedVars = [
+                    </Render/Vars/DistanceToImagePlaneSD>,
+                    </Render/Vars/LdrColorSD>,
+                    </Render/Vars/LdrColor>,
+                ]
+                custom bool overrideClipRange = 0
+                uniform int2 resolution = (1920, 1200)
+            }
+        }
+    }
+
+    def RenderSettings "OmniverseGlobalRenderSettings" (
+        prepend apiSchemas = ["OmniRtxSettingsGlobalRtAdvancedAPI_1", "OmniRtxSettingsGlobalPtAdvancedAPI_1"]
+        no_delete = true
+    )
+    {
+        rel products = [
+            </Render/OmniverseKit/HydraTextures/omni_kit_widget_viewport_ViewportTexture_0>,
+            </Render/OmniverseKit/HydraTextures/Replicator_01>,
+            </Render/OmniverseKit/HydraTextures/Replicator_02>,
+            </Render/OmniverseKit/HydraTextures/Replicator_03>,
+            </Render/OmniverseKit/HydraTextures/Replicator_04>,
+            </Render/OmniverseKit/HydraTextures/Replicator_05>,
+            </Render/OmniverseKit/HydraTextures/Replicator_06>,
+            </Render/OmniverseKit/HydraTextures/Replicator_07>,
+            </Render/OmniverseKit/HydraTextures/Replicator_08>,
+        ]
+    }
+
+    def "Vars"
+    {
+        def RenderVar "LdrColor" (
+            hide_in_stage_window = true
+            no_delete = true
+        )
+        {
+            uniform string sourceName = "LdrColor"
+        }
+    }
+
+    over "PostProcess"
+    {
+        over "SDGPipeline"
+        {
+            over "DispatchSync"
+            {
+                custom int2[] inputs:simTimesToWrite = [(135454, 5), (162545, 6), (406363, 15), (270909, 10), (406364, 15), (812729, 30), (27091, 1), (812731, 30), (406366, 15), (270911, 10)]
+            }
+        }
+    }
+}
+
+def Xform "World"
+{
+    quatd xformOp:orient = (1, 0, 0, 0)
+    double3 xformOp:scale = (1, 1, 1)
+    double3 xformOp:translate = (0, 0, 0)
+    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+    def OmniGraph "front_hawk_manipulator"
+    {
+        token evaluationMode = "Automatic"
+        token evaluator:type = "execution"
+        token fabricCacheBacking = "Shared"
+        int2 fileFormatVersion = (1, 9)
+        token pipelineStage = "pipelineStageSimulation"
+
+        def OmniGraphNode "on_playback_tick" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            token node:type = "omni.graph.action.OnPlaybackTick"
+            int node:typeVersion = 2
+            custom double outputs:deltaSeconds
+            custom double outputs:frame
+            custom uint outputs:tick (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom double outputs:time
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (-416.6529, 136.18164)
+        }
+
+        def OmniGraphNode "ros2_context" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom uchar inputs:domain_id
+            custom bool inputs:useDomainIDEnvVar = 1
+            token node:type = "isaacsim.ros2.bridge.ROS2Context"
+            int node:typeVersion = 2
+            custom uint64 outputs:context
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (562.87915, -391.58344)
+        }
+
+        def OmniGraphNode "left_camera_render_product" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom rel inputs:cameraPrim = </World/hawk_manipulator/left/camera_left> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom bool inputs:enabled = 1
+            custom uint inputs:execIn
+            delete uint inputs:execIn.connect = [
+                </World/front_hawk_manipulator/on_stage_event.outputs:execOut>,
+                </World/front_hawk_manipulator/on_playback_tick.outputs:tick>,
+            ]
+            prepend uint inputs:execIn.connect = </World/front_hawk_manipulator/isaac_run_one_simualtion_frame.outputs:step>
+            custom uint inputs:height = 1200
+            custom uint inputs:width = 1920
+            token node:type = "isaacsim.core.nodes.IsaacCreateRenderProduct"
+            int node:typeVersion = 2
+            custom uint outputs:execOut (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom token outputs:renderProductPath
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (449.87808, 38.92283)
+        }
+
+        def OmniGraphNode "left_camera_frame_id" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom string inputs:value = "front_stereo_camera_left"
+            token node:type = "omni.graph.nodes.ConstantString"
+            int node:typeVersion = 1
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (372.21716, -134.77046)
+        }
+
+        def OmniGraphNode "isaac_run_one_simualtion_frame" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            prepend uint inputs:execIn.connect = </World/front_hawk_manipulator/on_playback_tick.outputs:tick>
+            token node:type = "isaacsim.core.nodes.OgnIsaacRunOneSimulationFrame"
+            int node:typeVersion = 1
+            custom uint outputs:step (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (-6.4847665, 74.76161)
+        }
+
+        def OmniGraphNode "left_camera_publish_depth" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom uint64 inputs:context
+            prepend uint64 inputs:context.connect = </World/front_hawk_manipulator/ros2_context.outputs:context>
+            custom bool inputs:enabled = 1
+            custom bool inputs:enableSemanticLabels
+            custom uint inputs:execIn
+            prepend uint inputs:execIn.connect = </World/front_hawk_manipulator/left_camera_render_product.outputs:execOut>
+            custom string inputs:frameId
+            prepend string inputs:frameId.connect = </World/front_hawk_manipulator/left_camera_frame_id.inputs:value>
+            custom uint inputs:frameSkipCount
+            custom string inputs:nodeNamespace = "front_stereo_camera/depth"
+            custom string inputs:qosProfile
+            custom uint64 inputs:queueSize
+            custom token inputs:renderProductPath
+            prepend token inputs:renderProductPath.connect = </World/front_hawk_manipulator/left_camera_render_product.outputs:renderProductPath>
+            custom bool inputs:resetSimulationTimeOnStop = 1
+            custom string inputs:semanticLabelsTopicName
+            custom float2 inputs:stereoOffset
+            custom string inputs:topicName = "ground_truth"
+            custom token inputs:type = "depth" (
+                allowedTokens = ["rgb", "depth", "depth_pcl", "instance_segmentation", "semantic_segmentation", "bbox_2d_tight", "bbox_2d_loose", "bbox_3d", "camera_info"]
+            )
+            custom bool inputs:useSystemTime
+            custom token inputs:viewport
+            token node:type = "isaacsim.ros2.bridge.ROS2CameraHelper"
+            int node:typeVersion = 2
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (1063.471, 459.62363)
+        }
+
+        def OmniGraphNode "left_camera_info_helper" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom uint64 inputs:context
+            prepend uint64 inputs:context.connect = </World/front_hawk_manipulator/ros2_context.outputs:context>
+            custom bool inputs:enabled
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            prepend uint inputs:execIn.connect = </World/front_hawk_manipulator/left_camera_render_product.outputs:execOut>
+            custom string inputs:frameId = "front_stereo_camera_right"
+            prepend string inputs:frameId.connect = </World/front_hawk_manipulator/left_camera_frame_id.inputs:value>
+            custom string inputs:frameIdRight = ""
+            prepend string inputs:frameIdRight.connect = </World/front_hawk_manipulator/right_camera_frame_id.inputs:value>
+            custom uint inputs:frameSkipCount
+            custom string inputs:nodeNamespace = "front_stereo_camera"
+            custom string inputs:qosProfile
+            custom uint64 inputs:queueSize
+            custom token inputs:renderProductPath
+            prepend token inputs:renderProductPath.connect = </World/front_hawk_manipulator/left_camera_render_product.outputs:renderProductPath>
+            custom token inputs:renderProductPathRight
+            prepend token inputs:renderProductPathRight.connect = </World/front_hawk_manipulator/right_camera_render_product.outputs:renderProductPath>
+            custom bool inputs:resetSimulationTimeOnStop = 1
+            custom string inputs:topicName = "left/camera_info"
+            custom string inputs:topicNameRight = "right/camera_info"
+            custom bool inputs:useSystemTime
+            token node:type = "isaacsim.ros2.bridge.ROS2CameraInfoHelper"
+            int node:typeVersion = 1
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (1265.5884, 9.344343)
+        }
+
+        def OmniGraphNode "left_camera_publish_image" (
+            apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom uint64 inputs:context
+            prepend uint64 inputs:context.connect = </World/front_hawk_manipulator/ros2_context.outputs:context>
+            custom bool inputs:enabled = 1
+            custom bool inputs:enableSemanticLabels
+            custom uint inputs:execIn
+            prepend uint inputs:execIn.connect = [
+                </World/front_hawk_manipulator/right_camera_render_product.outputs:execOut>,
+                </World/front_hawk_manipulator/left_camera_render_product.outputs:execOut>,
+            ]
+            custom string inputs:frameId
+            prepend string inputs:frameId.connect = [
+                </World/front_hawk_manipulator/right_camera_frame_id.inputs:value>,
+                </World/front_hawk_manipulator/left_camera_frame_id.inputs:value>,
+            ]
+            custom uint inputs:frameSkipCount
+            custom string inputs:nodeNamespace = "front_stereo_camera/left"
+            prepend string inputs:nodeNamespace.connect = </World/front_hawk_manipulator/right_camera_namespace.inputs:value>
+            custom string inputs:qosProfile
+            custom uint64 inputs:queueSize
+            custom token inputs:renderProductPath
+            prepend token inputs:renderProductPath.connect = [
+                </World/front_hawk_manipulator/right_camera_render_product.outputs:renderProductPath>,
+                </World/front_hawk_manipulator/left_camera_render_product.outputs:renderProductPath>,
+            ]
+            custom bool inputs:resetSimulationTimeOnStop = 1
+            custom string inputs:semanticLabelsTopicName
+            custom float2 inputs:stereoOffset
+            custom string inputs:topicName = "image_raw"
+            custom token inputs:type (
+                allowedTokens = ["rgb", "depth", "depth_pcl", "instance_segmentation", "semantic_segmentation", "bbox_2d_tight", "bbox_2d_loose", "bbox_3d", "camera_info"]
+            )
+            custom bool inputs:useSystemTime
+            custom token inputs:viewport
+            token node:type = "isaacsim.ros2.bridge.ROS2CameraHelper"
+            int node:typeVersion = 2
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (1241.79, -456.9147)
+        }
+    }
+
+    def "hawk_manipulator" (
+        prepend payload = @https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Sensors/LeopardImaging/Hawk/hawk_v1.1_nominal.usd@
+    )
+    {
+        quatd xformOp:orient = (0.9238795325112867, 0, 0.3826834323650898, 0)
+        double3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (-1.1051764048822426, 2.1411206717469123e-16, 0.9415565291735672)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        over "left"
+        {
+            over "camera_left"
+            {
+                custom token cameraProjectionType = "pinhole"
+                custom string isaac:nameOverride = "front_stereo_camera_left" (
+                    displayName = "Name Override"
+                    doc = "Name override for prim lookup in base name search"
+                )
+                bool omni:kit:cameraLock = 0
+                custom uniform vector3d omni:kit:centerOfInterest = (0, 0, -0.00000618658739759504)
+                custom string physicalDistortionModel = "plumb_bob"
+                quatd xformOp:orient = (-0.4534556543364175, -0.5323820102684967, 0.5338877757507727, 0.47530117567359165)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (0.2897911929138421, 0.009470026736860485, -0.04434790009386501)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+        }
+
+        over "right"
+        {
+            over "camera_right"
+            {
+                custom token cameraProjectionType = "pinhole"
+                custom string isaac:nameOverride = "front_stereo_camera_right" (
+                    displayName = "Name Override"
+                    doc = "Name override for prim lookup in base name search"
+                )
+                custom string physicalDistortionModel = "pinhole"
+            }
+        }
+
+        over "meshes"
+        {
+            token visibility = "invisible"
+            double3 xformOp:translate = (0, 0, 0)
+        }
+    }
+
+    def Cube "target1_frame"
+    {
+        float3[] extent = [(-0.5, -0.5, -0.5), (0.5, 0.5, 0.5)]
+        double size = 1
+        token visibility = "invisible"
+        quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
+        double3 xformOp:scale = (0.05, 0.05, 0.05)
+        double3 xformOp:translate = (0, 0.35, 0.35)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
+
+    def Cube "target2_frame"
+    {
+        float3[] extent = [(-0.5, -0.5, -0.5), (0.5, 0.5, 0.5)]
+        double size = 1
+        token visibility = "invisible"
+        quatd xformOp:orient = (6.123233995736766e-17, 1, 0, 0)
+        double3 xformOp:scale = (0.05, 0.05, 0.05)
+        double3 xformOp:translate = (-0.35, 0, 0.5)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
+
+    def "small_KLT" (
+        prepend payload = @https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Props/KLT_Bin/small_KLT.usd@
+    )
+    {
+        float3 xformOp:rotateZYX = (0, 0, 0)
+        float3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (-0.5574693534868409, -0.2591009638754489, 0.061344918670859436)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateZYX", "xformOp:scale"]
+
+        over "Visuals"
+        {
+            over "FOF_Mesh_Magenta_Box"
+            {
+                float3 xformOp:rotateXYZ = (90.00001, -0, 0)
+                float3 xformOp:scale = (0.00999999, 0.00999999, 0.00999999)
+                double3 xformOp:translate = (-0.014628979954044663, 2.955445438379556e-8, -0.06817653543295457)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+        }
+
+        over "DomeLight"
+        {
+            quatd xformOp:orient = (1, 0, 0, 0)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0, 0, -0.07809598804638994)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+    }
+
+    def "soup_can" (
+        prepend apiSchemas = ["PhysicsMeshCollisionAPI", "PhysxRigidBodyAPI", "PhysicsCollisionAPI", "PhysicsRigidBodyAPI"]
+        prepend payload = @https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Props/YCB/Axis_Aligned_Physics/005_tomato_soup_can.usd@
+        prepend references = @https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Props/YCB/Axis_Aligned_Physics/005_tomato_soup_can.usd@
+    )
+    {
+        vector3f physics:angularVelocity = (4.9303326e-9, -5.0714952e-9, 4.3525893e-13)
+        uniform token physics:approximation = "convexDecomposition"
+        vector3f physics:velocity = (-7.2508353e-12, -7.0490723e-12, 0)
+        bool physxRigidBody:disableGravity = 0
+        float physxRigidBody:sleepThreshold = 0
+        token visibility = "inherited"
+        quatf xformOp:orient = (0.040026918, 0.040026918, 0.70597297, 0.70597297)
+        float3 xformOp:rotateZYX = (0, 0, 0)
+        float3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (0.08546868464161253, -0.004781084382762732, 0.06078650154618693)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        over "_05_tomato_soup_can"
+        {
+            token visibility = "inherited"
+            float3 xformOp:rotateXYZ = (0, -90, 180)
+            float3 xformOp:scale = (0.01, 0.01, 0.01)
+            double3 xformOp:translate = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+    }
+
+    def "ur10e_robotiq2f_140_ROS" (
+        prepend payload = @../Robots/ur10e_robotiq2f-140_ROS.usd@
+    )
+    {
+        quatd xformOp:orient = (-0.7071067690849304, 0, 0, 0.7071067690849304)
+        double3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (-0.21814000606536865, -0.571590006351471, 0.12999999523162842)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        over "ur10e_robotiq2f_140"
+        {
+            over "PhysicsScene"
+            {
+                uint physxScene:timeStepsPerSecond = 60
+            }
+
+            over "Robotiq_2F_140_config"
+            {
+                over "left_inner_finger"
+                {
+                    float physxContactReport:threshold = 0
+                    float physxRigidBody:sleepThreshold = 0
+                }
+            }
+
+            over "gripper"
+            {
+                over "left_inner_finger"
+                {
+                    float physxContactReport:threshold = 0
+                    float physxRigidBody:sleepThreshold = 0
+                }
+
+                over "robotiq_base_link"
+                {
+                }
+
+                over "left_outer_knuckle"
+                {
+                }
+
+                over "left_outer_finger"
+                {
+                }
+
+                over "left_inner_knuckle"
+                {
+                }
+
+                over "right_outer_knuckle"
+                {
+                }
+
+                over "right_outer_finger"
+                {
+                }
+
+                over "right_inner_finger"
+                {
+                }
+
+                over "right_inner_knuckle"
+                {
+                }
+
+                over "finger_joint"
+                {
+                    float state:angular:physics:position = 0
+                    float state:angular:physics:velocity = 0
+                }
+
+                over "right_outer_knuckle_joint"
+                {
+                    float state:angular:physics:position = 0
+                    float state:angular:physics:velocity = 0
+                }
+
+                over "left_outer_finger_joint"
+                {
+                    float state:angular:physics:position = 0
+                    float state:angular:physics:velocity = 0
+                }
+
+                over "right_outer_finger_joint"
+                {
+                    float state:angular:physics:position = 0
+                    float state:angular:physics:velocity = 0
+                }
+
+                over "left_inner_finger_joint"
+                {
+                    float state:angular:physics:position = 0
+                    float state:angular:physics:velocity = 0
+                }
+
+                over "right_inner_finger_joint"
+                {
+                    float state:angular:physics:position = 0
+                    float state:angular:physics:velocity = 0
+                }
+
+                over "left_inner_finger_pad_joint"
+                {
+                    float state:angular:physics:position = 0
+                    float state:angular:physics:velocity = 0
+                }
+
+                over "right_inner_finger_pad_joint"
+                {
+                    float state:angular:physics:position = 0
+                    float state:angular:physics:velocity = 0
+                }
+            }
+
+            over "base_link" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                string isaac:nameOverride (
+                    displayName = "Name Override"
+                    doc = "Name override for prim lookup in base name search"
+                )
+                bool physxRigidBody:disableGravity = 1
+            }
+
+            over "shoulder_link" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                bool physxRigidBody:disableGravity = 1
+            }
+
+            over "upper_arm_link" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                bool physxRigidBody:disableGravity = 1
+            }
+
+            over "forearm_link" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                bool physxRigidBody:disableGravity = 1
+            }
+
+            over "wrist_1_link" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                bool physxRigidBody:disableGravity = 1
+            }
+
+            over "wrist_2_link" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                bool physxRigidBody:disableGravity = 1
+            }
+
+            over "wrist_3_link" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                string isaac:nameOverride (
+                    displayName = "Name Override"
+                    doc = "Name override for prim lookup in base name search"
+                )
+                bool physxRigidBody:disableGravity = 1
+            }
+
+            over "joints"
+            {
+                over "shoulder_pan_joint"
+                {
+                    float drive:angular:physics:damping = 1.267109
+                    float drive:angular:physics:stiffness = 23.038345
+                    float drive:angular:physics:targetPosition = 150.93
+                    float physxJoint:maxJointVelocity = 124.61832
+                    float state:angular:physics:position = 0
+                    float state:angular:physics:velocity = 0
+                }
+
+                over "shoulder_lift_joint"
+                {
+                    float drive:angular:physics:damping = 1.267109
+                    float drive:angular:physics:stiffness = 23.038345
+                    float drive:angular:physics:targetPosition = -50.19
+                    float physxJoint:maxJointVelocity = 124.61832
+                    float state:angular:physics:position = 0
+                    float state:angular:physics:velocity = 0
+                }
+
+                over "elbow_joint"
+                {
+                    float drive:angular:physics:damping = 0.8552113
+                    float drive:angular:physics:stiffness = 5.2359877
+                    float drive:angular:physics:targetPosition = 88.87
+                    float physxJoint:maxJointVelocity = 124.61832
+                    float state:angular:physics:position = 0
+                    float state:angular:physics:velocity = 0
+                }
+
+                over "wrist_1_joint"
+                {
+                    float drive:angular:physics:damping = 0.51138145
+                    float drive:angular:physics:stiffness = 3.7699113
+                    float drive:angular:physics:targetPosition = -131.34
+                    float physxJoint:maxJointVelocity = 124.61832
+                    float state:angular:physics:position = 0
+                    float state:angular:physics:velocity = 0
+                }
+
+                over "wrist_2_joint"
+                {
+                    float drive:angular:physics:damping = 0.51138145
+                    float drive:angular:physics:stiffness = 3.7699113
+                    float drive:angular:physics:targetPosition = -89.41
+                    float physxJoint:maxJointVelocity = 124.61832
+                    float state:angular:physics:position = 0
+                    float state:angular:physics:velocity = 0
+                }
+
+                over "wrist_3_joint"
+                {
+                    float drive:angular:physics:damping = 0.51138145
+                    float drive:angular:physics:stiffness = 3.7699113
+                    float drive:angular:physics:targetPosition = -116.8
+                    float physxJoint:maxJointVelocity = 124.61832
+                    float state:angular:physics:position = 0
+                    float state:angular:physics:velocity = 0
+                }
+            }
+
+            over "root_joint"
+            {
+                int physxArticulation:solverPositionIterationCount = 192
+                quatd xformOp:orient = (1, 0, 0, 1.4901161193847656e-8)
+                double3 xformOp:translate = (0, 0, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            over "ee_link"
+            {
+                quatd xformOp:orient = (0.7071067690849304, 0, 0, 0.7071067690849304)
+                double3 xformOp:translate = (1.1842498779296875, 0.2907000184059143, 0.06084999442100525)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                over "left_inner_finger"
+                {
+                    string isaac:nameOverride (
+                        displayName = "Name Override"
+                        doc = "Name override for prim lookup in base name search"
+                    )
+                    float physxContactReport:threshold = 0
+                    float physxRigidBody:sleepThreshold = 0
+
+                    over "Fingertip_01" (
+                        prepend apiSchemas = ["PhysxSDFMeshCollisionAPI"]
+                    )
+                    {
+                        uniform token physics:approximation = "sdf"
+                    }
+
+                    over "Finger4_01" (
+                        prepend apiSchemas = ["PhysxSDFMeshCollisionAPI"]
+                    )
+                    {
+                        uniform token physics:approximation = "sdf"
+                    }
+                }
+
+                over "robotiq_base_link"
+                {
+                }
+
+                over "left_outer_knuckle" (
+                    prepend apiSchemas = ["PhysxSDFMeshCollisionAPI"]
+                )
+                {
+                    string isaac:nameOverride (
+                        displayName = "Name Override"
+                        doc = "Name override for prim lookup in base name search"
+                    )
+                    uniform token physics:approximation = "sdf"
+                }
+
+                over "left_outer_finger" (
+                    prepend apiSchemas = ["PhysxSDFMeshCollisionAPI"]
+                )
+                {
+                    string isaac:nameOverride (
+                        displayName = "Name Override"
+                        doc = "Name override for prim lookup in base name search"
+                    )
+                    uniform token physics:approximation = "sdf"
+                }
+
+                over "left_inner_knuckle" (
+                    prepend apiSchemas = ["PhysxSDFMeshCollisionAPI"]
+                )
+                {
+                    string isaac:nameOverride (
+                        displayName = "Name Override"
+                        doc = "Name override for prim lookup in base name search"
+                    )
+                    uniform token physics:approximation = "sdf"
+                }
+
+                over "right_outer_knuckle" (
+                    prepend apiSchemas = ["PhysxSDFMeshCollisionAPI"]
+                )
+                {
+                    string isaac:nameOverride (
+                        displayName = "Name Override"
+                        doc = "Name override for prim lookup in base name search"
+                    )
+                    uniform token physics:approximation = "sdf"
+                }
+
+                over "right_outer_finger" (
+                    prepend apiSchemas = ["PhysxSDFMeshCollisionAPI"]
+                )
+                {
+                    string isaac:nameOverride (
+                        displayName = "Name Override"
+                        doc = "Name override for prim lookup in base name search"
+                    )
+                    uniform token physics:approximation = "sdf"
+                }
+
+                over "right_inner_finger"
+                {
+                    string isaac:nameOverride (
+                        displayName = "Name Override"
+                        doc = "Name override for prim lookup in base name search"
+                    )
+
+                    over "Finger4_01" (
+                        prepend apiSchemas = ["PhysxSDFMeshCollisionAPI"]
+                    )
+                    {
+                        uniform token physics:approximation = "sdf"
+                    }
+
+                    over "Fingertip_01" (
+                        prepend apiSchemas = ["PhysxSDFMeshCollisionAPI"]
+                    )
+                    {
+                        uniform token physics:approximation = "sdf"
+                    }
+                }
+
+                over "right_inner_knuckle"
+                {
+                    string isaac:nameOverride (
+                        displayName = "Name Override"
+                        doc = "Name override for prim lookup in base name search"
+                    )
+                    bool physxRigidBody:disableGravity = 1
+                }
+
+                over "finger_joint"
+                {
+                    float drive:angular:physics:damping = 8.94
+                    float drive:angular:physics:stiffness = 20
+                    float drive:angular:physics:targetPosition = 0
+                    bool physics:collisionEnabled = 0
+                    float state:angular:physics:position = 0
+                    float state:angular:physics:velocity = 0
+                    quatd xformOp:orient = (1, 0, 0, 0)
+                    double3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                over "right_outer_knuckle_joint"
+                {
+                    float drive:angular:physics:targetPosition = 0
+                    float state:angular:physics:position = 0
+                    float state:angular:physics:velocity = 0
+                }
+
+                over "left_outer_finger_joint"
+                {
+                    float state:angular:physics:position = 0
+                    float state:angular:physics:velocity = 0
+                }
+
+                over "right_outer_finger_joint"
+                {
+                    float drive:angular:physics:damping = 20
+                    float drive:angular:physics:stiffness = 400
+                    float state:angular:physics:position = 0
+                    float state:angular:physics:velocity = 0
+                }
+
+                over "left_inner_finger_joint"
+                {
+                    float drive:angular:physics:damping = 20
+                    float drive:angular:physics:stiffness = 400
+                    float state:angular:physics:position = 0
+                    float state:angular:physics:velocity = 0
+                }
+
+                over "right_inner_finger_joint"
+                {
+                    float drive:angular:physics:damping = 20
+                    float drive:angular:physics:stiffness = 400
+                    float state:angular:physics:position = 0
+                    float state:angular:physics:velocity = 0
+                }
+
+                over "left_inner_finger_pad_joint"
+                {
+                    float drive:angular:physics:damping = 20
+                    float drive:angular:physics:stiffness = 400
+                    float state:angular:physics:position = 0
+                    float state:angular:physics:velocity = 0
+                }
+
+                over "right_inner_finger_pad_joint"
+                {
+                    float drive:angular:physics:damping = 20
+                    float drive:angular:physics:stiffness = 400
+                    float state:angular:physics:position = 0
+                    float state:angular:physics:velocity = 0
+                }
+            }
+
+            over "ActionGraph"
+            {
+            }
+        }
+
+        over "ur_action_graph"
+        {
+            token pipelineStage = "pipelineStageOnDemand"
+
+            over "articulation_controller"
+            {
+                custom uint inputs:execIn
+                delete uint inputs:execIn.connect = </World/ur10e_robotiq2f_140_ROS/ur_action_graph/on_playback_tick.outputs:tick>
+                prepend uint inputs:execIn.connect = </World/ur10e_robotiq2f_140_ROS/ur_action_graph/on_physics_step.outputs:step>
+                uniform float2 ui:nodegraph:node:pos = (-483.36502, -415.04755)
+            }
+
+            over "on_playback_tick" (
+                active = false
+            )
+            {
+                uniform float2 ui:nodegraph:node:pos = (-1841.2812, -384.48508)
+            }
+
+            def OmniGraphNode "on_physics_step" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                token node:type = "isaacsim.core.nodes.OnPhysicsStep"
+                int node:typeVersion = 1
+                custom double outputs:deltaSimulationTime
+                custom double outputs:deltaSystemTime
+                custom uint outputs:step (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1559.7438, -214.93877)
+            }
+
+            over "ros2_publish_joint_state"
+            {
+                custom uint inputs:execIn
+                delete uint inputs:execIn.connect = </World/ur10e_robotiq2f_140_ROS/ur_action_graph/on_playback_tick.outputs:tick>
+                prepend uint inputs:execIn.connect = </World/ur10e_robotiq2f_140_ROS/ur_action_graph/on_physics_step.outputs:step>
+            }
+
+            over "ros2_subscribe_joint_state"
+            {
+                custom uint inputs:execIn
+                delete uint inputs:execIn.connect = </World/ur10e_robotiq2f_140_ROS/ur_action_graph/on_playback_tick.outputs:tick>
+                prepend uint inputs:execIn.connect = </World/ur10e_robotiq2f_140_ROS/ur_action_graph/on_physics_step.outputs:step>
+            }
+
+            over "isaac_read_simulation_time"
+            {
+                custom uint64 inputs:referenceTimeDenominator
+                custom int64 inputs:referenceTimeNumerator
+            }
+        }
+    }
+
+    def OmniGraph "transform_tree_odometry_ur_nvblox"
+    {
+        token evaluationMode = "Automatic"
+        token evaluator:type = "execution"
+        token fabricCacheBacking = "Shared"
+        int2 fileFormatVersion = (1, 9)
+        token pipelineStage = "pipelineStageSimulation"
+
+        def OmniGraphNode "on_playback_tick" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            token node:type = "omni.graph.action.OnPlaybackTick"
+            int node:typeVersion = 2
+            custom double outputs:deltaSeconds
+            custom double outputs:frame
+            custom uint outputs:tick (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom double outputs:time
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (397.9396, 178.86125)
+        }
+
+        def OmniGraphNode "isaac_compute_odometry_node" (
+            active = true
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom rel inputs:chassisPrim = </World/ur10e_robotiq2f_140_ROS/ur10e_robotiq2f_140/base_link> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom uint inputs:execIn
+            prepend uint inputs:execIn.connect = </World/transform_tree_odometry_ur_nvblox/on_playback_tick.outputs:tick>
+            token node:type = "isaacsim.core.nodes.IsaacComputeOdometry"
+            int node:typeVersion = 1
+            custom vector3d outputs:angularAcceleration
+            custom vector3d outputs:angularVelocity
+            custom uint outputs:execOut (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom vector3d outputs:globalLinearAcceleration
+            custom vector3d outputs:globalLinearVelocity
+            custom vector3d outputs:linearAcceleration
+            custom vector3d outputs:linearVelocity
+            custom quatd outputs:orientation
+            custom vector3d outputs:position
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (1091.6243, 444.89316)
+        }
+
+        def OmniGraphNode "ros2_publish_raw_transform_tree" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom string inputs:childFrameId = "base_link"
+            custom uint64 inputs:context
+            prepend uint64 inputs:context.connect = </World/transform_tree_odometry_ur_nvblox/ros2_context.outputs:context>
+            custom uint inputs:execIn
+            prepend uint inputs:execIn.connect = </World/transform_tree_odometry_ur_nvblox/on_playback_tick.outputs:tick>
+            custom string inputs:nodeNamespace
+            prepend string inputs:nodeNamespace.connect = </World/transform_tree_odometry_ur_nvblox/node_namespace.inputs:value>
+            custom string inputs:parentFrameId = "odom"
+            custom string inputs:qosProfile
+            custom uint64 inputs:queueSize
+            custom quatd inputs:rotation
+            prepend quatd inputs:rotation.connect = </World/transform_tree_odometry_ur_nvblox/isaac_compute_odometry_node.outputs:orientation>
+            custom bool inputs:staticPublisher
+            custom double inputs:timeStamp
+            prepend double inputs:timeStamp.connect = </World/transform_tree_odometry_ur_nvblox/isaac_read_simulation_time.outputs:simulationTime>
+            custom string inputs:topicName
+            custom vector3d inputs:translation
+            prepend vector3d inputs:translation.connect = </World/transform_tree_odometry_ur_nvblox/isaac_compute_odometry_node.outputs:position>
+            token node:type = "isaacsim.ros2.bridge.ROS2PublishRawTransformTree"
+            int node:typeVersion = 1
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (1234.2279, 901.80316)
+        }
+
+        def OmniGraphNode "ros2_publish_odometry" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom vector3d inputs:angularVelocity
+            prepend vector3d inputs:angularVelocity.connect = </World/transform_tree_odometry_ur_nvblox/isaac_compute_odometry_node.outputs:angularVelocity>
+            custom string inputs:chassisFrameId
+            custom uint64 inputs:context
+            prepend uint64 inputs:context.connect = </World/transform_tree_odometry_ur_nvblox/ros2_context.outputs:context>
+            custom uint inputs:execIn
+            prepend uint inputs:execIn.connect = </World/transform_tree_odometry_ur_nvblox/on_playback_tick.outputs:tick>
+            custom vector3d inputs:linearVelocity
+            prepend vector3d inputs:linearVelocity.connect = </World/transform_tree_odometry_ur_nvblox/isaac_compute_odometry_node.outputs:linearVelocity>
+            custom string inputs:nodeNamespace
+            prepend string inputs:nodeNamespace.connect = </World/transform_tree_odometry_ur_nvblox/node_namespace.inputs:value>
+            custom string inputs:odomFrameId
+            custom quatd inputs:orientation
+            prepend quatd inputs:orientation.connect = </World/transform_tree_odometry_ur_nvblox/isaac_compute_odometry_node.outputs:orientation>
+            custom vector3d inputs:position
+            prepend vector3d inputs:position.connect = </World/transform_tree_odometry_ur_nvblox/isaac_compute_odometry_node.outputs:position>
+            custom bool inputs:publishRawVelocities
+            custom string inputs:qosProfile
+            custom uint64 inputs:queueSize
+            custom vector3d inputs:robotFront
+            custom double inputs:timeStamp
+            prepend double inputs:timeStamp.connect = </World/transform_tree_odometry_ur_nvblox/isaac_read_simulation_time.outputs:simulationTime>
+            custom string inputs:topicName
+            token node:type = "isaacsim.ros2.bridge.ROS2PublishOdometry"
+            int node:typeVersion = 1
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (1532.5618, 506.84268)
+        }
+
+        def OmniGraphNode "isaac_read_simulation_time" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom uint64 inputs:referenceTimeDenominator
+            custom int64 inputs:referenceTimeNumerator
+            custom bool inputs:resetOnStop = 1
+            custom int64 inputs:swhFrameNumber
+            token node:type = "isaacsim.core.nodes.IsaacReadSimulationTime"
+            int node:typeVersion = 1
+            custom double outputs:simulationTime = 0
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (592.99255, -6.022416)
+        }
+
+        def OmniGraphNode "tf_tree_base_link_to_sensors" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom uint64 inputs:context
+            prepend uint64 inputs:context.connect = </World/transform_tree_odometry_ur_nvblox/ros2_context.outputs:context>
+            custom uint inputs:execIn
+            prepend uint inputs:execIn.connect = </World/transform_tree_odometry_ur_nvblox/on_playback_tick.outputs:tick>
+            custom string inputs:nodeNamespace
+            prepend string inputs:nodeNamespace.connect = </World/transform_tree_odometry_ur_nvblox/node_namespace.inputs:value>
+            custom rel inputs:parentPrim = </World/ur10e_robotiq2f_140_ROS/ur10e_robotiq2f_140/ur10e/base_link> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom string inputs:qosProfile
+            custom uint64 inputs:queueSize
+            custom bool inputs:staticPublisher = 1
+            custom rel inputs:targetPrims = </World/hawk_manipulator/left/camera_left> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom double inputs:timeStamp
+            prepend double inputs:timeStamp.connect = </World/transform_tree_odometry_ur_nvblox/isaac_read_simulation_time.outputs:simulationTime>
+            custom string inputs:topicName = "tf_static"
+            token node:type = "isaacsim.ros2.bridge.ROS2PublishTransformTree"
+            int node:typeVersion = 1
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (1542.9656, 230.02322)
+        }
+
+        def OmniGraphNode "ros2_context" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom uchar inputs:domain_id
+            custom bool inputs:useDomainIDEnvVar = 1
+            token node:type = "isaacsim.ros2.bridge.ROS2Context"
+            int node:typeVersion = 2
+            custom uint64 outputs:context
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (459.5691, 430.8495)
+        }
+
+        def OmniGraphNode "node_namespace" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom string inputs:value
+            token node:type = "omni.graph.nodes.ConstantString"
+            int node:typeVersion = 1
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (229.79895, 346.31158)
+        }
+
+        def OmniGraphNode "tf_tree_world_to_base_link" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom string inputs:childFrameId = "world"
+            custom uint64 inputs:context
+            prepend uint64 inputs:context.connect = </World/transform_tree_odometry_ur_nvblox/ros2_context.outputs:context>
+            custom uint inputs:execIn
+            prepend uint inputs:execIn.connect = </World/transform_tree_odometry_ur_nvblox/on_playback_tick.outputs:tick>
+            custom string inputs:nodeNamespace
+            prepend string inputs:nodeNamespace.connect = </World/transform_tree_odometry_ur_nvblox/node_namespace.inputs:value>
+            custom string inputs:parentFrameId = "base_link"
+            custom string inputs:qosProfile
+            custom uint64 inputs:queueSize
+            custom quatd inputs:rotation
+            prepend quatd inputs:rotation.connect = </World/transform_tree_odometry_ur_nvblox/isaac_compute_odometry_node.outputs:orientation>
+            custom bool inputs:staticPublisher = 1
+            custom double inputs:timeStamp
+            prepend double inputs:timeStamp.connect = </World/transform_tree_odometry_ur_nvblox/isaac_read_simulation_time.outputs:simulationTime>
+            custom string inputs:topicName = "tf_static"
+            custom vector3d inputs:translation
+            prepend vector3d inputs:translation.connect = </World/transform_tree_odometry_ur_nvblox/isaac_compute_odometry_node.outputs:position>
+            token node:type = "isaacsim.ros2.bridge.ROS2PublishRawTransformTree"
+            int node:typeVersion = 1
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (1571.213, 873.44934)
+        }
+
+        def OmniGraphNode "tf_tree_base_link_to_targets" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom uint64 inputs:context
+            prepend uint64 inputs:context.connect = </World/transform_tree_odometry_ur_nvblox/ros2_context.outputs:context>
+            custom uint inputs:execIn
+            prepend uint inputs:execIn.connect = </World/transform_tree_odometry_ur_nvblox/on_playback_tick.outputs:tick>
+            custom string inputs:nodeNamespace
+            prepend string inputs:nodeNamespace.connect = </World/transform_tree_odometry_ur_nvblox/node_namespace.inputs:value>
+            custom rel inputs:parentPrim = </World/ur10e_robotiq2f_140_ROS/ur10e_robotiq2f_140/ur10e/base_link> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom string inputs:qosProfile
+            custom uint64 inputs:queueSize
+            custom bool inputs:staticPublisher = 1
+            custom rel inputs:targetPrims = [
+                </World/target1_frame>,
+                </World/target2_frame>,
+                </World/soup_can>,
+                </World/gear_small>,
+                </World/gear_medium>,
+                </World/gear_large>,
+                </World/gear_assembly_frame>,
+            ] (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom double inputs:timeStamp
+            prepend double inputs:timeStamp.connect = </World/transform_tree_odometry_ur_nvblox/isaac_read_simulation_time.outputs:simulationTime>
+            custom string inputs:topicName = "tf_static"
+            token node:type = "isaacsim.ros2.bridge.ROS2PublishTransformTree"
+            int node:typeVersion = 1
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (1481.7076, -148.81836)
+        }
+    }
+
+    def OmniGraph "ROS_Clock"
+    {
+        token evaluationMode = "Automatic"
+        token evaluator:type = "execution"
+        token fabricCacheBacking = "Shared"
+        int2 fileFormatVersion = (1, 9)
+        token pipelineStage = "pipelineStageOnDemand"
+
+        def OmniGraphNode "ReadSimTime"
+        {
+            custom uint64 inputs:referenceTimeDenominator
+            custom int64 inputs:referenceTimeNumerator
+            custom bool inputs:resetOnStop = 1
+            custom int64 inputs:swhFrameNumber
+            token node:type = "isaacsim.core.nodes.IsaacReadSimulationTime"
+            int node:typeVersion = 1
+            custom double outputs:simulationTime
+        }
+
+        def OmniGraphNode "PublishClock"
+        {
+            custom uint64 inputs:context
+            prepend uint64 inputs:context.connect = </World/ROS_Clock/Context.outputs:context>
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            prepend uint inputs:execIn.connect = </World/ROS_Clock/on_physics_step.outputs:step>
+            custom string inputs:nodeNamespace
+            custom string inputs:qosProfile
+            custom uint64 inputs:queueSize
+            custom double inputs:timeStamp
+            prepend double inputs:timeStamp.connect = </World/ROS_Clock/ReadSimTime.outputs:simulationTime>
+            custom string inputs:topicName
+            token node:type = "isaacsim.ros2.bridge.ROS2PublishClock"
+            int node:typeVersion = 1
+        }
+
+        def OmniGraphNode "Context"
+        {
+            custom uchar inputs:domain_id
+            custom bool inputs:useDomainIDEnvVar
+            token node:type = "isaacsim.ros2.bridge.ROS2Context"
+            int node:typeVersion = 2
+            custom uint64 outputs:context
+        }
+
+        def OmniGraphNode "on_physics_step" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            token node:type = "isaacsim.core.nodes.OnPhysicsStep"
+            int node:typeVersion = 1
+            custom double outputs:deltaSimulationTime
+            custom double outputs:deltaSystemTime
+            custom uint outputs:step (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (-879.66156, -20.18014)
+        }
+    }
+
+    def "gear_small" (
+        prepend payload = @https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Props/isaac_ros_segment_anything/meshes/gear_small.usd@
+    )
+    {
+        quatd xformOp:orient = (1, 0, 0, 0)
+        double3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (-0.2075651628288962, 0.3554345922524562, 0.019415868746589227)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        over "factory_gear_small"
+        {
+        }
+    }
+
+    def "gear_medium" (
+        prepend payload = @https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Props/isaac_ros_segment_anything/meshes/gear_medium.usd@
+    )
+    {
+        quatd xformOp:orient = (1, 0, 0, 0)
+        double3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (-0.29031886101486115, 0.28958794836052487, 0.022211133827912562)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        over "factory_gear_medium"
+        {
+        }
+    }
+
+    def "gear_large" (
+        prepend payload = @https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Props/isaac_ros_segment_anything/meshes/gear_large.usd@
+    )
+    {
+        bool physxRigidBody:disableGravity = 1
+        quatd xformOp:orient = (0.7071067811865476, 0, 0, -0.7071067811865475)
+        double3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (-0.0880849041689881, 0.19826450248372457, 0.01857735772785346)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        over "factory_gear_large"
+        {
+        }
+    }
+
+    def "robotiq_action_graph_01" (
+        prepend payload = @./robotiq_action_graph.usd@
+    )
+    {
+        over "ActionGraph"
+        {
+            over "read_upper_limit"
+            {
+                custom rel inputs:prim = </World/ur10e_robotiq2f_140_ROS/ur10e_robotiq2f_140/ee_link/finger_joint>
+            }
+
+            over "read_lower_limit"
+            {
+                custom rel inputs:prim = </World/ur10e_robotiq2f_140_ROS/ur10e_robotiq2f_140/ee_link/finger_joint>
+            }
+
+            over "write_target"
+            {
+                custom rel inputs:prim = </World/ur10e_robotiq2f_140_ROS/ur10e_robotiq2f_140/ee_link/finger_joint>
+            }
+
+            over "write_target_01"
+            {
+                custom rel inputs:prim = </World/ur10e_robotiq2f_140_ROS/ur10e_robotiq2f_140/ee_link/right_outer_knuckle_joint>
+            }
+
+            over "on_playback_tick"
+            {
+                uniform float2 ui:nodegraph:node:pos = (-2141.2483, -409.11636)
+            }
+
+            over "ros2_subscribe_joint_state"
+            {
+                uniform float2 ui:nodegraph:node:pos = (-1615.2063, -111.180305)
+            }
+
+            def OmniGraphNode "articulation_controller" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom double[] inputs:effortCommand
+                prepend double[] inputs:effortCommand.connect = </World/robotiq_action_graph_01/ActionGraph/ros2_subscribe_joint_state.outputs:effortCommand>
+                custom uint inputs:execIn (
+                    customData = {
+                        bool isExecution = 1
+                    }
+                )
+                prepend uint inputs:execIn.connect = </World/robotiq_action_graph_01/ActionGraph/on_playback_tick.outputs:tick>
+                custom int[] inputs:jointIndices
+                custom token[] inputs:jointNames
+                prepend token[] inputs:jointNames.connect = </World/robotiq_action_graph_01/ActionGraph/ros2_subscribe_joint_state.outputs:jointNames>
+                custom double[] inputs:positionCommand
+                prepend double[] inputs:positionCommand.connect = </World/robotiq_action_graph_01/ActionGraph/ros2_subscribe_joint_state.outputs:positionCommand>
+                custom string inputs:robotPath
+                custom rel inputs:targetPrim = </World/ur10e_robotiq2f_140_ROS/ur10e_robotiq2f_140/ee_link/finger_joint> (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom double[] inputs:velocityCommand
+                prepend double[] inputs:velocityCommand.connect = </World/robotiq_action_graph_01/ActionGraph/ros2_subscribe_joint_state.outputs:velocityCommand>
+                token node:type = "isaacsim.core.nodes.IsaacArticulationController"
+                int node:typeVersion = 1
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1117.4767, -27.895784)
+            }
+
+            over "get_array_index"
+            {
+                custom token inputs:array
+                uniform float2 ui:nodegraph:node:pos = (-1491.1765, -292.97296)
+            }
+
+            over "divide"
+            {
+                custom token inputs:a
+            }
+
+            over "ros2_context"
+            {
+                uniform float2 ui:nodegraph:node:pos = (-2521.1858, 29.86621)
+            }
+        }
+    }
+
+    def "gear_assembly_frame" (
+        prepend payload = @https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Props/isaac_ros_segment_anything/meshes/gear_base.usd@
+    )
+    {
+        vector3f physics:angularVelocity = (-0.13050339, 0.026722405, -0.0023636243)
+        bool physics:rigidBodyEnabled = 0
+        vector3f physics:velocity = (-2.9399894e-7, 0.000017785022, -0.00011535127)
+        quatd xformOp:orient = (0.9998833537101746, -0.012168306857347488, -0.004215342458337545, 0.008209501393139362)
+        double3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (0.15963000059127808, 0.35578998923301697, 0.020709995180368423)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        over "factory_gear_base"
+        {
+        }
+    }
+
+    def PhysicsScene "PhysicsScene" (
+        prepend apiSchemas = ["PhysxSceneAPI"]
+    )
+    {
+        vector3f physics:gravityDirection = (0, 0, -1)
+        float physics:gravityMagnitude = 9.81
+        float physxScene:bounceThreshold = 0.5
+        bool physxScene:enableStabilization = 1
+        float physxScene:frictionCorrelationDistance = 0.025
+        float physxScene:frictionOffsetThreshold = 0.04
+        uint physxScene:gpuCollisionStackSize = 67108864
+        uint physxScene:gpuFoundLostAggregatePairsCapacity = 33554432
+        uint physxScene:gpuFoundLostPairsCapacity = 2097152
+        uint physxScene:gpuMaxNumPartitions = 8
+        uint physxScene:gpuMaxRigidContactCount = 8388608
+        uint physxScene:gpuMaxRigidPatchCount = 163840
+        uint physxScene:gpuTotalAggregatePairsCapacity = 2097152
+        uniform uint physxScene:maxPositionIterationCount = 255
+        uniform uint physxScene:maxVelocityIterationCount = 255
+        uniform token physxScene:solverType = "TGS"
+        uint physxScene:timeStepsPerSecond = 120
+    }
+
+    def Xform "large_gear"
+    {
+        quatd xformOp:orient = (1, 0, 0, 0)
+        double3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (0, 0, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
+}
+
+over "ActionGraph"
+{
+    over "ActionGraph"
+    {
+    }
+}
+
+def "mac_n_cheese_centered" (
+    prepend apiSchemas = ["PhysicsMeshCollisionAPI", "PhysxRigidBodyAPI", "PhysicsCollisionAPI", "PhysicsRigidBodyAPI"]
+    prepend payload = @https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Props/Food/mac_n_cheese_centered.usd@
+)
+{
+    uniform token physics:approximation = "convexDecomposition"
+    bool physxRigidBody:disableGravity = 0
+    float physxRigidBody:sleepThreshold = 0
+    float3 xformOp:rotateXYZ = (90, 0, -90)
+    float3 xformOp:scale = (1, 1, 1)
+    double3 xformOp:translate = (-0.4515472654593063, 0.07328052039862537, 0.11739996123439975)
+    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+}

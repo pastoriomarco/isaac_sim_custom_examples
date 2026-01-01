@@ -2,10 +2,10 @@
 (
     defaultPrim = "World"
     metersPerUnit = 1
+    timeCodesPerSecond = 60
     upAxis = "Z"
     subLayers = [
         @./lite6_scene.usda@,
         @./lite6_ros.usda@
     ]
 )
-

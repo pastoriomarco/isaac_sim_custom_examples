@@ -8,7 +8,7 @@ def "Graph" (
     variants = {
         string Gripper = "None"
         string JointStates = "On"
-        string TF = "Off"
+        string TF = "On"
         string MountedCameras = "0"
         string ExternalCameras = "0"
         string CameraTopicConvention = "IsaacForManipulation"
@@ -42,8 +42,22 @@ def "Graph" (
     {
         over "PublisherTF"
         {
-            prepend rel inputs:targetPrims = </World/lite6>
+            custom rel inputs:parentPrim = </World>
+            custom rel inputs:targetPrims = </World/lite6>
         }
+
+        over "PublisherTFStatic" (
+            active = false
+        )
+        {
+            custom rel inputs:parentPrim = </World>
+        }
+    }
+
+    def OmniGraph "ROS_Clock" (
+        prepend references = @../Robots/Ufactory/lite6/graphs/ros_clock.usda@</Graph/ROS_Clock>
+    )
+    {
     }
 
     def OmniGraph "ROS_Camera_Mounted_1" (
@@ -129,7 +143,13 @@ def "Graph" (
             {
                 over "PublisherTF"
                 {
-                    prepend rel inputs:targetPrims = </World/lite6/link6/sensors/camera_link/rsd455/Camera_OmniVision_OV9782_Color/camera_color_optical_frame>
+                    custom rel inputs:targetPrims = </World/lite6>
+                }
+
+                over "PublisherTFStatic" (
+                    active = false
+                )
+                {
                 }
             }
         }
@@ -147,6 +167,15 @@ def "Graph" (
             )
             {
             }
+
+            over "ROS_TF"
+            {
+                over "PublisherTFStatic" (
+                    active = false
+                )
+                {
+                }
+            }
         }
         "1" {
             over "ROS_Camera_External_1" (
@@ -162,9 +191,11 @@ def "Graph" (
 
             over "ROS_TF"
             {
-                over "PublisherTF"
+                over "PublisherTFStatic" (
+                    active = true
+                )
                 {
-                    prepend rel inputs:targetPrims = </World/rsd455/realsense_camera_1/realsense_camera_1_color/camera_1_color_optical_frame>
+                    custom rel inputs:targetPrims = </World/rsd455>
                 }
             }
         }
@@ -182,11 +213,13 @@ def "Graph" (
 
             over "ROS_TF"
             {
-                over "PublisherTF"
+                over "PublisherTFStatic" (
+                    active = true
+                )
                 {
-                    prepend rel inputs:targetPrims = [
-                        </World/rsd455/realsense_camera_1/realsense_camera_1_color/camera_1_color_optical_frame>,
-                        </World/rsd455_2/realsense_camera_2/realsense_camera_2_color/camera_2_color_optical_frame>
+                    custom rel inputs:targetPrims = [
+                        </World/rsd455>,
+                        </World/rsd455_2>
                     ]
                 }
             }
