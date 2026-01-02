@@ -7,8 +7,8 @@
                 double radius = 5
             }
             dictionary Perspective = {
-                double3 position = (-0.7260780732918762, 1.6650736352707272, 1.2556831263791128)
-                double3 target = (-0.4837030752967964, -6.42043726732114, -3.346360678259404)
+                double3 position = (-1.1791811811425637, 3.171188649199579, 0.701045263206313)
+                double3 target = (1.2620537023478928, -1.954774313208969, -0.772286640214458)
             }
             dictionary Right = {
                 double3 position = (0, -5, 0)
@@ -32,7 +32,7 @@
             int version = 1
         }
         dictionary omni_layer = {
-            string authoring_layer = "./isaac_manipulator_scene_light.usda"
+            string authoring_layer = "./isaac_manipulator_scene.usda"
             dictionary locked = {
             }
             dictionary muteness = {
@@ -41,7 +41,6 @@
         dictionary physicsSettings = {
             int "/persistent/simulation/minFrameRate" = 60
         }
-        int refinementOverrideImplVersion = 0
         dictionary renderSettings = {
         }
     }
@@ -67,9 +66,7 @@ def Xform "background" (
         token visibility = "inherited"
     }
 
-    over "Towel_Room01_floor_bottom_218" (
-        active = true
-    )
+    over "Towel_Room01_floor_bottom_218"
     {
         double3 xformOp:rotateZYX = (0, 0, 0)
         double3 xformOp:scale = (1, 1, 1)
@@ -100,354 +97,6 @@ def Xform "background" (
         double3 xformOp:scale = (0.009999999776482582, 0.009999999776482582, 0.009999999776482582)
         double3 xformOp:translate = (0, 0, -0.007756443890224507)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
-    }
-
-    over "Floor" (
-        active = true
-    )
-    {
-    }
-
-    over "Floor2" (
-        active = true
-    )
-    {
-    }
-
-    over "Floor3" (
-        active = true
-    )
-    {
-    }
-
-    over "Floor4" (
-        active = true
-    )
-    {
-    }
-
-    over "Floor5" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_floor_rim_back001_222" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_floor_rim_back_220" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_floor_rim_corner001_226" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_floor_rim_corner002_228" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_floor_rim_corner003_230" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_floor_rim_corner004_232" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_floor_rim_corner005_234" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_floor_rim_corner006_236" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_floor_rim_corner007_238" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_floor_rim_corner_224" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_floor_rim_front_center001_242" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_floor_rim_front_center_240" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_floor_rim_front_center_side001_246" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_floor_rim_front_center_side002_248" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_floor_rim_front_center_side003_250" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_floor_rim_front_center_side_244" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_floor_rim_side001_254" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_floor_rim_side002_256" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_floor_rim_side003_258" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_floor_rim_side_252" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_floor_top_260" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_florr_edge001_264" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_florr_edge_262" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_lamp_266" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_lamp_frame_268" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_wall_back001_274" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_wall_back_272" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_wall_corner001_278" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_wall_corner002_280" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_wall_corner003_282" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_wall_corner_276" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_wall_side001_286" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_wall_side_284" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_window1_290" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_window_288" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_window_frame_bottom001_292" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_window_frame_bottom002_294" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_window_frame_corner002_296" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_window_frame_corner004_298" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_window_frame_corner005_300" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_window_frame_corner006_302" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_window_frame_side001_304" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_window_frame_side002_306" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_wood_wall_008_322" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_wood_wall_009_324" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_wood_wall_308" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_wood_wall_310" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_wood_wall_312" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_wood_wall_314" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_wood_wall_316" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_wood_wall_318" (
-        active = true
-    )
-    {
-    }
-
-    over "Towel_Room01_wood_wall_320" (
-        active = true
-    )
-    {
-    }
-
-    over "Looks" (
-        active = true
-    )
-    {
     }
 }
 
@@ -786,61 +435,6 @@ def "Render" (
                 custom bool overrideClipRange = 0
                 uniform int2 resolution = (1920, 1200)
             }
-
-            def RenderProduct "Replicator_09" (
-                prepend apiSchemas = ["OmniRtxSettingsCommonAdvancedAPI_1", "OmniRtxSettingsRtAdvancedAPI_1", "OmniRtxSettingsPtAdvancedAPI_1", "OmniRtxPostColorGradingAPI_1", "OmniRtxPostChromaticAberrationAPI_1", "OmniRtxPostBloomPhysicalAPI_1", "OmniRtxPostMatteObjectAPI_1", "OmniRtxPostCompositingAPI_1", "OmniRtxPostDofAPI_1", "OmniRtxPostMotionBlurAPI_1", "OmniRtxPostTvNoiseAPI_1", "OmniRtxPostTonemapIrayReinhardAPI_1", "OmniRtxPostDebugSettingsAPI_1", "OmniRtxDebugSettingsAPI_1"]
-                hide_in_stage_window = true
-                no_delete = true
-            )
-            {
-                rel camera = </World/hawk_manipulator/left/camera_left>
-                bool omni:rtx:material:db:syncLoads = 1
-                bool omni:rtx:rt:ecoMode:enabled = 0
-                bool omni:rtx:scene:hydra:materialSyncLoads = 1
-                rel orderedVars = </Render/Vars/LdrColor>
-                custom bool overrideClipRange = 0
-                uniform int2 resolution = (1920, 1200)
-            }
-
-            def RenderProduct "Replicator_10" (
-                prepend apiSchemas = ["OmniRtxSettingsCommonAdvancedAPI_1", "OmniRtxSettingsRtAdvancedAPI_1", "OmniRtxSettingsPtAdvancedAPI_1", "OmniRtxPostColorGradingAPI_1", "OmniRtxPostChromaticAberrationAPI_1", "OmniRtxPostBloomPhysicalAPI_1", "OmniRtxPostMatteObjectAPI_1", "OmniRtxPostCompositingAPI_1", "OmniRtxPostDofAPI_1", "OmniRtxPostMotionBlurAPI_1", "OmniRtxPostTvNoiseAPI_1", "OmniRtxPostTonemapIrayReinhardAPI_1", "OmniRtxPostDebugSettingsAPI_1", "OmniRtxDebugSettingsAPI_1"]
-                hide_in_stage_window = true
-                no_delete = true
-            )
-            {
-                rel camera = </World/hawk_manipulator/left/camera_left>
-                custom string ogPostProcessPath = "/Render/OmniverseKit/HydraTextures/Replicator_10/PostRender"
-                bool omni:rtx:material:db:syncLoads = 1
-                bool omni:rtx:rt:ecoMode:enabled = 0
-                bool omni:rtx:scene:hydra:materialSyncLoads = 1
-                rel orderedVars = [
-                    </Render/Vars/DistanceToImagePlaneSD>,
-                    </Render/Vars/LdrColorSD>,
-                    </Render/Vars/LdrColor>,
-                ]
-                custom bool overrideClipRange = 0
-                uniform int2 resolution = (1920, 1200)
-            }
-
-            def RenderProduct "Replicator_11" (
-                prepend apiSchemas = ["OmniRtxSettingsCommonAdvancedAPI_1", "OmniRtxSettingsRtAdvancedAPI_1", "OmniRtxSettingsPtAdvancedAPI_1", "OmniRtxPostColorGradingAPI_1", "OmniRtxPostChromaticAberrationAPI_1", "OmniRtxPostBloomPhysicalAPI_1", "OmniRtxPostMatteObjectAPI_1", "OmniRtxPostCompositingAPI_1", "OmniRtxPostDofAPI_1", "OmniRtxPostMotionBlurAPI_1", "OmniRtxPostTvNoiseAPI_1", "OmniRtxPostTonemapIrayReinhardAPI_1", "OmniRtxPostDebugSettingsAPI_1", "OmniRtxDebugSettingsAPI_1"]
-                hide_in_stage_window = true
-                no_delete = true
-            )
-            {
-                rel camera = </World/hawk_manipulator/left/camera_left>
-                custom string ogPostProcessPath = "/Render/OmniverseKit/HydraTextures/Replicator_11/PostRender"
-                bool omni:rtx:material:db:syncLoads = 1
-                bool omni:rtx:rt:ecoMode:enabled = 0
-                bool omni:rtx:scene:hydra:materialSyncLoads = 1
-                rel orderedVars = [
-                    </Render/Vars/DistanceToImagePlaneSD>,
-                    </Render/Vars/LdrColorSD>,
-                    </Render/Vars/LdrColor>,
-                ]
-                custom bool overrideClipRange = 0
-                uniform int2 resolution = (1920, 1200)
-            }
         }
     }
 
@@ -859,9 +453,6 @@ def "Render" (
             </Render/OmniverseKit/HydraTextures/Replicator_06>,
             </Render/OmniverseKit/HydraTextures/Replicator_07>,
             </Render/OmniverseKit/HydraTextures/Replicator_08>,
-            </Render/OmniverseKit/HydraTextures/Replicator_09>,
-            </Render/OmniverseKit/HydraTextures/Replicator_10>,
-            </Render/OmniverseKit/HydraTextures/Replicator_11>,
         ]
     }
 
@@ -895,9 +486,7 @@ def Xform "World"
     double3 xformOp:translate = (0, 0, 0)
     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
-    def OmniGraph "front_hawk_manipulator" (
-        active = true
-    )
+    def OmniGraph "front_hawk_manipulator"
     {
         token evaluationMode = "Automatic"
         token evaluator:type = "execution"
@@ -1115,7 +704,6 @@ def Xform "World"
     }
 
     def "hawk_manipulator" (
-        active = true
         prepend payload = @https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Sensors/LeopardImaging/Hawk/hawk_v1.1_nominal.usd@
     )
     {
@@ -1191,7 +779,7 @@ def Xform "World"
     {
         float3 xformOp:rotateZYX = (0, 0, 0)
         float3 xformOp:scale = (1, 1, 1)
-        double3 xformOp:translate = (-0.5574693534868409, -0.36755017794452793, 0.061344918670859436)
+        double3 xformOp:translate = (-0.5574693534868409, -0.2591009638754489, 0.061344918670859436)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateZYX", "xformOp:scale"]
 
         over "Visuals"
@@ -1243,7 +831,7 @@ def Xform "World"
     }
 
     def "ur10e_robotiq2f_140_ROS" (
-        prepend payload = @../Robots/ur10e_robotiq2f-140_ROS.usd@
+        prepend payload = @../../../Robots/ur10e_robotiq2f-140_ROS.usd@
     )
     {
         quatd xformOp:orient = (-0.7071067690849304, 0, 0, 0.7071067690849304)
@@ -2080,7 +1668,6 @@ def Xform "World"
     }
 
     def "gear_small" (
-        active = false
         prepend payload = @https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Props/isaac_ros_segment_anything/meshes/gear_small.usd@
     )
     {
@@ -2095,7 +1682,6 @@ def Xform "World"
     }
 
     def "gear_medium" (
-        active = false
         prepend payload = @https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Props/isaac_ros_segment_anything/meshes/gear_medium.usd@
     )
     {
@@ -2110,7 +1696,6 @@ def Xform "World"
     }
 
     def "gear_large" (
-        active = false
         prepend payload = @https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Props/isaac_ros_segment_anything/meshes/gear_large.usd@
     )
     {
@@ -2215,7 +1800,6 @@ def Xform "World"
     }
 
     def "gear_assembly_frame" (
-        active = false
         prepend payload = @https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Props/isaac_ros_segment_anything/meshes/gear_base.usd@
     )
     {
@@ -2239,7 +1823,6 @@ def Xform "World"
         vector3f physics:gravityDirection = (0, 0, -1)
         float physics:gravityMagnitude = 9.81
         float physxScene:bounceThreshold = 0.5
-        bool physxScene:enableGPUDynamics = 0
         bool physxScene:enableStabilization = 1
         float physxScene:frictionCorrelationDistance = 0.025
         float physxScene:frictionOffsetThreshold = 0.04
@@ -2253,60 +1836,15 @@ def Xform "World"
         uniform uint physxScene:maxPositionIterationCount = 255
         uniform uint physxScene:maxVelocityIterationCount = 255
         uniform token physxScene:solverType = "TGS"
-        uint physxScene:timeStepsPerSecond = 30
+        uint physxScene:timeStepsPerSecond = 120
     }
 
-    def Xform "large_gear" (
-        active = false
-    )
+    def Xform "large_gear"
     {
         quatd xformOp:orient = (1, 0, 0, 0)
         double3 xformOp:scale = (1, 1, 1)
         double3 xformOp:translate = (0, 0, 0)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-    }
-
-    def Cylinder "Cylinder"
-    {
-        uniform token axis = "Z"
-        float3[] extent = [(-0.5, -0.5, -0.5), (0.5, 0.5, 0.5)]
-        double height = 1
-        double radius = 0.5
-        custom bool refinementEnableOverride = 1
-        custom int refinementLevel = 2
-        quatd xformOp:orient = (1, 0, 0, 0)
-        double3 xformOp:scale = (0.2, 0.2, 0.15)
-        double3 xformOp:translate = (-0.2199530391933553, -0.5719422279280736, 0.05681902307227814)
-        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-    }
-
-    def "small_KLT_01" (
-        prepend payload = @https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Props/KLT_Bin/small_KLT.usd@
-    )
-    {
-        float3 xformOp:rotateZYX = (0, 0, 0)
-        float3 xformOp:scale = (1, 1, 1)
-        double3 xformOp:translate = (0.27175512746024855, -0.35853601662081885, 0.061344918670859436)
-        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateZYX", "xformOp:scale"]
-
-        over "Visuals"
-        {
-            over "FOF_Mesh_Magenta_Box"
-            {
-                float3 xformOp:rotateXYZ = (90.00001, -0, 0)
-                float3 xformOp:scale = (0.00999999, 0.00999999, 0.00999999)
-                double3 xformOp:translate = (-0.014628979954044663, 2.955445438379556e-8, -0.06817653543295457)
-                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
-            }
-        }
-
-        over "DomeLight"
-        {
-            quatd xformOp:orient = (1, 0, 0, 0)
-            double3 xformOp:scale = (1, 1, 1)
-            double3 xformOp:translate = (0, 0, -0.07809598804638994)
-            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-        }
     }
 }
 
