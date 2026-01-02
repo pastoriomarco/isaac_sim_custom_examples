@@ -17,7 +17,7 @@ over "UF_ROBOT"
                 uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
 
                 def Xform "rsd455" (
-                    prepend references = @../../../../Sensors/RealSense/rsd455.usda@</Root/RSD455>
+                    prepend references = @https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.0/Isaac/Sensors/Intel/RealSense/rsd455.usd@</Root/RSD455>
                     delete apiSchemas = ["PhysicsRigidBodyAPI", "PhysxRigidBodyAPI", "PhysicsMassAPI"]
                 )
                 {
