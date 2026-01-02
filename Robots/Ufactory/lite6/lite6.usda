@@ -31,7 +31,7 @@ def Xform "UF_ROBOT" (
     variantSet "Sensor" = {
         "None" {
         }
-        "MountedCamera" (
+        "MountedCamera_RSD455" (
             prepend payload = @./configuration/lite6_sensor.usda@</UF_ROBOT>
         ) {
         }
