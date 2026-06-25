@@ -7,8 +7,8 @@
                 double radius = 5
             }
             dictionary Perspective = {
-                double3 position = (-0.7260780732918762, 1.6650736352707272, 1.2556831263791128)
-                double3 target = (-0.4837030752967964, -6.42043726732114, -3.346360678259404)
+                double3 position = (-0.9684997686165964, 1.5982033370379696, 0.8001781635473595)
+                double3 target = (1.162143386983954, -6.766653245818813, -2.291253163694141)
             }
             dictionary Right = {
                 double3 position = (0, -5, 0)
@@ -841,6 +841,26 @@ def "Render" (
                 custom bool overrideClipRange = 0
                 uniform int2 resolution = (1920, 1200)
             }
+
+            def RenderProduct "Replicator_12" (
+                prepend apiSchemas = ["OmniRtxSettingsCommonAdvancedAPI_1", "OmniRtxSettingsRtAdvancedAPI_1", "OmniRtxSettingsPtAdvancedAPI_1", "OmniRtxPostColorGradingAPI_1", "OmniRtxPostChromaticAberrationAPI_1", "OmniRtxPostBloomPhysicalAPI_1", "OmniRtxPostMatteObjectAPI_1", "OmniRtxPostCompositingAPI_1", "OmniRtxPostDofAPI_1", "OmniRtxPostMotionBlurAPI_1", "OmniRtxPostTvNoiseAPI_1", "OmniRtxPostTonemapIrayReinhardAPI_1", "OmniRtxPostDebugSettingsAPI_1", "OmniRtxDebugSettingsAPI_1"]
+                hide_in_stage_window = true
+                no_delete = true
+            )
+            {
+                rel camera = </World/hawk_manipulator/left/camera_left>
+                custom string ogPostProcessPath = "/Render/OmniverseKit/HydraTextures/Replicator_12/PostRender"
+                bool omni:rtx:material:db:syncLoads = 1
+                bool omni:rtx:rt:ecoMode:enabled = 0
+                bool omni:rtx:scene:hydra:materialSyncLoads = 1
+                rel orderedVars = [
+                    </Render/Vars/DistanceToImagePlaneSD>,
+                    </Render/Vars/LdrColorSD>,
+                    </Render/Vars/LdrColor>,
+                ]
+                custom bool overrideClipRange = 0
+                uniform int2 resolution = (1920, 1200)
+            }
         }
     }
 
@@ -862,6 +882,7 @@ def "Render" (
             </Render/OmniverseKit/HydraTextures/Replicator_09>,
             </Render/OmniverseKit/HydraTextures/Replicator_10>,
             </Render/OmniverseKit/HydraTextures/Replicator_11>,
+            </Render/OmniverseKit/HydraTextures/Replicator_12>,
         ]
     }
 
@@ -1014,7 +1035,7 @@ def Xform "World"
             prepend uint inputs:execIn.connect = </World/front_hawk_manipulator/left_camera_render_product.outputs:execOut>
             custom string inputs:frameId
             prepend string inputs:frameId.connect = </World/front_hawk_manipulator/left_camera_frame_id.inputs:value>
-            custom uint inputs:frameSkipCount
+            custom uint inputs:frameSkipCount = 9
             custom string inputs:nodeNamespace = "front_stereo_camera/depth"
             custom string inputs:qosProfile
             custom uint64 inputs:queueSize
@@ -1052,7 +1073,7 @@ def Xform "World"
             prepend string inputs:frameId.connect = </World/front_hawk_manipulator/left_camera_frame_id.inputs:value>
             custom string inputs:frameIdRight = ""
             prepend string inputs:frameIdRight.connect = </World/front_hawk_manipulator/right_camera_frame_id.inputs:value>
-            custom uint inputs:frameSkipCount
+            custom uint inputs:frameSkipCount = 9
             custom string inputs:nodeNamespace = "front_stereo_camera"
             custom string inputs:qosProfile
             custom uint64 inputs:queueSize
@@ -1088,7 +1109,7 @@ def Xform "World"
                 </World/front_hawk_manipulator/right_camera_frame_id.inputs:value>,
                 </World/front_hawk_manipulator/left_camera_frame_id.inputs:value>,
             ]
-            custom uint inputs:frameSkipCount
+            custom uint inputs:frameSkipCount = 9
             custom string inputs:nodeNamespace = "front_stereo_camera/left"
             prepend string inputs:nodeNamespace.connect = </World/front_hawk_manipulator/right_camera_namespace.inputs:value>
             custom string inputs:qosProfile
@@ -1198,10 +1219,21 @@ def Xform "World"
         {
             over "FOF_Mesh_Magenta_Box"
             {
+                token visibility = "inherited"
                 float3 xformOp:rotateXYZ = (90.00001, -0, 0)
                 float3 xformOp:scale = (0.00999999, 0.00999999, 0.00999999)
                 double3 xformOp:translate = (-0.014628979954044663, 2.955445438379556e-8, -0.06817653543295457)
                 uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            over "FOF_Mesh_Label_6_Small"
+            {
+                token visibility = "inherited"
+            }
+
+            over "FOF_Mesh_Label_1"
+            {
+                token visibility = "inherited"
             }
         }
 
@@ -1211,6 +1243,11 @@ def Xform "World"
             double3 xformOp:scale = (1, 1, 1)
             double3 xformOp:translate = (0, 0, -0.07809598804638994)
             uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        over "Collision"
+        {
+            double3 xformOp:translate = (-0.015, 0, 0)
         }
     }
 
@@ -2307,6 +2344,11 @@ def Xform "World"
             double3 xformOp:translate = (0, 0, -0.07809598804638994)
             uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
         }
+
+        over "Collision"
+        {
+            double3 xformOp:translate = (-0.015, 0, 0)
+        }
     }
 }
 
@@ -2318,7 +2360,7 @@ over "ActionGraph"
 }
 
 def "mac_n_cheese_centered" (
-    prepend apiSchemas = ["PhysicsMeshCollisionAPI", "PhysxRigidBodyAPI", "PhysicsCollisionAPI", "PhysicsRigidBodyAPI"]
+    prepend apiSchemas = ["PhysicsMeshCollisionAPI", "PhysxRigidBodyAPI", "PhysicsCollisionAPI", "PhysicsRigidBodyAPI", "PhysxConvexHullCollisionAPI", "PhysxTriangleMeshSimplificationCollisionAPI", "PhysxConvexDecompositionCollisionAPI"]
     prepend payload = @https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Props/Food/mac_n_cheese_centered.usd@
 )
 {
@@ -2330,3 +2372,4 @@ def "mac_n_cheese_centered" (
     double3 xformOp:translate = (-0.4515472654593063, 0.07328052039862537, 0.11739996123439975)
     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
 }
+
