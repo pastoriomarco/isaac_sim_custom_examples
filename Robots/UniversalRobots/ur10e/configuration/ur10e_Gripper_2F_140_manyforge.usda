@@ -1,0 +1,60 @@
+#usda 1.0
+(
+    defaultPrim = "ur10e"
+    metersPerUnit = 1
+    upAxis = "Z"
+)
+
+# ManyForge uses NVIDIA's supported one-drive/five-mimic Robotiq model. The
+# sample's standalone root joint is disabled because the UR ee_joint owns the
+# fixed attachment and the complete arm/gripper chain is one articulation.
+over "ur10e"
+{
+    over "ee_link" (
+        delete apiSchemas = ["PhysicsArticulationRootAPI", "PhysxArticulationAPI"]
+        payload = @https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Samples/Rigging/Manipulator/import_manipulator/robotiq_2f_140/robotiq_2f_140.usd@
+    )
+    {
+        double3 xformOp:rotateZYX = (0, 0, 90)
+
+        over "root_joint" (
+            active = false
+        )
+        {
+        }
+
+        over "left_inner_finger"
+        {
+            float physxContactReport:threshold = 0
+            float physxRigidBody:sleepThreshold = 0
+        }
+
+        over "right_inner_finger"
+        {
+            float physxContactReport:threshold = 0
+            float physxRigidBody:sleepThreshold = 0
+        }
+
+        over "joints"
+        {
+            over "finger_joint"
+            {
+                # NVIDIA's supported sample ships at 1000 N. The documented
+                # manipulator setup recommends 200 N to avoid contact
+                # penetration and linkage instability at a 60 Hz physics rate.
+                float drive:angular:physics:maxForce = 200
+            }
+        }
+    }
+
+    over "joints"
+    {
+        over "ee_joint"
+        {
+            rel physics:body1 = </ur10e/ee_link/robotiq_arg2f_base_link>
+            bool physics:jointEnabled = 1
+            point3f physics:localPos1 = (-1.8537044e-9, -2.861023e-9, 7.801056e-8)
+            quatf physics:localRot1 = (-0.70710677, -4.8245425e-15, -4.981552e-15, 0.7071068)
+        }
+    }
+}

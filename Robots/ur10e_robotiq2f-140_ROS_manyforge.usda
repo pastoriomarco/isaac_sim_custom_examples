@@ -1,0 +1,32 @@
+#usda 1.0
+(
+    defaultPrim = "ur10e_robotiq2f_140_ROS"
+    metersPerUnit = 1
+    subLayers = [
+        @./ur10e_robotiq2f-140_ROS.usd@
+    ]
+    upAxis = "Z"
+)
+
+# Preserve the qualified binary robot stage and author only the stronger
+# ManyForge substitutions needed by the corrected gripper contract.
+over "ur10e_robotiq2f_140_ROS"
+{
+    over "ur10e_robotiq2f_140" (
+        delete payload = @./UniversalRobots/ur10e/ur10e.usd@
+        prepend payload = @./UniversalRobots/ur10e/ur10e_manyforge.usda@
+    )
+    {
+        over "Robotiq_2F_140_config" (
+            active = false
+        )
+        {
+        }
+
+        over "gripper" (
+            active = false
+        )
+        {
+        }
+    }
+}

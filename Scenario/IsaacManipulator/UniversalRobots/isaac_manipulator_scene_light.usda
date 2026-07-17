@@ -916,6 +916,14 @@ def Xform "World"
     double3 xformOp:translate = (0, 0, 0)
     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
+    def Scope "ManyForgeContracts"
+    {
+        def Scope "RobotiqSingleAuthorityV1"
+        {
+            custom string contract = "one_master_drive_six_joint_settled_completion_v1"
+        }
+    }
+
     def OmniGraph "front_hawk_manipulator" (
         active = true
     )
@@ -1280,7 +1288,7 @@ def Xform "World"
     }
 
     def "ur10e_robotiq2f_140_ROS" (
-        prepend payload = @../../../Robots/ur10e_robotiq2f-140_ROS.usd@
+        prepend payload = @../../../Robots/ur10e_robotiq2f-140_ROS_manyforge.usda@
     )
     {
         quatd xformOp:orient = (-0.7071067690849304, 0, 0, 0.7071067690849304)
@@ -1293,104 +1301,6 @@ def Xform "World"
             over "PhysicsScene"
             {
                 uint physxScene:timeStepsPerSecond = 60
-            }
-
-            over "Robotiq_2F_140_config"
-            {
-                over "left_inner_finger"
-                {
-                    float physxContactReport:threshold = 0
-                    float physxRigidBody:sleepThreshold = 0
-                }
-            }
-
-            over "gripper"
-            {
-                over "left_inner_finger"
-                {
-                    float physxContactReport:threshold = 0
-                    float physxRigidBody:sleepThreshold = 0
-                }
-
-                over "robotiq_base_link"
-                {
-                }
-
-                over "left_outer_knuckle"
-                {
-                }
-
-                over "left_outer_finger"
-                {
-                }
-
-                over "left_inner_knuckle"
-                {
-                }
-
-                over "right_outer_knuckle"
-                {
-                }
-
-                over "right_outer_finger"
-                {
-                }
-
-                over "right_inner_finger"
-                {
-                }
-
-                over "right_inner_knuckle"
-                {
-                }
-
-                over "finger_joint"
-                {
-                    float state:angular:physics:position = 0
-                    float state:angular:physics:velocity = 0
-                }
-
-                over "right_outer_knuckle_joint"
-                {
-                    float state:angular:physics:position = 0
-                    float state:angular:physics:velocity = 0
-                }
-
-                over "left_outer_finger_joint"
-                {
-                    float state:angular:physics:position = 0
-                    float state:angular:physics:velocity = 0
-                }
-
-                over "right_outer_finger_joint"
-                {
-                    float state:angular:physics:position = 0
-                    float state:angular:physics:velocity = 0
-                }
-
-                over "left_inner_finger_joint"
-                {
-                    float state:angular:physics:position = 0
-                    float state:angular:physics:velocity = 0
-                }
-
-                over "right_inner_finger_joint"
-                {
-                    float state:angular:physics:position = 0
-                    float state:angular:physics:velocity = 0
-                }
-
-                over "left_inner_finger_pad_joint"
-                {
-                    float state:angular:physics:position = 0
-                    float state:angular:physics:velocity = 0
-                }
-
-                over "right_inner_finger_pad_joint"
-                {
-                    float state:angular:physics:position = 0
-                    float state:angular:physics:velocity = 0
-                }
             }
 
             over "base_link" (
@@ -1526,191 +1436,6 @@ def Xform "World"
                 quatd xformOp:orient = (0.7071067690849304, 0, 0, 0.7071067690849304)
                 double3 xformOp:translate = (1.1842498779296875, 0.2907000184059143, 0.06084999442100525)
                 uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-
-                over "left_inner_finger"
-                {
-                    string isaac:nameOverride (
-                        displayName = "Name Override"
-                        doc = "Name override for prim lookup in base name search"
-                    )
-                    float physxContactReport:threshold = 0
-                    float physxRigidBody:sleepThreshold = 0
-
-                    over "Fingertip_01" (
-                        prepend apiSchemas = ["PhysxSDFMeshCollisionAPI"]
-                    )
-                    {
-                        uniform token physics:approximation = "sdf"
-                    }
-
-                    over "Finger4_01" (
-                        prepend apiSchemas = ["PhysxSDFMeshCollisionAPI"]
-                    )
-                    {
-                        uniform token physics:approximation = "sdf"
-                    }
-                }
-
-                over "robotiq_base_link"
-                {
-                }
-
-                over "left_outer_knuckle" (
-                    prepend apiSchemas = ["PhysxSDFMeshCollisionAPI"]
-                )
-                {
-                    string isaac:nameOverride (
-                        displayName = "Name Override"
-                        doc = "Name override for prim lookup in base name search"
-                    )
-                    uniform token physics:approximation = "sdf"
-                }
-
-                over "left_outer_finger" (
-                    prepend apiSchemas = ["PhysxSDFMeshCollisionAPI"]
-                )
-                {
-                    string isaac:nameOverride (
-                        displayName = "Name Override"
-                        doc = "Name override for prim lookup in base name search"
-                    )
-                    uniform token physics:approximation = "sdf"
-                }
-
-                over "left_inner_knuckle" (
-                    prepend apiSchemas = ["PhysxSDFMeshCollisionAPI"]
-                )
-                {
-                    string isaac:nameOverride (
-                        displayName = "Name Override"
-                        doc = "Name override for prim lookup in base name search"
-                    )
-                    uniform token physics:approximation = "sdf"
-                }
-
-                over "right_outer_knuckle" (
-                    prepend apiSchemas = ["PhysxSDFMeshCollisionAPI"]
-                )
-                {
-                    string isaac:nameOverride (
-                        displayName = "Name Override"
-                        doc = "Name override for prim lookup in base name search"
-                    )
-                    uniform token physics:approximation = "sdf"
-                }
-
-                over "right_outer_finger" (
-                    prepend apiSchemas = ["PhysxSDFMeshCollisionAPI"]
-                )
-                {
-                    string isaac:nameOverride (
-                        displayName = "Name Override"
-                        doc = "Name override for prim lookup in base name search"
-                    )
-                    uniform token physics:approximation = "sdf"
-                }
-
-                over "right_inner_finger"
-                {
-                    string isaac:nameOverride (
-                        displayName = "Name Override"
-                        doc = "Name override for prim lookup in base name search"
-                    )
-
-                    over "Finger4_01" (
-                        prepend apiSchemas = ["PhysxSDFMeshCollisionAPI"]
-                    )
-                    {
-                        uniform token physics:approximation = "sdf"
-                    }
-
-                    over "Fingertip_01" (
-                        prepend apiSchemas = ["PhysxSDFMeshCollisionAPI"]
-                    )
-                    {
-                        uniform token physics:approximation = "sdf"
-                    }
-                }
-
-                over "right_inner_knuckle"
-                {
-                    string isaac:nameOverride (
-                        displayName = "Name Override"
-                        doc = "Name override for prim lookup in base name search"
-                    )
-                    bool physxRigidBody:disableGravity = 1
-                }
-
-                over "finger_joint"
-                {
-                    float drive:angular:physics:damping = 8.94
-                    float drive:angular:physics:stiffness = 20
-                    float drive:angular:physics:targetPosition = 0
-                    bool physics:collisionEnabled = 0
-                    float state:angular:physics:position = 0
-                    float state:angular:physics:velocity = 0
-                    quatd xformOp:orient = (1, 0, 0, 0)
-                    double3 xformOp:scale = (1, 1, 1)
-                    double3 xformOp:translate = (0, 0, 0)
-                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-                }
-
-                over "right_outer_knuckle_joint"
-                {
-                    float drive:angular:physics:targetPosition = 0
-                    float state:angular:physics:position = 0
-                    float state:angular:physics:velocity = 0
-                }
-
-                over "left_outer_finger_joint"
-                {
-                    float state:angular:physics:position = 0
-                    float state:angular:physics:velocity = 0
-                }
-
-                over "right_outer_finger_joint"
-                {
-                    float drive:angular:physics:damping = 20
-                    float drive:angular:physics:stiffness = 400
-                    float state:angular:physics:position = 0
-                    float state:angular:physics:velocity = 0
-                }
-
-                over "left_inner_finger_joint"
-                {
-                    float drive:angular:physics:damping = 20
-                    float drive:angular:physics:stiffness = 400
-                    float state:angular:physics:position = 0
-                    float state:angular:physics:velocity = 0
-                }
-
-                over "right_inner_finger_joint"
-                {
-                    float drive:angular:physics:damping = 20
-                    float drive:angular:physics:stiffness = 400
-                    float state:angular:physics:position = 0
-                    float state:angular:physics:velocity = 0
-                }
-
-                over "left_inner_finger_pad_joint"
-                {
-                    float drive:angular:physics:damping = 20
-                    float drive:angular:physics:stiffness = 400
-                    float state:angular:physics:position = 0
-                    float state:angular:physics:velocity = 0
-                }
-
-                over "right_inner_finger_pad_joint"
-                {
-                    float drive:angular:physics:damping = 20
-                    float drive:angular:physics:stiffness = 400
-                    float state:angular:physics:position = 0
-                    float state:angular:physics:velocity = 0
-                }
-            }
-
-            over "ActionGraph"
-            {
             }
         }
 
@@ -2163,60 +1888,14 @@ def Xform "World"
     }
 
     def "robotiq_action_graph_01" (
-        prepend payload = @./robotiq_action_graph.usd@
+        prepend payload = @./robotiq_action_graph.usda@
     )
     {
         over "ActionGraph"
         {
-            over "read_upper_limit"
+            over "articulation_controller"
             {
-                custom rel inputs:prim = </World/ur10e_robotiq2f_140_ROS/ur10e_robotiq2f_140/ee_link/finger_joint>
-            }
-
-            over "read_lower_limit"
-            {
-                custom rel inputs:prim = </World/ur10e_robotiq2f_140_ROS/ur10e_robotiq2f_140/ee_link/finger_joint>
-            }
-
-            over "write_target"
-            {
-                custom rel inputs:prim = </World/ur10e_robotiq2f_140_ROS/ur10e_robotiq2f_140/ee_link/finger_joint>
-            }
-
-            over "write_target_01"
-            {
-                custom rel inputs:prim = </World/ur10e_robotiq2f_140_ROS/ur10e_robotiq2f_140/ee_link/right_outer_knuckle_joint>
-            }
-
-            over "on_playback_tick"
-            {
-                uniform float2 ui:nodegraph:node:pos = (-2141.2483, -409.11636)
-            }
-
-            over "ros2_subscribe_joint_state"
-            {
-                uniform float2 ui:nodegraph:node:pos = (-1615.2063, -111.180305)
-            }
-
-            def OmniGraphNode "articulation_controller" (
-                prepend apiSchemas = ["NodeGraphNodeAPI"]
-            )
-            {
-                custom double[] inputs:effortCommand
-                prepend double[] inputs:effortCommand.connect = </World/robotiq_action_graph_01/ActionGraph/ros2_subscribe_joint_state.outputs:effortCommand>
-                custom uint inputs:execIn (
-                    customData = {
-                        bool isExecution = 1
-                    }
-                )
-                prepend uint inputs:execIn.connect = </World/robotiq_action_graph_01/ActionGraph/on_playback_tick.outputs:tick>
-                custom int[] inputs:jointIndices
-                custom token[] inputs:jointNames
-                prepend token[] inputs:jointNames.connect = </World/robotiq_action_graph_01/ActionGraph/ros2_subscribe_joint_state.outputs:jointNames>
-                custom double[] inputs:positionCommand
-                prepend double[] inputs:positionCommand.connect = </World/robotiq_action_graph_01/ActionGraph/ros2_subscribe_joint_state.outputs:positionCommand>
-                custom string inputs:robotPath
-                custom rel inputs:targetPrim = </World/ur10e_robotiq2f_140_ROS/ur10e_robotiq2f_140/ee_link/finger_joint> (
+                custom rel inputs:targetPrim = </World/ur10e_robotiq2f_140_ROS/ur10e_robotiq2f_140/root_joint> (
                     customData = {
                         dictionary omni = {
                             dictionary graph = {
@@ -2225,28 +1904,6 @@ def Xform "World"
                         }
                     }
                 )
-                custom double[] inputs:velocityCommand
-                prepend double[] inputs:velocityCommand.connect = </World/robotiq_action_graph_01/ActionGraph/ros2_subscribe_joint_state.outputs:velocityCommand>
-                token node:type = "isaacsim.core.nodes.IsaacArticulationController"
-                int node:typeVersion = 1
-                uniform token ui:nodegraph:node:expansionState = "open"
-                uniform float2 ui:nodegraph:node:pos = (-1117.4767, -27.895784)
-            }
-
-            over "get_array_index"
-            {
-                custom token inputs:array
-                uniform float2 ui:nodegraph:node:pos = (-1491.1765, -292.97296)
-            }
-
-            over "divide"
-            {
-                custom token inputs:a
-            }
-
-            over "ros2_context"
-            {
-                uniform float2 ui:nodegraph:node:pos = (-2521.1858, 29.86621)
             }
         }
     }

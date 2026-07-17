@@ -1,0 +1,31 @@
+#usda 1.0
+(
+    defaultPrim = "ur10e"
+    metersPerUnit = 1
+    subLayers = [
+        @./ur10e.usda@
+    ]
+    upAxis = "Z"
+)
+
+# Keep the shared UR asset unchanged. Only the ManyForge combined robot loads
+# this stronger layer, which substitutes the corrected Robotiq variant payload.
+over "ur10e"
+{
+    variantSet "Gripper" = {
+        "Robotiq_2f_140" (
+            delete payload = @./configuration/ur10e_Gripper_2F_140.usd@
+            prepend payload = @./configuration/ur10e_Gripper_2F_140_manyforge.usda@
+        ) {
+            over "ee_link" (
+                delete payload = [
+                    @https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Robots/Robotiq/2F-140/Robotiq_2F_140_physics_edit.usd@,
+                    @omniverse://isaac-dev.ov.nvidia.com/Isaac/Robots/UniversalRobots/ur10e/configuration/ur10e_Gripper_2F_85.usd@,
+                    @./configuration/ur10e_Gripper_2F_140_manyforge.usda@
+                ]
+            )
+            {
+            }
+        }
+    }
+}
