@@ -6,7 +6,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from pxr import Sdf, Usd
+from pxr import Gf, Sdf, Usd
 
 
 ROBOT_INSTANCE = "/World/ur10e_robotiq2f_140_ROS/ur10e_robotiq2f_140"
@@ -23,6 +23,20 @@ OFFICIAL_GRIPPER_ASSET = (
     "Isaac/5.1/Isaac/Samples/Rigging/Manipulator/import_manipulator/"
     "robotiq_2f_140/robotiq_2f_140.usd"
 )
+EXPECTED_PREPLAY_LOCAL_ORIENTATION = Gf.Quatd(
+    0.5, Gf.Vec3d(-0.5, 0.5, 0.5)
+)
+EXPECTED_PREPLAY_WORLD_ORIENTATION = Gf.Quatd(
+    2**-0.5, Gf.Vec3d(0.0, 2**-0.5, 0.0)
+)
+EXPECTED_ATTACHMENT_RELATIVE_ORIENTATION = Gf.Quatd(
+    2**-0.5, Gf.Vec3d(0.0, 0.0, -(2**-0.5))
+)
+EXPECTED_PREPLAY_XFORM_ORDER = [
+    "xformOp:translate",
+    "xformOp:orient",
+    "xformOp:scale",
+]
 EXPECTED_ROBOT_TARGET = Sdf.Path(f"{ROBOT_INSTANCE}/root_joint")
 EXPECTED_EXEC_SOURCE = Sdf.Path(
     f"{COMMAND_SUBSCRIBER}.outputs:execOut"
@@ -60,6 +74,26 @@ def _walk(prim: Sdf.PrimSpec):
     yield prim
     for child in prim.nameChildren:
         yield from _walk(child)
+
+
+def _quat_components(value: Gf.Quatd) -> tuple[float, float, float, float]:
+    imaginary = value.GetImaginary()
+    return (value.GetReal(), imaginary[0], imaginary[1], imaginary[2])
+
+
+def _assert_same_rotation(actual: Gf.Quatd, expected: Gf.Quatd) -> None:
+    actual_components = _quat_components(actual)
+    expected_components = _quat_components(expected)
+    direct_error = max(
+        abs(a - b) for a, b in zip(actual_components, expected_components)
+    )
+    negated_error = max(
+        abs(a + b) for a, b in zip(actual_components, expected_components)
+    )
+    assert min(direct_error, negated_error) <= 1e-6, (
+        actual_components,
+        expected_components,
+    )
 
 
 def _validate_graph(root: Path) -> None:
@@ -116,6 +150,9 @@ def _validate_gripper_composition(root: Path) -> None:
     ee_link = layer.GetPrimAtPath("/ur10e/ee_link")
     payloads = [item.assetPath for item in _items(ee_link.payloadList)]
     assert payloads == [OFFICIAL_GRIPPER_ASSET], payloads
+    assert "xformOp:rotateZYX" not in ee_link.attributes, (
+        "the gripper payload must not retain a second authored pose authority"
+    )
     assert layer.GetPrimAtPath("/ur10e/ee_link/root_joint").active is False
 
     max_force = layer.GetPropertyAtPath(
@@ -127,6 +164,14 @@ def _validate_gripper_composition(root: Path) -> None:
     assert _items(attachment.targetPathList) == [
         Sdf.Path("/ur10e/ee_link/robotiq_arg2f_base_link")
     ]
+    attachment_orientation = layer.GetPropertyAtPath(
+        "/ur10e/joints/ee_joint.physics:localRot1"
+    )
+    assert attachment_orientation is not None
+    _assert_same_rotation(
+        attachment_orientation.default,
+        EXPECTED_ATTACHMENT_RELATIVE_ORIENTATION,
+    )
 
 
 def _validate_ur_overlay(root: Path) -> None:
@@ -162,6 +207,22 @@ def _validate_robot_layer(root: Path) -> None:
     for stale_path in STALE_ROBOT_LAYER_PRIMS:
         stale = layer.GetPrimAtPath(stale_path)
         assert stale is not None and stale.active is False, stale_path
+
+    ee_link = layer.GetPrimAtPath(f"{ROBOT_LAYER_INSTANCE}/ee_link")
+    assert ee_link is not None
+    preplay_orientation = ee_link.attributes["xformOp:orient"]
+    _assert_same_rotation(
+        preplay_orientation.default, EXPECTED_PREPLAY_LOCAL_ORIENTATION
+    )
+    assert (
+        ee_link.attributes["xformOpOrder"].default
+        == EXPECTED_PREPLAY_XFORM_ORDER
+    )
+    assert "xformOp:rotateZYX" not in ee_link.attributes, (
+        "pre-Play pose must have one orientation authority"
+    )
+    assert "xformOp:translate" not in ee_link.attributes
+    assert "xformOp:scale" not in ee_link.attributes
 
     original = _open_layer(root / "Robots/ur10e_robotiq2f-140_ROS.usd")
     original_robot = original.GetPrimAtPath(ROBOT_LAYER_INSTANCE)
@@ -216,9 +277,17 @@ def _validate_scene(root: Path, scene_name: str) -> None:
 
     for stale_path in STALE_ROBOT_PRIMS:
         assert layer.GetPrimAtPath(stale_path) is None, stale_path
-    ee_link = layer.GetPrimAtPath(f"{ROBOT_INSTANCE}/ee_link")
-    assert ee_link is not None and not list(ee_link.nameChildren), (
-        "scene must not override gripper-model children"
+    assert layer.GetPrimAtPath(f"{ROBOT_INSTANCE}/ee_link") is None, (
+        "scene must not override the attachment wrapper's pre-Play pose"
+    )
+
+    robot_orientation = layer.GetPropertyAtPath(
+        "/World/ur10e_robotiq2f_140_ROS.xformOp:orient"
+    )
+    assert robot_orientation is not None
+    _assert_same_rotation(
+        robot_orientation.default * EXPECTED_PREPLAY_LOCAL_ORIENTATION,
+        EXPECTED_PREPLAY_WORLD_ORIENTATION,
     )
 
     controller = layer.GetPrimAtPath(SCENE_CONTROLLER)

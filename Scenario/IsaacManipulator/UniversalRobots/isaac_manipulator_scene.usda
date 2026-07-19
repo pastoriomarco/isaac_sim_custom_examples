@@ -982,12 +982,6 @@ def Xform "World"
                 uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
             }
 
-            over "ee_link"
-            {
-                quatd xformOp:orient = (0.7071067690849304, 0, 0, 0.7071067690849304)
-                double3 xformOp:translate = (1.1842498779296875, 0.2907000184059143, 0.06084999442100525)
-                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-            }
         }
 
         over "ur_action_graph"

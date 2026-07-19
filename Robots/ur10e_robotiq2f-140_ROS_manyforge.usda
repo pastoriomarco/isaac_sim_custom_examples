@@ -28,5 +28,13 @@ over "ur10e_robotiq2f_140_ROS"
         )
         {
         }
+
+        over "ee_link"
+        {
+            # Match the imported wrist pose and ee_joint frame before PhysX
+            # starts so the rigid gripper has no first-Play correction.
+            quatd xformOp:orient = (0.5, -0.5, 0.5, 0.5)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
     }
 }

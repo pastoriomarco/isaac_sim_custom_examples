@@ -74,6 +74,15 @@ cleanup of those two source layers is therefore the smallest reliable option.
 - caps the master drive at 200 N for stable 60 Hz contact behavior;
 - preserves NVIDIA's masses, collision shapes, limits, and mimic laws.
 
+The full and light scenes do not author `ee_link` transforms. This is a
+single-authority rule, not just cleanup: a scene-local transform is stronger
+than the robot payload and can display the gripper at a stale pose until PhysX
+solves the fixed joint on first Play. The strongest reusable
+`ur10e_robotiq2f-140_ROS_manyforge.usda` robot overlay owns the one pre-Play
+orientation that matches the imported wrist pose and fixed-joint frame. It must
+already satisfy the joint so physics initialization does not reposition the
+gripper.
+
 `ur10e_manyforge.usda` is a small variant overlay. It keeps the shared UR asset
 unchanged and substitutes the corrected Robotiq payload only for this ManyForge
 composition, avoiding behavior changes in unrelated UR scene consumers.
@@ -140,18 +149,34 @@ Never hot-edit the checkout or a loaded release on the Isaac workstation.
 For every asset update:
 
 1. Load the full and light scenes from a newly promoted immutable release.
-2. Confirm the scene marker and exactly the six expected gripper joints.
-3. Close to `0.55` rad and verify all six joints converge with the table signs.
-4. Open to `0.0` rad and verify all six return to zero.
-5. Stop and restart simulation; readiness must degrade and recover without the
+2. Before Play, confirm the gripper is aligned with the wrist and record the
+   wrist and rigid gripper-base poses.
+3. Start paused, advance one physics step, and compare the wrist-to-gripper-base
+   relative transform before and after the step. Its translation delta must be
+   at most `1e-4 m` and angular delta at most `1e-3 rad`. Compare the relative
+   transform rather than the base's world pose because the arm's own drives may
+   initialize on that step.
+4. Confirm the scene marker and exactly the six expected gripper joints.
+5. Close to `0.55` rad and verify all six joints converge with the table signs.
+6. Open to `0.0` rad and verify all six return to zero.
+7. Stop and restart simulation; readiness must degrade and recover without the
    bridge dying or requiring an Isaac restart.
-6. Run the complete light-scene pick/place cycle. The object must lift, move,
+8. Run the complete light-scene pick/place cycle. The object must lift, move,
    release, and fall at the drop pose; master-only convergence is failure.
-7. Reset and repeat. Confirm there is one articulation root and one command
+9. Reset and repeat. Confirm there is one articulation root and one command
    writer after every reload.
 
 The 2026-07-17 qualification passed close, open, readiness recovery, and the
 full Composer pick/place cycle. The simulation was stopped after testing.
+
+The 2026-07-19 pre-Play continuity qualification used immutable release
+`gripper-preplay-20260719-r2`. Both scenes passed the parser contract; the
+light scene's stopped-to-first-step wrist-to-gripper relative transform stayed
+within `1e-4 m` and `1e-3 rad`; direct close/open converged all six joints; and
+the normal Composer deployment completed repeated pick/place passes. Composer
+scene evidence recorded attach, detach at the drop pose, and the released
+object falling to its support. The simulation was then verified in standard
+`STATE_STOPPED`.
 
 ## Failure Diagnosis
 
@@ -165,6 +190,10 @@ full Composer pick/place cycle. The simulation was stopped after testing.
 - **Fresh workstation cannot load the gripper:** verify access to the exact
   NVIDIA 5.1 URL (or populate the Isaac resolver cache), then reload and confirm
   the six-joint readiness contract.
+- **Gripper is misplaced before Play and snaps into place:** a stronger scene
+  or robot layer has regained `ee_link` pose authority. Restore the strongest
+  reusable robot overlay as the sole pose owner and rerun the parser plus
+  stopped-to-Play continuity test.
 - **Transient controller initialization warning after reset:** acceptable only
   if the graph immediately reinitializes, readiness returns, and repeated
   commands pass. Persistent failure is not qualified.
@@ -174,6 +203,8 @@ full Composer pick/place cycle. The simulation was stopped after testing.
 - Preserve a single drive joint and single command writer.
 - Never add scene-local follower drives to compensate for a broken asset.
 - Never depend on browser/Composer polling to advance gripper state.
+- Never author `ee_link` transforms in a consuming scene; the strongest
+  reusable robot overlay is the sole pre-Play pose authority.
 - Change the versioned upstream URL only in the wrapper and repeat full
   qualification; never copy/edit vendor meshes into the scene layers.
 - Any topology, force, graph, or attachment change requires parser validation
